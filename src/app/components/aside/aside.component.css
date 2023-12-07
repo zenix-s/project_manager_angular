@@ -1,0 +1,6 @@
+:host{
+  border-right: 1px solid white;
+  width: max-content;
+  height: 100%;
+  padding: 16px;
+}
