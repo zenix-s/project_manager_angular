@@ -56,9 +56,9 @@ La idea del proyecto es crear un sistema de gestión de proyectos que permita a 
     - etc
 - userWorkspace
   - role
-    1. Admin
-    2. User
-    3. Guest
+    - 1 - Admin
+    - 2 - User
+    - 3 - Guest
   - settings json
     - theme
     - language
@@ -75,13 +75,13 @@ La idea del proyecto es crear un sistema de gestión de proyectos que permita a 
 - Tag 
   - name
   - type
-    1. Project
-    2. Team
-    3. Category 
+    - 1 - Project
+    - 2 - Team
+    - 3 - Category
 - SubTag
   - type
-    1. subproject
-    2. assignation
+    - 1 - Subproject
+    - 2 - Assignation
   - idTagParent
   - idTagChild 
 - userTask
