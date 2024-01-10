@@ -31,89 +31,155 @@ La idea del proyecto es crear un sistema de gestión de proyectos que permita a 
 ## Entidades
 
 
-- User
-  - id
-  - username
-  - email
-  - password
-  - creationDate
-  - updateDate
-  - settings json
-    - theme
-    - language
-    - notifications
-    - etc
-- Workspace
-  - id
-  - name
-  - description
-  - creationDate
-  - updateDate
-  - settings json
-    - theme
-    - language
-    - notifications
-    - etc
-- userWorkspace
-  - role
-    - 1 - Admin
-    - 2 - User
-    - 3 - Guest
-  - settings json
-    - theme
-    - language
-    - notifications
-    - etc 
-  - idWorkspace
-  - idUser
-- Task
-  - name
-  - description
-  - creationDate
-  - updateDate
-  - idWorkspace
-- Tag 
-  - name
-  - type
-    - 1 - Project
-    - 2 - Team
-    - 3 - Category
-- SubTag
-  - type
-    - 1 - Subproject
-    - 2 - Assignation
-  - idTagParent
-  - idTagChild 
-- userTask
-  - id
-  - idUser
-  - idTask
-- userTag
-  - id
-  - idUser
-  - idTag
-- taskTag
-  - id
-  - idTask
-  - idTag 
+```ts
+interface User {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+  creationDate: Date;
+  updateDate: Date;
+  settings: {
+    theme: string;
+    language: string;
+    notifications: boolean;
+  }
+}
+
+interface Invitation {
+  id: number;
+  idWorkspace: number;
+  idUser: number;
+  role: number;
+  status: number;
+  creationDate: Date;
+  updateDate: Date;
+}
+
+interface Workspace {
+  id: number;
+  name: string;
+  description: string;
+  creationDate: Date;
+  updateDate: Date;
+  settings: {
+    theme: string;
+    language: string;
+    notifications: boolean;
+  }
+}
+
+interface UserWorkspace {
+  role: number;
+  settings: {
+    theme: string;
+    language: string;
+    notifications: boolean;
+  }
+  idWorkspace: number;
+  idUser: number;
+}
+
+interface Task {
+  id: number;
+  name: string;
+  description: string;
+  creationDate: Date;
+  updateDate: Date;
+  idWorkspace: number;
+}
+
+interface Category {
+  id: number;
+  name: string;
+  description: string;
+  creationDate: Date;
+  updateDate: Date;
+}
+
+interface Team {
+  id: number;
+  name: string;
+  description: string;
+  creationDate: Date;
+  updateDate: Date;
+}
+
+interface Project {
+  id: number;
+  name: string;
+  description: string;
+  creationDate: Date;
+  updateDate: Date;
+}
+
+interface SubProject {
+  id: number;
+  name: string;
+  description: string;
+  creationDate: Date;
+  updateDate: Date;
+}
+
+interface UserTeam {
+  id: number;
+  role: number;
+  settings: {
+    theme: string;
+    language: string;
+    notifications: boolean;
+  }
+  idTeam: number;
+  idUser: number;
+}
+
+interface UserProject {
+  id: number;
+  role: number;
+  settings: {
+    theme: string;
+    language: string;
+    notifications: boolean;
+  }
+  idProject: number;
+  idUser: number;
+}
+
+interface TaskCategory {
+  id: number;
+  idTask: number;
+  idCategory: number;
+}
+
+interface TaskUser {
+  id: number;
+  idTask: number;
+  idUser: number;
+}
+
+interface TaskTeam {
+  id: number;
+  idTask: number;
+  idTeam: number;
+}
+
+interface ProjectCategory {
+  id: number;
+  idProject: number;
+  idCategory: number;
+}
+
+interface TeamProject {
+  id: number;
+  idTeam: number;
+  idProject: number;
+}
 
 
-Las categorías, proyectos, y equipos son entidades que se agrupan a traves de tags, que son entidades que se pueden agrupar entre si
+```
 
-Ejemplo:
-En caso de querer crear un proyecto y asginarlo a un equipo, se crean dos tags:
 
-- Tag de proyecto - `project`
-- Tag de equipo - `team`
 
-Y se asocian a un tag padre, que en este caso sería el workspace
-
-- Workspace padre - `workspace`
-
-Se crea un subtag con los datos del proyecto
-- Subtag de proyecto - `subproject`
-- idTagParent - `team`
-- idTagChild - `project`
 
 
 
