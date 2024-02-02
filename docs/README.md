@@ -116,6 +116,18 @@ interface UserTeam {
   idUser: number;
 }
 
+interface WorkspaceTeam {
+	id: number;
+	role: number;
+	settings: {
+		theme: string;
+		language: string;
+		notifications: boolean;
+	};
+	idWorkspace: number;
+	idTeam: number;
+}
+
 interface TaskCategory {
   id: number;
   idTask: number;
