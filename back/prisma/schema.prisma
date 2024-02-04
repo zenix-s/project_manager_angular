@@ -26,6 +26,7 @@ model User {
 	teams		UserTeam[]
 	projects	UserProject[]
 	tasks		UserTask[]
+	invitations	Invitation[]
 }
 
 model Workspace {
@@ -37,6 +38,10 @@ model Workspace {
 	settings Json	
 
 	users		userWorkspace[]
+	tasks		Task[]
+	categories	Category[]
+	projects	Project[]
+	invitations	Invitation[]
 }
 
 model Task {
@@ -45,6 +50,8 @@ model Task {
 	description	String
 	creationDate DateTime @default(now())
 	updateDate	DateTime @updatedAt
+	idWorkspace Int
+	workspace	Workspace @relation(fields: [idWorkspace], references: [id])
 
 	users		UserTask[]
 	categories	TaskCategory[]
@@ -58,6 +65,8 @@ model Category {
 	description	String
 	creationDate DateTime @default(now())
 	updateDate	DateTime @updatedAt
+	idWorkspace Int
+	workspace	Workspace @relation(fields: [idWorkspace], references: [id])
 
 	tasks		TaskCategory[]
 }
@@ -68,6 +77,8 @@ model Project {
 	description	String
 	creationDate DateTime @default(now())
 	updateDate	DateTime @updatedAt
+	idWorkspace Int
+	workspace	Workspace @relation(fields: [idWorkspace], references: [id])
 
 	users		UserProject[]
 	tasks		TaskProject[]
@@ -94,6 +105,9 @@ model Invitation {
 	status		Int
 	creationDate DateTime @default(now())
 	updateDate	DateTime @updatedAt
+
+	workspace	Workspace @relation(fields: [idWorkspace], references: [id])
+	user		User @relation(fields: [idUser], references: [id])
 }
 
 model userWorkspace {
