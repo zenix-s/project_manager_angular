@@ -1,6 +1,9 @@
 # Project Manager
 
+
+
 ## Overview
+
 
 La idea del proyecto es crear un sistema de gestión de proyectos que permita a los usuarios crear workspace para sus proyectos, en los cuales se pueda:
 
@@ -40,7 +43,7 @@ interface User {
   updateDate: Date;
   settings: {
     theme: string;
-    language: string;
+    language: string;q:q
     notifications: boolean;
   };
 }
