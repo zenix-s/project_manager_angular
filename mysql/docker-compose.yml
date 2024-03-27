@@ -9,13 +9,9 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpassdev
-    volumes:
-      - db:/var/lib/mysql
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
-  volumes:
-    db:
