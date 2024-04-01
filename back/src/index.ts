@@ -1,7 +1,10 @@
 import express, {Express, Request, Response} from "express";
-import tasksRouter from '@/routes/tasks/routerTasks'
+import tasksRouter from '@/routes/routerTasks'
 
+process.loadEnvFile();
 const app: Express = express();
+
+
 
 app.use('/tasks', tasksRouter);
 
