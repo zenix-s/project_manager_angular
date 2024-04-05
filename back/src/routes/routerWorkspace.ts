@@ -1,10 +1,13 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { listWorkspaces } from '@/controller/workspaceController';
 
 const router = express.Router();
 
 // Listar workspaces de un usuario
-router.get('/:userId', listWorkspaces);
+router.get('/:userId', (req: Request, res: Response) => {
+	const userId = parseInt(req.params.userId);
+	res.send(listWorkspaces(userId));
+});
 
 // Crear un workspace
 router.post('/', (req, res) => {

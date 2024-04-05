@@ -1,0 +1,18 @@
+<div>
+  <form [formGroup]="workspaceForm" (ngSubmit)="onSubmit()">
+  º
+    <input
+      type="text"
+      formControlName="name"
+      placeholder="Workspace name"
+    />
+    <input
+      type="text"
+      formControlName="description"
+      placeholder="Workspace description"
+    />
+    <button>Create</button>
+
+  </form>
+
+</div>

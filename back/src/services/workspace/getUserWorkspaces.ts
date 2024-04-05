@@ -1,40 +1,32 @@
 import { Workspace } from "@/interfaces/interfaces";
+import { pool } from "@/config/dbconfig";
 
-const Data: Workspace[] = [
-  {
-    id: 1,
-    name: "Workspace 1",
-    description: "Description of Workspace 1",
-    createdAt: new Date(),
-  },
-  {
-    id: 2,
-    name: "Workspace 2",
-    description: "Description of Workspace 2",
-    createdAt: new Date(),
-  },
-  {
-    id: 3,
-    name: "Workspace 3",
-    description: "Description of Workspace 3",
-    createdAt: new Date(),
-  },
-  {
-    id: 4,
-    name: "Workspace 4",
-    description: "Description of Workspace 4",
-    createdAt: new Date(),
-  },
-  {
-    id: 5,
-    name: "Workspace 5",
-    description: "Description of Workspace 5",
-    createdAt: new Date(),
-  },
-];
-function getUserWorkspaces(userId: number): Workspace[] {
-	
-  return Data;
+
+async function  getUserWorkspaces(userId: number){
+	// const query = `SELECT w.id, w.name, w.description, uw.createdAt
+	// FROM workspace w
+	// JOIN userWorkspace uw ON w.id = uw.workspace_id
+	// WHERE uw.user_id = ?`;
+
+	const query = 'SELECT * FROM workspace'
+
+	console.log(query);
+
+	// return pool.query(query, [userId])
+	// 	.then(([result]: any) => {
+	// 		// const workspaces: Workspace = result;
+	// 		return result;
+	// 	})
+	// 	.catch((err) => {
+	// 		console.log(err);
+	// 		return null;
+	// 	});
+
+	const result = await pool.query(query);
+	console.log(result);
+
+	return "Workspaces"
+
 }
 
 export default getUserWorkspaces;
