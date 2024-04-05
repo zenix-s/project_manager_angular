@@ -15,9 +15,7 @@ export class UserWorkspacePageComponent {
     return this.UserWorkspaceService.getUserWorkspaces();
   }
 
-  addUserWorkspace(workspace: Workspace):void {
-    this.UserWorkspaceService.addUserWorkspace(workspace);
-  }
+
 
   deleteUserWorkspace(workspaceId: number):void {
     this.UserWorkspaceService.deleteUserWorkspace(workspaceId);

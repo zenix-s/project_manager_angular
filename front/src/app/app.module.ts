@@ -3,16 +3,18 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UserWorkspacesModule } from '@features/userWorkspaces/user-workspaces.module'
+import { UserWorkspacesModule } from '@features/userWorkspaces/user-workspaces.module';
+import { ShareModule } from './share/share.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    UserWorkspacesModule
+    UserWorkspacesModule,
+    ShareModule
   ],
   providers: [],
   bootstrap: [AppComponent]
