@@ -1,8 +1,0 @@
-aside::before{
-  content: 'pages';
-  position: absolute;
-  top: -2px;
-  left: 20px;
-  padding: 2px;
-  background: #fff;
-}

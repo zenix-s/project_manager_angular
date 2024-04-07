@@ -4,7 +4,6 @@ import { Workspace } from '@features/userWorkspaces/interfaces/workspace.interfa
 @Component({
   selector: 'app-list-workspaces',
   templateUrl: './list-workspaces.component.html',
-  styleUrl: './list-workspaces.component.css',
 })
 export class ListWorkspacesComponent {
   @Input()

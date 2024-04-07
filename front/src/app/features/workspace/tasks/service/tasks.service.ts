@@ -1,49 +1,31 @@
 import { Injectable } from '@angular/core';
 import { Task } from '../interfaces/task.interface';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TasksService {
-  private tasks: Task[] = [
-    {
-      id: 1,
-      name: 'Task 1',
-      description: 'Description 1',
-      dueDate: new Date(),
-      completed: false,
-    },
-    {
-      id: 2,
-      name: 'Task 2',
-      description: 'Description 2',
-      dueDate: new Date(),
-      completed: false,
-    },
-    {
-      id: 3,
-      name: 'Task 3',
-      description: 'Description 3',
-      dueDate: new Date(),
-      completed: false,
-    },
-  ];
+  constructor(private http: HttpClient) {}
 
-  private nextId = 4;
+  private baseUrl = 'http://localhost:3000';
+  private resourceUrl = 'tasks';
 
-  getTasks() {
-    return this.tasks;
+
+
+  getTasks(idWorkspace: number): Observable<Task[]> {
+    idWorkspace = parseInt(idWorkspace.toString());
+    return this.http.get<Task[]>(`${this.baseUrl}/workspace/${idWorkspace}/${this.resourceUrl}`);
   }
 
-  addTask(task: Task) {
-    const newTask = { ...task };
-    newTask.id = this.nextId++;
-    this.tasks.push(newTask);
-  }
+  // addTask(task: Task) {
+  //   const newTask = { ...task };
+  //   newTask.id = this.nextId++;
+  //   this.tasks.push(newTask);
+  // }
 
-  deleteTask(taskId: number) {
-    this.tasks = this.tasks.filter((task) => task.id !== taskId);
-  }
-
-  constructor() {}
+  // deleteTask(taskId: number) {
+  //   this.tasks = this.tasks.filter((task) => task.id !== taskId);
+  // }
 }

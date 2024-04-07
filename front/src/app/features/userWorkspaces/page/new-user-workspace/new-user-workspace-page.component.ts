@@ -14,8 +14,8 @@ export class NewUserWorkspaceComponent {
   ) {}
 
   addUserWorkspace(workspace: Workspace): void {
-    this.UserWorkspaceService.addUserWorkspace(workspace)
-    this.router.navigate(['']);
+    // this.UserWorkspaceService.addUserWorkspace(workspace)
+    // this.router.navigate(['']);
 
   }
 }
