@@ -1,18 +1,20 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Workspace } from '@features/userWorkspaces/interfaces/workspace.interface';
 
 @Component({
   selector: 'app-new-workspace',
   templateUrl: './new-workspace.component.html',
-  styleUrl: './new-workspace.component.css',
 })
 export class NewWorkspaceComponent {
 
-  public workspaceForm = new FormGroup({
-    name: new FormControl<string>(''),
-    description: new FormControl<string>(''),
+  constructor(private fb: FormBuilder) {}
+
+  workspaceForm = this.fb.group({
+    name: ['', Validators.required],
+    description: [''],
   });
+
 
 
   get workspace(): Workspace {

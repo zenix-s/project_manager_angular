@@ -16,10 +16,6 @@ const routes: Routes = [
   {
     path: 'newWorkspace',
     component: NewUserWorkspaceComponent,
-  },
-  {
-    path: 'workspace/:id',
-    component: UserWorkspacePageComponent,
   }
 ];
 

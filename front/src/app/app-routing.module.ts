@@ -9,6 +9,13 @@ const routes: Routes = [
         (m) => m.UserWorkspacesModule
       ),
   },
+  {
+    path: 'workspace',
+    loadChildren: () =>
+      import('./features/workspace/workspace.module').then(
+        (m) => m.WorkspaceModule
+      ),
+  },
 ];
 
 @NgModule({
