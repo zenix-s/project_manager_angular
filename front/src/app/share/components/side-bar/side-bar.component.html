@@ -1,5 +1,19 @@
 <aside class="h-screen p-4 ">
-  <nav class="flex flex-col outline h-full p-2">
+  <nav class="
+    flex
+    flex-col
+    outline
+    h-full
+    p-2
+    before:content-['aside']
+    before:relative
+    before:top-[-1.5rem]
+    before:bg-white
+    before:w-min
+    before:px-2
+    hover:outline-red-500
+    hover:before:text-red-500
+  ">
     <a [routerLink]="['/']">
       <span>Workspaces</span>
     </a>

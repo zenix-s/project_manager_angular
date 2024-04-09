@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Workspace } from '@features/userWorkspaces/interfaces/workspace.interface';
+import { Workspace } from '@types';
 import { UserWorkspacesService } from '@features/userWorkspaces/service/user-workspaces.service';
 import { Router } from '@angular/router';
 
@@ -14,8 +14,10 @@ export class NewUserWorkspaceComponent {
   ) {}
 
   addUserWorkspace(workspace: Workspace): void {
-    // this.UserWorkspaceService.addUserWorkspace(workspace)
-    // this.router.navigate(['']);
-
+    this.UserWorkspaceService.addUserWorkspace(workspace)
+      .subscribe((workspace) => {
+        console.log(workspace);
+        this.router.navigate(['/']);
+      });
   }
 }

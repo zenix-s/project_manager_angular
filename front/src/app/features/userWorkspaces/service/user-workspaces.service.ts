@@ -1,17 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Workspace } from '@features/userWorkspaces/interfaces/workspace.interface';
+import { Workspace } from '@types';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { port, backendUrl } from '@env';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserWorkspacesService {
-  private baseUrl = 'http://localhost:3000';
   private resourceUrl = 'userWorkspaces';
-  private baseUrlJson = '/assets/data/api/userWorkspaces';
-  private resourceUrlJson = 'userWorkspaces.json';
-  private userId = 1;
 
   constructor(private http: HttpClient) {}
 
@@ -20,19 +17,46 @@ export class UserWorkspacesService {
     //   headers: new HttpHeaders()
     //     .set('Access-Control-Allow-Origin', '*'),
     // };
-    return this.http.get<Workspace[]>(`${ this.baseUrl }/${ this.resourceUrl }`);
-    // return this.http.get<Workspace[]>(`${this.baseUrlJson}/${this.userId}/${this.resourceUrlJson}`);
+    return this.http.get<Workspace[]>(
+      `${backendUrl}:${port}/${this.resourceUrl}`
+    );
   }
 
-  // addUserWorkspace(workspace: Workspace) {
-  //   const newWorkspace = { ...workspace };
-  //   newWorkspace.id = this.nextId++;
-  //   this.userWorkspaces.push(newWorkspace);
-  // }
+  addUserWorkspace(workspace: Workspace): Observable<Workspace> {
+    // this.http.post<Workspace>(
+    //   `${backendUrl}:${port}/${this.resourceUrl}`,
+    //   workspace
+    // );
+    // console.log('service ejecutado http post');
+    // this.http
+    //   .post<string>(`${backendUrl}:${port}/${this.resourceUrl}`, workspace)
 
-  // deleteUserWorkspace(workspaceId: number) {
-  //   this.userWorkspaces = this.userWorkspaces.filter(
-  //     (workspace) => workspace.id !== workspaceId
-  //   );
-  // }
+    return this.http.post<Workspace>(
+      `${backendUrl}:${port}/${this.resourceUrl}`,
+      workspace
+    );
+  }
+
+  deleteUserWorkspace(workspaceId: number) {
+    //   this.userWorkspaces = this.userWorkspaces.filter(
+    //     (workspace) => workspace.id !== workspaceId
+    //   );
+  }
+
+  updateUserWorkspace(workspace: Workspace) {}
+
+  getUserWorkspaceById(workspaceId: number): Workspace {
+    const workspace: Workspace = {
+      id: 1,
+      name: 'Workspace 1',
+      description: 'Description 1',
+      createdAt: new Date('2021-09-01'),
+    };
+
+    return workspace;
+  }
+
+  getWorkspaceId(): number {
+    return 1;
+  }
 }

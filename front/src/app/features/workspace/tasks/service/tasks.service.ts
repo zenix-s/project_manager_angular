@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Task } from '../interfaces/task.interface';
+import { Task } from '@types';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -9,8 +9,8 @@ import { Observable } from 'rxjs';
 export class TasksService {
   constructor(private http: HttpClient) {}
 
-  private baseUrl = 'http://localhost:3000';
-  private resourceUrl = 'tasks';
+  private baseUrl = 'http://localhost:5000';
+  private resourceUrl = 'task';
 
 
 

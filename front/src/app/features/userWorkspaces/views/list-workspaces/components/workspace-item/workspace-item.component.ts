@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Workspace } from '@app/features/userWorkspaces/interfaces/workspace.interface';
+import { Workspace } from '@types';
 
 @Component({
   selector: 'app-workspace-item',
   templateUrl: './workspace-item.component.html',
-  styleUrl: './workspace-item.component.css',
 })
 export class WorkspaceItemComponent {
   @Input()

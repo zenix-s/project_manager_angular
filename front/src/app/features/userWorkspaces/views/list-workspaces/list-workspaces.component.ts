@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Workspace } from '@features/userWorkspaces/interfaces/workspace.interface';
+import { Workspace } from '@types';
 
 @Component({
   selector: 'app-list-workspaces',

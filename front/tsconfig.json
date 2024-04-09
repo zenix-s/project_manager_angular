@@ -25,6 +25,8 @@
     "paths": {
       "@app/*": ["./src/app/*"],
       "@features/*": ["./src/app/features/*"],
+      "@types": ["./src/app/interfaces/interfaces.ts"],
+      "@env": ["./src/env.ts"],
     }
   },
   "angularCompilerOptions": {

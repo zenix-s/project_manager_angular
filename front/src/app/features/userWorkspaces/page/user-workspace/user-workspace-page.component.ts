@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserWorkspacesService } from '@features/userWorkspaces/service/user-workspaces.service';
-import { Workspace } from '@features/userWorkspaces/interfaces/workspace.interface';
+import { Workspace } from '@types';
 
 @Component({
   selector: 'app-user-workspace-page',
