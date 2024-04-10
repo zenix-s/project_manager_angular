@@ -23,7 +23,8 @@ export class UserWorkspacePageComponent implements OnInit {
   //   return this.UserWorkspaceService.getUserWorkspaces();
   // }
 
-  // deleteUserWorkspace(workspaceId: number):void {
-  //   this.UserWorkspaceService.deleteUserWorkspace(workspaceId);
-  // }
+  deleteUserWorkspace(workspaceId: number):void {
+    console.log("user-workspace ejecutado page")
+    this.UserWorkspaceService.deleteUserWorkspace(workspaceId);
+  }
 }

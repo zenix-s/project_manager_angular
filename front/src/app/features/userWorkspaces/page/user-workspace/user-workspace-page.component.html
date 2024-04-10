@@ -2,8 +2,8 @@
   <a [routerLink]="['/newWorkspace']">Create new workspace</a>
 </div>
 <div>
-  <!-- (onDeleteWorkspace)="deleteUserWorkspace($event)" -->
   <app-list-workspaces
+  (onDeleteWorkspace)="deleteUserWorkspace($event)"
   [userWorkspaces]="userWorkspaces"
   >
   </app-list-workspaces>

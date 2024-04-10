@@ -38,9 +38,9 @@ export class UserWorkspacesService {
   }
 
   deleteUserWorkspace(workspaceId: number) {
-    //   this.userWorkspaces = this.userWorkspaces.filter(
-    //     (workspace) => workspace.id !== workspaceId
-    //   );
+    this.http.delete(`${backendUrl}:${port}/workspace/${workspaceId}`).subscribe((data) => {
+      console.log(data)
+    })
   }
 
   updateUserWorkspace(workspace: Workspace) {}
