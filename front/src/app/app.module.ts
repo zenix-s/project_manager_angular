@@ -3,22 +3,24 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UserWorkspacesModule } from '@features/userWorkspaces/user-workspaces.module';
+import { ListWorkspacesModule } from '@features/list-workspaces/list-workspaces.module';
+import { CeWorkspacesModule } from '@features/ce-workspaces/ce-workspaces.module';
+import { WorkspaceModule } from '@features/workspace/workspace.module';
 import { ShareModule } from './share/share.module';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    UserWorkspacesModule,
+    HttpClientModule,
+    ListWorkspacesModule,
+    CeWorkspacesModule,
+    WorkspaceModule,
     ShareModule,
-    HttpClientModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -27,6 +27,7 @@
       "@features/*": ["./src/app/features/*"],
       "@types": ["./src/app/interfaces/interfaces.ts"],
       "@env": ["./src/env.ts"],
+      "@service/*": ["./src/app/service/*"],
     }
   },
   "angularCompilerOptions": {

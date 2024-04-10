@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TasksService } from '@features/workspace/tasks/service/tasks.service';
+import { TasksService } from '@app/service/workspace-tasks.service';
 import { ActivatedRoute } from '@angular/router';
 import { Task } from '@types';
 
@@ -10,6 +10,6 @@ import { Task } from '@types';
 export class ListTasksComponent{
   @Input()
   tasks: Task[] = [];
-  @Input()
-  workspaceId!: number;
+  // @Input()
+  // workspaceId!: number;
 }

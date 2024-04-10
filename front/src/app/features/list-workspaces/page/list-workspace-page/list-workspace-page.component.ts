@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { UserWorkspacesService } from '@features/userWorkspaces/service/user-workspaces.service';
+import { UserWorkspacesService } from '@service/user-workspaces.service';
 import { Workspace } from '@types';
 
 @Component({
-  selector: 'app-user-workspace-page',
-  templateUrl: './user-workspace-page.component.html',
+  selector: 'app-list-workspace-page',
+  templateUrl: './list-workspace-page.component.html',
   // styleUrl: ''
 })
-export class UserWorkspacePageComponent implements OnInit {
+export class ListWorkspacePageComponent implements OnInit {
   constructor(private UserWorkspaceService: UserWorkspacesService) {}
 
   userWorkspaces: Workspace[] = [];
@@ -15,7 +15,6 @@ export class UserWorkspacePageComponent implements OnInit {
   ngOnInit(): void {
     this.UserWorkspaceService.getUserWorkspaces().subscribe((workspaces) => {
       this.userWorkspaces = workspaces;
-      console.log("workspaces: ", this.userWorkspaces);
     });
   }
 
@@ -24,7 +23,6 @@ export class UserWorkspacePageComponent implements OnInit {
   // }
 
   deleteUserWorkspace(workspaceId: number):void {
-    console.log("user-workspace ejecutado page")
     this.UserWorkspaceService.deleteUserWorkspace(workspaceId);
   }
 }

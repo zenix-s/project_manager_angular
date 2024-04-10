@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { Workspace } from '@types';
-import { UserWorkspacesService } from '@features/userWorkspaces/service/user-workspaces.service';
+import { UserWorkspacesService } from '@app/service/user-workspaces.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-new-user-workspace-page',
-  templateUrl: './new-user-workspace.component.html',
+  selector: 'app-new-workspace-page',
+  templateUrl: './ce-workspace-page.component.html',
 })
-export class NewUserWorkspaceComponent {
+export class CEWorkspacePageComponent {
   constructor(
     private UserWorkspaceService: UserWorkspacesService,
     private router: Router

@@ -1,14 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WorkspaceRoutingModule } from './workspace-routing.module';
-
-
+import { TasksModule } from './tasks/tasks.module';
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    WorkspaceRoutingModule
-  ]
+  imports: [CommonModule, TasksModule],
+  exports: [TasksModule],
 })
-export class WorkspaceModule { }
+export class WorkspaceModule {}

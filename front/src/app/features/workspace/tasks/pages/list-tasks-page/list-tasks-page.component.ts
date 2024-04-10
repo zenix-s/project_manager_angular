@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TasksService } from '@features/workspace/tasks/service/tasks.service';
+import { TasksService } from '@service/workspace-tasks.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, switchMap } from 'rxjs';
 import { Task } from '@types';

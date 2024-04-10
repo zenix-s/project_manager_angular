@@ -20,10 +20,10 @@ interface error {
 }
 
 @Component({
-  selector: 'app-new-workspace',
-  templateUrl: './new-workspace.component.html',
+  selector: 'app-ce-form-workspace',
+  templateUrl: './ce-form-workspace.component.html',
 })
-export class NewWorkspaceComponent {
+export class CEFormWorkspaceComponent {
   constructor(private fb: FormBuilder) {}
   private _loading = false;
   private _errorSaving = false;
