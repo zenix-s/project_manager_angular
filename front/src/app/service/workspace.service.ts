@@ -9,7 +9,15 @@ import { port, backendUrl } from '@env';
 })
 export class WorkspaceService {
   constructor(private http: HttpClient) {}
-  deleteUserWorkspace(workspaceId: number) {
+
+  createWorkspace(workspace: Workspace): Observable<Workspace> {
+    return this.http.post<Workspace>(
+      `${backendUrl}:${port}/workspace`,
+      workspace
+    );
+  }
+
+  deleteWorkspace(workspaceId: number) {
     this.http
       .delete(`${backendUrl}:${port}/workspace/${workspaceId}`)
       .subscribe((data) => {

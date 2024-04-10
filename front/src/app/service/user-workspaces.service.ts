@@ -13,35 +13,20 @@ export class UserWorkspacesService {
   constructor(private http: HttpClient) {}
 
   getUserWorkspaces(): Observable<Workspace[]> {
-    // const options = {
-    //   headers: new HttpHeaders()
-    //     .set('Access-Control-Allow-Origin', '*'),
-    // };
     return this.http.get<Workspace[]>(
       `${backendUrl}:${port}/${this.resourceUrl}`
     );
   }
 
-  addUserWorkspace(workspace: Workspace): Observable<Workspace> {
-    // this.http.post<Workspace>(
-    //   `${backendUrl}:${port}/${this.resourceUrl}`,
-    //   workspace
-    // );
-    // console.log('service ejecutado http post');
-    // this.http
-    //   .post<string>(`${backendUrl}:${port}/${this.resourceUrl}`, workspace)
+  // addUserWorkspace(workspace: Workspace): Observable<Workspace> {
 
-    return this.http.post<Workspace>(
-      `${backendUrl}:${port}/${this.resourceUrl}`,
-      workspace
-    );
-  }
+  // }
 
-  deleteUserWorkspace(workspaceId: number) {
-    this.http.delete(`${backendUrl}:${port}/workspace/${workspaceId}`).subscribe((data) => {
-      console.log(data)
-    })
-  }
+  // deleteUserWorkspace(workspaceId: number) {
+  //   this.http.delete(`${backendUrl}:${port}/workspace/${workspaceId}`).subscribe((data) => {
+  //     console.log(data)
+  //   })
+  // }
 
   updateUserWorkspace(workspace: Workspace) {}
 

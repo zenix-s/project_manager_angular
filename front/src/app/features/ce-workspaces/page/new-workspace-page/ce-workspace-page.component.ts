@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Workspace } from '@types';
-import { UserWorkspacesService } from '@app/service/user-workspaces.service';
+import { WorkspaceService } from '@app/service/workspace.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,12 +9,12 @@ import { Router } from '@angular/router';
 })
 export class CEWorkspacePageComponent {
   constructor(
-    private UserWorkspaceService: UserWorkspacesService,
+    private WorkspacesService: WorkspaceService,
     private router: Router
   ) {}
 
   addUserWorkspace(workspace: Workspace): void {
-    this.UserWorkspaceService.addUserWorkspace(workspace)
+    this.WorkspacesService.createWorkspace(workspace)
       .subscribe((workspace) => {
         console.log(workspace);
         this.router.navigate(['/']);
