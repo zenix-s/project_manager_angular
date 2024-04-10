@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserWorkspacesService } from '@service/user-workspaces.service';
+import { WorkspaceService } from '@app/service/workspace.service';
 import { Workspace } from '@types';
 
 @Component({
@@ -8,7 +9,10 @@ import { Workspace } from '@types';
   // styleUrl: ''
 })
 export class ListWorkspacePageComponent implements OnInit {
-  constructor(private UserWorkspaceService: UserWorkspacesService) {}
+  constructor(
+    private UserWorkspaceService: UserWorkspacesService,
+    private workspaceService: WorkspaceService
+  ) {}
 
   userWorkspaces: Workspace[] = [];
 
@@ -23,6 +27,6 @@ export class ListWorkspacePageComponent implements OnInit {
   // }
 
   deleteUserWorkspace(workspaceId: number):void {
-    this.UserWorkspaceService.deleteUserWorkspace(workspaceId);
+    this.workspaceService.deleteWorkspace(workspaceId);
   }
 }
