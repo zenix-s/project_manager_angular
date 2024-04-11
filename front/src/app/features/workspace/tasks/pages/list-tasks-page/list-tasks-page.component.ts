@@ -18,17 +18,34 @@ export class ListTasksPageComponent implements OnInit {
   tasks: Task[] = [];
 
   ngOnInit(): void {
-    this.ActivatedRoute.params
-      .pipe(
-        switchMap(({ workspaceId }) => this.tasksService.getTasks(workspaceId))
-      )
-      .subscribe((tasksOrTask) => {
-        if (Array.isArray(tasksOrTask)) {
-          this.tasks = tasksOrTask;
-        } else {
-          this.tasks = [tasksOrTask];
-        }
-      });
+    if (!this.ActivatedRoute.snapshot.paramMap.has('idWorkspace')) {
+      this.router.navigate(['/']);
+    }
+    const idWorkspace = parseInt(
+      this.ActivatedRoute.snapshot.paramMap.get('idWorkspace') as any
+    );
+    if (isNaN(idWorkspace) || !isFinite(idWorkspace) || idWorkspace < 0) {
+      this.router.navigate(['/']);
+    }
+
+    this.tasksService.getTasks(idWorkspace).subscribe((tasks) => {
+      this.tasks = tasks;
+    });
+
+    // this.idWorkspace = this.ActivatedRoute.snapshot.paramMap.get('idWorkspace') as any;
+    // console.log(this.idWorkspace);
+    // this.ActivatedRoute.params
+    //   .pipe(
+    //     switchMap(({ idWorkspace }) => this.tasksService.getTasks(idWorkspace))
+    //   )
+    //   .subscribe((tasksOrTask) => {
+    //     if (Array.isArray(tasksOrTask)) {
+    //       this.tasks = tasksOrTask;
+    //     } else {
+    //       this.tasks = [tasksOrTask];
+    //     }
+    //     console.table(this.tasks);
+    //   });
   }
 
   // get tasks() {

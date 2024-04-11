@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Task } from '@types';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { port, backendUrl } from '@env';
 
 @Injectable({
   providedIn: 'root',
@@ -9,14 +10,13 @@ import { Observable } from 'rxjs';
 export class TasksService {
   constructor(private http: HttpClient) {}
 
-  private baseUrl = 'http://localhost:5000';
-  private resourceUrl = 'task';
+
 
 
 
   getTasks(idWorkspace: number): Observable<Task[]> {
     idWorkspace = parseInt(idWorkspace.toString());
-    return this.http.get<Task[]>(`${this.baseUrl}/workspace/${idWorkspace}/${this.resourceUrl}`);
+    return this.http.get<Task[]>(`${backendUrl}:${port}/workspace/${idWorkspace}/task`);
   }
 
   // addTask(task: Task) {

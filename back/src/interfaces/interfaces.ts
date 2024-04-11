@@ -17,24 +17,26 @@ export interface Workspace {
 export interface Invitation {
 	id: number;
 	email: string;
-	workspaceId: number;
+	idWorkspace: number;
 	createdAt: Date;
 }
 
 export interface UserWorkspace {
 	id: number;
-	userId: number;
-	workspaceId: number;
+	idUser: number;
+	idWorkspace: number;
 	role: 'admin' | 'member' | 'guest';
 	createdAt: Date;
 }
 
 export interface Task {
 	id: number;
+	createdAt: Date;
+	idWorkspace: number;
 	name: string;
 	description?: string;
-	createdAt: Date;
-	workspaceId: number;
+	completed: boolean;
+	deadline?: Date;
 	visibility: 'public' | 'private';
 }
 
@@ -43,7 +45,7 @@ export interface Category {
 	name: string;
 	description?: string;
 	createdAt: Date;
-	workspaceId: number;
+	idWorkspace: number;
 }
 
 export interface Team {
@@ -51,7 +53,7 @@ export interface Team {
 	name: string;
 	description?: string;
 	createdAt: Date;
-	workspaceId: number;
+	idWorkspace: number;
 }
 
 export interface Project {
@@ -59,59 +61,59 @@ export interface Project {
 	name: string;
 	description?: string;
 	createdAt: Date;
-	workspaceId: number;
+	idWorkspace: number;
 }
 
 export interface UserTeam {
 	id: number;
-	userId: number;
-	teamId: number;
+	idUser: number;
+	idTeam: number;
 	role: 'admin' | 'member' | 'guest';
 	createdAt: Date;
 }
 
 export interface UserProject {
 	id: number;
-	userId: number;
-	projectId: number;
+	idUser: number;
+	idProject: number;
 	role: 'admin' | 'member' | 'guest';
 	createdAt: Date;
 }
 
 export interface UserTask {
 	id: number;
-	userId: number;
-	taskId: number;
+	idUser: number;
+	idTask: number;
 	role: 'admin' | 'member' | 'guest';
 	createdAt: Date;
 }
 
 export interface TeamTask {
 	id: number;
-	teamId: number;
-	taskId: number;
+	idTeam: number;
+	idTask: number;
 	role: 'admin' | 'member' | 'guest';
 	createdAt: Date;
 }
 
 export interface TeamProject {
 	id: number;
-	teamId: number;
-	projectId: number;
+	idTeam: number;
+	idProject: number;
 	role: 'admin' | 'member' | 'guest';
 	createdAt: Date;
 }
 
 export interface TaskCategory {
 	id: number;
-	taskId: number;
+	idTask: number;
 	categoryId: number;
 	createdAt: Date;
 }
 
 export interface TaskProject {
 	id: number;
-	taskId: number;
-	projectId: number;
+	idTask: number;
+	idProject: number;
 	createdAt: Date;
 }

@@ -57,6 +57,8 @@ CREATE TABLE IF NOT EXISTS `task` (
     `description` VARCHAR(255) DEFAULT NULL,
     `created_at` DATETIME NOT NULL,
     `workspace_id` INT(11) NOT NULL,
+		`deadline` DATETIME DEFAULT NULL,
+		`completed` BOOLEAN NOT NULL DEFAULT FALSE,
     `visibility` ENUM ('public', 'private') NOT NULL DEFAULT 'private',
     PRIMARY KEY (`id`),
     KEY `workspace_id` (`workspace_id`),

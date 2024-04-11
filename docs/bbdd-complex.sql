@@ -58,6 +58,8 @@ CREATE TABLE IF NOT EXISTS `task` (
     `created_at` DATETIME NOT NULL,
     `workspace_id` INT(11) NOT NULL,
     `visibility` ENUM ('public', 'private') NOT NULL DEFAULT 'private',
+		`deadline` DATETIME DEFAULT NULL,
+		`completed` BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY (`id`),
     KEY `workspace_id` (`workspace_id`),
     CONSTRAINT `fk_task_workspace` FOREIGN KEY (`workspace_id`) REFERENCES `workspace` (`id`)
