@@ -8,14 +8,4 @@ import { Workspace } from '@types';
 export class WorkspaceItemComponent {
   @Input()
   userWorkspace!: Workspace;
-
-  @Output()
-  public onDeleteWorkspace = new EventEmitter<number>();
-
-  DeleteWorkspace(workspaceId: number): void {
-    if (!workspaceId) {
-      return;
-    }
-    this.onDeleteWorkspace.emit(workspaceId);
-  }
 }

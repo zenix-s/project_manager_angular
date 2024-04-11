@@ -1,0 +1,37 @@
+<div>
+  <nav>
+    <ul class="flex gap-2">
+      <li>
+        <button (click)="section = 'tasks'">
+          1 - tasks
+        </button>
+      </li>
+      <li>
+        <button (click)="section = 'teams'">
+          2 - teams/users
+        </button>
+      </li>
+      <li>
+        <button (click)="section = 'categories'">
+          3 - categories
+        </button>
+      </li>
+      <li>
+        <button (click)="section = 'options'">
+          4 - options
+        </button>
+      </li>
+    </ul>
+  </nav>
+  <div>
+    <app-list-tasks-page *ngIf="section === 'tasks'" [idWorkspace]="idWorkspace">
+    </app-list-tasks-page>
+
+    <div *ngIf="section === 'teams'">teams</div>
+    <div *ngIf="section === 'categories'">categories</div>
+
+    <!-- <app-workspace-options-page *ngIf="section === 'options'" [idWorkspace]="idWorkspace"> -->
+      <app-workspace-options-page *ngIf="section === 'options'" [idWorkspace]="idWorkspace">
+    </app-workspace-options-page>
+  </div>
+</div>

@@ -3,7 +3,6 @@
     <li *ngFor="let userWorkspace of userWorkspaces">
       <app-workspace-item
         [userWorkspace]="userWorkspace"
-        (onDeleteWorkspace)="DeleteWorkspace($event)"
       ></app-workspace-item>
     </li>
   </ul>

@@ -26,7 +26,4 @@ export class ListWorkspacePageComponent implements OnInit {
   //   return this.UserWorkspaceService.getUserWorkspaces();
   // }
 
-  deleteUserWorkspace(workspaceId: number):void {
-    this.workspaceService.deleteWorkspace(workspaceId);
-  }
 }
