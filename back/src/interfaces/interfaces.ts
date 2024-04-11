@@ -37,6 +37,7 @@ export interface Task {
 	description?: string;
 	completed: boolean;
 	deadline?: Date;
+	priority: 'none' |'low' | 'medium' | 'high' | 'urgent';
 	visibility: 'public' | 'private';
 }
 
