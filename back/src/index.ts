@@ -4,10 +4,12 @@ import { getWorkspaceTasksController } from "@/controller/workspace/task/control
 import {
   deleteUserWorkspacesController,
   getUserWorkspacesController,
-  postUserWorkspacesController,
   putUserWorkspacesController,
 } from "./controller/userWorkspaces/controllerUserWorkspaces";
-import { deleteWorkspaceController } from "./controller/workspace/controllerWorkspace";
+import {
+  deleteWorkspaceController,
+  postWorkspacesController,
+} from "./controller/workspace/controllerWorkspace";
 
 process.loadEnvFile();
 const app: Express = express();
@@ -20,11 +22,11 @@ app.use(bodyParser.json());
 // app.use("/userWorkspaces", UserWorkspacesRouter);
 app.get("/userWorkspaces", getUserWorkspacesController);
 app.delete("/userWorkspaces/:id", deleteUserWorkspacesController);
-app.post("/userWorkspaces/", postUserWorkspacesController);
 app.put("/userWorkspaces/:id", putUserWorkspacesController);
 
 // app.use("/workspace/:idWorkspace", WorkspaceRouter);
 app.delete("/workspace/:idWorkspace", deleteWorkspaceController);
 app.get("/workspace/:idWorkspace/task", getWorkspaceTasksController);
+app.post("/workspace", postWorkspacesController);
 
 app.listen(port, () => console.log("Server running on port " + port));

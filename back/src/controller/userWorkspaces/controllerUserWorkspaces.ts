@@ -1,6 +1,5 @@
 import express, { Express, Router, Request, Response } from "express";
 import getUserWorkspaces from "@/services/userWorkspaces/getUserWorkspaces";
-import newUserWorkspace from "@/services/userWorkspaces/newUserWorkspace";
 import { Workspace } from "@types";
 
 // /userWorkspaces
@@ -20,28 +19,7 @@ export function getUserWorkspacesController(req: Request, res: Response) {
  * POST: Crea un nuevo workspace
  *
  */
-export function postUserWorkspacesController(req: Request, res: Response) {
-  if (!req.body) {
-    res.status(400).send({
-      message: "Content can not be empty!",
-    });
-    return;
-  }
-  if (!req.body.name) {
-    res.status(400).send({
-      message: "Name can not be empty!",
-    });
-    return;
-  }
-  try {
-    const workspace: Workspace = req.body;
-    res.status(201).send(newUserWorkspace(workspace));
-  } catch (error) {
-    res.status(400).send({
-      message: "Content can not be empty!",
-    });
-  }
-}
+
 
 // Modificar un workspace
 // router.put("/:id", (req, res) => {
