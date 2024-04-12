@@ -20,6 +20,14 @@ export class TasksPageComponent implements OnInit {
   @Input()
   idWorkspace: number = 0;
 
+  DeleteTask(taskId: number) {
+    console.log('delete task ', taskId);
+  }
+
+  EditTask(taskId: number) {
+    console.log('edit task ', taskId);
+  }
+
   ngOnInit(): void {
     this.tasksService.getTasks(this.idWorkspace).subscribe((tasks) => {
       this.tasks = tasks;

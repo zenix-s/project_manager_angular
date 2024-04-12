@@ -1,3 +1,9 @@
-<div>
-  {{ task.id }} - {{ task.name }} - {{ task.deadline | date : 'yyyy-MM-dd' }} - {{ task.completed }}
+<div class="flex gap-2">
+  <div>
+    {{ task.id }} - {{ task.name }} - {{ task.deadline | date : 'yyyy-MM-dd' }} - {{ task.completed }}
+  </div>
+  <div class="gap-2 flex">
+    <button (click)="onEdit()">Edit</button>
+    <button (click)="onDelete()">Delete</button>
+  </div>
 </div>
