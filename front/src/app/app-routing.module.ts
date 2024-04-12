@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListWorkspacePageComponent } from '@features/list-workspaces/page/list-workspace-page/list-workspace-page.component';
 import { CEWorkspacePageComponent } from '@features/ce-workspaces/page/new-workspace-page/ce-workspace-page.component';
-import { ListTasksPageComponent } from '@features/workspace/tasks/pages/list-tasks-page/list-tasks-page.component';
 import { WorkspacePageComponent } from './features/workspace/workspace-page/workspace-page.component';
 
 
@@ -32,7 +31,7 @@ const routes: Routes = [
   },
   // {
   //   path: 'workspace/:idWorkspace',
-  //   component: ListTasksPageComponent,
+  //   component: TasksPageComponent,
   // },
   {
     path: 'workspace/:idWorkspace',

@@ -5,10 +5,10 @@ import { map, switchMap } from 'rxjs';
 import { Task } from '@types';
 
 @Component({
-  selector: 'app-list-tasks-page',
-  templateUrl: './list-tasks-page.component.html',
+  selector: 'app-tasks-page',
+  templateUrl: './tasks-page.component.html',
 })
-export class ListTasksPageComponent implements OnInit {
+export class TasksPageComponent implements OnInit {
   constructor(
     private tasksService: TasksService,
     private ActivatedRoute: ActivatedRoute,

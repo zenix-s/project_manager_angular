@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ListTasksPageComponent } from './pages/list-tasks-page/list-tasks-page.component';
+import { TasksPageComponent } from './pages/list-tasks-page/tasks-page.component';
 import { ListTasksComponent } from './components/list-tasks/list-tasks.component';
 import { TasksItemComponent } from './components/tasks-item/tasks-item.component';
 
 
 @NgModule({
   declarations: [
-    ListTasksPageComponent,
+    TasksPageComponent,
     ListTasksComponent,
     TasksItemComponent
   ],
@@ -15,7 +15,7 @@ import { TasksItemComponent } from './components/tasks-item/tasks-item.component
     CommonModule,
   ],
   exports: [
-    ListTasksPageComponent
+    TasksPageComponent
   ]
 })
 export class TasksModule { }

@@ -24,8 +24,8 @@
     </ul>
   </nav>
   <div>
-    <app-list-tasks-page *ngIf="section === 'tasks'" [idWorkspace]="idWorkspace">
-    </app-list-tasks-page>
+    <app-tasks-page *ngIf="section === 'tasks'" [idWorkspace]="idWorkspace">
+    </app-tasks-page>
 
     <div *ngIf="section === 'teams'">teams</div>
     <div *ngIf="section === 'categories'">categories</div>
