@@ -1,5 +1,5 @@
 <ul>
   <li *ngFor="let task of tasks">
-    {{task.id}} - {{ task.name}} - {{task.deadline | date: 'yyyy-MM-dd'}} - {{task.completed}}
+    <app-tasks-item [task]="task"></app-tasks-item>
   </li>
 </ul>
