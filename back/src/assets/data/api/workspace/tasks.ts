@@ -219,5 +219,16 @@ export const tasks: Task[] = [
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
 		priority: 0
+	},
+	{
+		id: 21,
+		name: "Task 21",
+		idWorkspace: 3,
+		description: "Description 21",
+		createdAt: new Date("2021-12-31"),
+		completed: false,
+		visibility: "public",
+		deadline: new Date("2021-12-31"),
+		priority: 0
 	}
 ];
