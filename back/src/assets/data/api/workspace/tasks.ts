@@ -9,6 +9,7 @@ export const tasks: Task[] = [
     completed: false,
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
+		priority: 0
   },
 	{
 		id: 2,
@@ -19,6 +20,7 @@ export const tasks: Task[] = [
 		completed: false,
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
+		priority: 0
 	},
 	{
 		id: 3,
@@ -29,6 +31,7 @@ export const tasks: Task[] = [
 		completed: false,
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
+		priority: 0
 	},
 	{
 		id: 4,
@@ -39,6 +42,7 @@ export const tasks: Task[] = [
 		completed: false,
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
+		priority: 0
 	},
 	{
 		id: 5,
@@ -49,6 +53,7 @@ export const tasks: Task[] = [
 		completed: false,
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
+		priority: 0
 	},
 	{
 		id: 6,
@@ -59,6 +64,7 @@ export const tasks: Task[] = [
 		completed: false,
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
+		priority: 0
 	},
 	{
 		id: 7,
@@ -69,6 +75,7 @@ export const tasks: Task[] = [
 		completed: false,
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
+		priority: 0
 	},
 	{
 		id: 8,
@@ -79,6 +86,7 @@ export const tasks: Task[] = [
 		completed: false,
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
+		priority: 0
 	},
 	{
 		id: 9,
@@ -89,6 +97,7 @@ export const tasks: Task[] = [
 		completed: false,
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
+		priority: 0
 	},
 	{
 		id: 10,
@@ -99,6 +108,7 @@ export const tasks: Task[] = [
 		completed: false,
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
+		priority: 0
 	},
 	{
 		id: 11,
@@ -109,6 +119,7 @@ export const tasks: Task[] = [
 		completed: false,
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
+		priority: 0
 	},
 	{
 		id: 12,
@@ -119,6 +130,7 @@ export const tasks: Task[] = [
 		completed: false,
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
+		priority: 0
 	},
 	{
 		id: 13,
@@ -129,6 +141,7 @@ export const tasks: Task[] = [
 		completed: false,
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
+		priority: 0
 	},
 	{
 		id: 14,
@@ -139,6 +152,7 @@ export const tasks: Task[] = [
 		completed: false,
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
+		priority: 0
 	},
 	{
 		id: 15,
@@ -149,6 +163,7 @@ export const tasks: Task[] = [
 		completed: false,
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
+		priority: 0
 	},
 	{
 		id: 16,
@@ -159,6 +174,7 @@ export const tasks: Task[] = [
 		completed: false,
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
+		priority: 0
 	},
 	{
 		id: 17,
@@ -169,6 +185,7 @@ export const tasks: Task[] = [
 		completed: false,
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
+		priority: 0
 	},
 	{
 		id: 18,
@@ -179,6 +196,7 @@ export const tasks: Task[] = [
 		completed: false,
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
+		priority: 0
 	},
 	{
 		id: 19,
@@ -189,5 +207,17 @@ export const tasks: Task[] = [
 		completed: false,
 		visibility: "public",
 		deadline: new Date("2021-12-31"),
+		priority: 0
+	},
+	{
+		id: 20,
+		name: "Task 20",
+		idWorkspace: 5,
+		description: "Description 20",
+		createdAt: new Date("2021-12-31"),
+		completed: false,
+		visibility: "public",
+		deadline: new Date("2021-12-31"),
+		priority: 0
 	}
 ];
