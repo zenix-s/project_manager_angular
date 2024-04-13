@@ -1,0 +1,12 @@
+<button (click)="openDialog(dialog)">Abrir dialog</button>
+<dialog #dialog class="w-min border border-black backdrop:bg-transparent overflow-visible">
+  <span class="absolute  bg-white px-2 text-sm z-10 left-0 -top-2 ">Form</span>
+  <div class="p-4 w-72">
+    <button (click)="dialog.close()">Cerrar</button>
+    <form class="flex flex-col">
+      <input type="text" placeholder="Nombre de la tarea" />
+      <input type="text" placeholder="Descripción de la tarea" />
+      <button type="submit">Guardar</button>
+    </form>
+  </div>
+</dialog>
