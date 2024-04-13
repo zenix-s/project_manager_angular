@@ -1,10 +1,5 @@
 <div>
-  header tasks section
+  <app-task-form></app-task-form>
 </div>
-<app-list-tasks
-  [tasks]="tasks"
-  (onDeleteTask)="DeleteTask($event)"
-  (onEditTask)="EditTask($event)"
->
+<app-list-tasks [tasks]="tasks" (onDeleteTask)="DeleteTask($event)" (onEditTask)="EditTask($event)">
 </app-list-tasks>
-<app-task-form></app-task-form>

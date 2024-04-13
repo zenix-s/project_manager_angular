@@ -1,11 +1,13 @@
-<button (click)="openDialog(dialog)">Abrir dialog</button>
+<button (click)="openDialog(dialog)">
+  <span class="text-sm">Nueva tarea</span>
+</button>
 <dialog #dialog class="w-min border border-black backdrop:bg-transparent overflow-visible">
   <span class="absolute  bg-white px-2 text-sm z-10 left-0 -top-2 ">Form</span>
   <div class="p-4 w-72">
     <button (click)="dialog.close()">Cerrar</button>
-    <form class="flex flex-col">
-      <input type="text" placeholder="Nombre de la tarea" />
-      <input type="text" placeholder="Descripción de la tarea" />
+    <form class="flex flex-col gap-2" [formGroup]="taskForm" (ngSubmit)="onSubmit(dialog)">
+      <input type="text" placeholder="Nombre de la tarea" formControlName="name" />
+      <input type="text" placeholder="Descripción de la tarea" formControlName="description" />
       <button type="submit">Guardar</button>
     </form>
   </div>

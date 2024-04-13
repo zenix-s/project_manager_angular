@@ -31,15 +31,14 @@ export interface UserWorkspace {
 
 export interface Task {
   id: number;
-  createdAt: Date;
-  idWorkspace: number;
   name: string;
   description?: string;
   completed: boolean;
+  createdAt: Date;
   deadline?: Date;
-  // priority: 'none' |'low' | 'medium' | 'high' | 'urgent';
   priority: 0 | 1 | 2 | 3 | 4;
   visibility: 'public' | 'private';
+  idWorkspace: number;
 }
 
 export interface Category {
