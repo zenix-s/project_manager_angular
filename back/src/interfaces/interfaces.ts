@@ -40,6 +40,7 @@ export interface Task {
   // priority: 'none' |'low' | 'medium' | 'high' | 'urgent';
   priority: 0 | 1 | 2 | 3 | 4;
   visibility: "public" | "private";
+	idProject?: number;
 }
 
 export interface Category {
@@ -113,9 +114,19 @@ export interface TaskCategory {
   createdAt: Date;
 }
 
-export interface TaskProject {
-  id: number;
-  idTask: number;
-  idProject: number;
-  createdAt: Date;
+
+export interface TaskData {
+	id: number;
+	createdAt: Date;
+	idWorkspace: number;
+	name: string;
+	description?: string;
+	completed: boolean;
+	deadline?: Date;
+	priority: 0 | 1 | 2 | 3 | 4;
+	visibility: "public" | "private";
+	idProject?: number;
+	categories: Category[];
+	teams: Team[];
+	users: User[];
 }

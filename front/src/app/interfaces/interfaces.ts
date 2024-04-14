@@ -25,20 +25,22 @@ export interface UserWorkspace {
   id: number;
   idUser: number;
   idWorkspace: number;
-  role: 'admin' | 'member' | 'guest';
+  role: "admin" | "member" | "guest";
   createdAt: Date;
 }
 
 export interface Task {
   id: number;
+  createdAt: Date;
+  idWorkspace: number;
   name: string;
   description?: string;
   completed: boolean;
-  createdAt: Date;
   deadline?: Date;
+  // priority: 'none' |'low' | 'medium' | 'high' | 'urgent';
   priority: 0 | 1 | 2 | 3 | 4;
-  visibility: 'public' | 'private';
-  idWorkspace: number;
+  visibility: "public" | "private";
+	idProject?: number;
 }
 
 export interface Category {
@@ -69,7 +71,7 @@ export interface UserTeam {
   id: number;
   idUser: number;
   idTeam: number;
-  role: 'admin' | 'member' | 'guest';
+  role: "admin" | "member" | "guest";
   createdAt: Date;
 }
 
@@ -77,7 +79,7 @@ export interface UserProject {
   id: number;
   idUser: number;
   idProject: number;
-  role: 'admin' | 'member' | 'guest';
+  role: "admin" | "member" | "guest";
   createdAt: Date;
 }
 
@@ -85,7 +87,7 @@ export interface UserTask {
   id: number;
   idUser: number;
   idTask: number;
-  role: 'admin' | 'member' | 'guest';
+  role: "admin" | "member" | "guest";
   createdAt: Date;
 }
 
@@ -93,7 +95,7 @@ export interface TeamTask {
   id: number;
   idTeam: number;
   idTask: number;
-  role: 'admin' | 'member' | 'guest';
+  role: "admin" | "member" | "guest";
   createdAt: Date;
 }
 
@@ -101,7 +103,7 @@ export interface TeamProject {
   id: number;
   idTeam: number;
   idProject: number;
-  role: 'admin' | 'member' | 'guest';
+  role: "admin" | "member" | "guest";
   createdAt: Date;
 }
 
@@ -112,9 +114,19 @@ export interface TaskCategory {
   createdAt: Date;
 }
 
-export interface TaskProject {
-  id: number;
-  idTask: number;
-  idProject: number;
-  createdAt: Date;
+
+export interface TaskData {
+	id: number;
+	createdAt: Date;
+	idWorkspace: number;
+	name: string;
+	description?: string;
+	completed: boolean;
+	deadline?: Date;
+	priority: 0 | 1 | 2 | 3 | 4;
+	visibility: "public" | "private";
+	idProject?: number;
+	categories: Category[];
+	teams: Team[];
+	users: User[];
 }

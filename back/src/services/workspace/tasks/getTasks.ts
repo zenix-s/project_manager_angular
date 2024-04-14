@@ -1,7 +1,21 @@
 import { tasks as data } from "@/assets/data/api/tasks";
-import { Task } from "@/interfaces/interfaces";
-export function getTasks(workspaceId: number): Task[] {
+import { Task, TaskData, Team, User, Category } from "@types";
+
+export function getTasks(workspaceId: number): TaskData[] {
   const tasks: Task[] = data.filter((task) => task.idWorkspace === workspaceId);
 
-  return tasks;
+  const tasksData: TaskData[] = tasks.map((task) => {
+    const categories: Category[] = [];
+    const teams: Team[] = [];
+    const users: User[] = [];
+
+    return {
+      ...task,
+      categories,
+      teams,
+      users,
+    };
+  });
+
+  return tasksData;
 }

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TasksService } from '@app/service/workspace-tasks.service';
 import { ActivatedRoute } from '@angular/router';
-import { Task } from '@types';
+import { Task, TaskData } from '@types';
 
 @Component({
   selector: 'app-list-tasks',
@@ -9,7 +9,7 @@ import { Task } from '@types';
 })
 export class ListTasksComponent{
   @Input()
-  tasks: Task[] = [];
+  tasks: TaskData[] = [];
 
   @Output()
   onDeleteTask = new EventEmitter<number>();

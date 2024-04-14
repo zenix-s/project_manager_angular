@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Task } from '@app/interfaces/interfaces';
+import { Task, TaskData } from '@app/interfaces/interfaces';
 
 @Component({
   selector: 'app-tasks-item',
@@ -8,7 +8,7 @@ import { Task } from '@app/interfaces/interfaces';
 })
 export class TasksItemComponent {
   @Input()
-  task!: Task;
+  task!: TaskData;
 
   @Output()
   onDeleteTask = new EventEmitter<number>();

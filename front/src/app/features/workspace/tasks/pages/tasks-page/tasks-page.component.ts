@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { TasksService } from '@service/workspace-tasks.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, switchMap } from 'rxjs';
-import { Task } from '@types';
+import { Task, TaskData } from '@types';
 
 @Component({
   selector: 'app-tasks-page',
@@ -15,7 +15,7 @@ export class TasksPageComponent implements OnInit {
     private router: Router
   ) {}
 
-  tasks: Task[] = [];
+  tasks: TaskData[] = [];
 
   @Input()
   idWorkspace: number = 0;
@@ -30,7 +30,7 @@ export class TasksPageComponent implements OnInit {
   CreateTask(task: Task) {
     this.tasksService.addTask(this.idWorkspace, task).subscribe((task) => {
       console.log(task);
-      this.tasks.push(task);
+      // this.tasks.push(task);
     });
   }
 
@@ -40,6 +40,7 @@ export class TasksPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.tasksService.getTasks(this.idWorkspace).subscribe((tasks) => {
+      console.log(tasks);
       this.tasks = tasks;
     });
   }

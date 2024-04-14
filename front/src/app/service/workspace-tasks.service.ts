@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Task } from '@types';
+import { Task, TaskData } from '@types';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { port, backendUrl } from '@env';
@@ -10,9 +10,9 @@ import { port, backendUrl } from '@env';
 export class TasksService {
   constructor(private http: HttpClient) {}
 
-  getTasks(idWorkspace: number): Observable<Task[]> {
+  getTasks(idWorkspace: number): Observable<TaskData[]> {
     idWorkspace = parseInt(idWorkspace.toString());
-    return this.http.get<Task[]>(
+    return this.http.get<TaskData[]>(
       `${backendUrl}:${port}/workspace/${idWorkspace}/task`
     );
   }
