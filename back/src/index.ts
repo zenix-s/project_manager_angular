@@ -1,6 +1,9 @@
 import express, { Express } from "express";
 import bodyParser from "body-parser";
-import { getWorkspaceTasksController } from "@/controller/workspace/task/controllerTasks";
+import {
+  getWorkspaceTasksController,
+  deleteTaskController,
+} from "@/controller/workspace/task/controllerTasks";
 import {
   deleteUserWorkspacesController,
   getUserWorkspacesController,
@@ -28,5 +31,7 @@ app.put("/userWorkspaces/:id", putUserWorkspacesController);
 app.delete("/workspace/:idWorkspace", deleteWorkspaceController);
 app.get("/workspace/:idWorkspace/task", getWorkspaceTasksController);
 app.post("/workspace", postWorkspacesController);
+
+app.delete("/task/:idTask", deleteTaskController);
 
 app.listen(port, () => console.log("Server running on port " + port));
