@@ -21,7 +21,14 @@ export class TasksPageComponent implements OnInit {
   idWorkspace: number = 0;
 
   DeleteTask(taskId: number) {
-    console.log('delete task ', taskId);
+    this.tasksService.deleteTask(taskId).subscribe((data) => {
+      console.log(data);
+      this.tasks = this.tasks.filter((task) => task.id !== taskId);
+    });
+  }
+
+  CreateTask() {
+    console.log('create task');
   }
 
   EditTask(taskId: number) {

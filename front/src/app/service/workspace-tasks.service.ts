@@ -25,7 +25,7 @@ export class TasksService {
   //   this.tasks.push(newTask);
   // }
 
-  // deleteTask(taskId: number) {
-  //   this.tasks = this.tasks.filter((task) => task.id !== taskId);
-  // }
+  deleteTask(taskId: number) {
+    return this.http.delete(`${backendUrl}:${port}/task/${taskId}`);
+  }
 }
