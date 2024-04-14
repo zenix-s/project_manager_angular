@@ -1,5 +1,5 @@
 import { Workspace } from "@types";
-import { userWorkspaces } from "@/assets/data/api/userWorkspaces/userWorkspaces";
+import { userWorkspaces } from "@/assets/data/api/workspaces";
 
 
 
