@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { getTasks } from "@/services/workspace/tasks/getTasks";
 import { getTaskById } from "@/services/workspace/tasks/getTaskById";
+import { addTask } from "@/services/workspace/tasks/addTask";
 
 // /workspace/:idWorkspace/task
 export function getWorkspaceTasksController(req: Request, res: Response) {
@@ -21,4 +22,15 @@ export function deleteTaskController(req: Request, res: Response) {
 		message: "Task deleted",
 		task,
 	})
+}
+
+// /workspace/:idWorkspace/task
+export function postTaskController(req: Request, res: Response) {
+	const workspaceId = parseInt(req.params.idWorkspace);
+	const task = req.body;
+	task.idWorkspace = workspaceId;
+	task.id = 1;
+
+	const newTask = addTask(task);
+	res.json(newTask);
 }

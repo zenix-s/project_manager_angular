@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import {
   getWorkspaceTasksController,
   deleteTaskController,
+	postTaskController
 } from "@/controller/workspace/task/controllerTasks";
 import {
   deleteUserWorkspacesController,
@@ -30,6 +31,7 @@ app.put("/userWorkspaces/:id", putUserWorkspacesController);
 // app.use("/workspace/:idWorkspace", WorkspaceRouter);
 app.delete("/workspace/:idWorkspace", deleteWorkspaceController);
 app.get("/workspace/:idWorkspace/task", getWorkspaceTasksController);
+app.post("/workspace/:idWorkspace/task", postTaskController);
 app.post("/workspace", postWorkspacesController);
 
 app.delete("/task/:idTask", deleteTaskController);
