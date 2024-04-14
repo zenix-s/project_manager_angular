@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Task } from '@types';
 
 @Component({
   selector: 'app-task-form',
@@ -16,6 +17,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class TaskFormComponent {
   constructor(private fb: FormBuilder) {}
 
+  @Output()
+  onSubmitTask = new EventEmitter<Task>();
+
   taskForm: FormGroup = this.fb.group({
     name: [
       '',
@@ -28,7 +32,7 @@ export class TaskFormComponent {
   });
 
   onSubmit(dialog: HTMLDialogElement) {
-    console.log(this.taskForm.value);
+    this.onSubmitTask.emit(this.taskForm.value);
     this.closeDialog(dialog);
   }
 

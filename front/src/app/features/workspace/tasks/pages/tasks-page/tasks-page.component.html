@@ -1,5 +1,7 @@
 <div>
-  <app-task-form></app-task-form>
+  <app-task-form
+    (onSubmitTask)="CreateTask($event)"
+  ></app-task-form>
 </div>
 <app-list-tasks [tasks]="tasks" (onDeleteTask)="DeleteTask($event)" (onEditTask)="EditTask($event)">
 </app-list-tasks>

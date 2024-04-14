@@ -27,8 +27,11 @@ export class TasksPageComponent implements OnInit {
     });
   }
 
-  CreateTask() {
-    console.log('create task');
+  CreateTask(task: Task) {
+    this.tasksService.addTask(this.idWorkspace, task).subscribe((task) => {
+      console.log(task);
+      this.tasks.push(task);
+    });
   }
 
   EditTask(taskId: number) {

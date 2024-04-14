@@ -10,20 +10,19 @@ import { port, backendUrl } from '@env';
 export class TasksService {
   constructor(private http: HttpClient) {}
 
-
-
-
-
   getTasks(idWorkspace: number): Observable<Task[]> {
     idWorkspace = parseInt(idWorkspace.toString());
-    return this.http.get<Task[]>(`${backendUrl}:${port}/workspace/${idWorkspace}/task`);
+    return this.http.get<Task[]>(
+      `${backendUrl}:${port}/workspace/${idWorkspace}/task`
+    );
   }
 
-  // addTask(task: Task) {
-  //   const newTask = { ...task };
-  //   newTask.id = this.nextId++;
-  //   this.tasks.push(newTask);
-  // }
+  addTask(idWorkspace: number, task: Task) {
+    return this.http.post<Task>(
+      `${backendUrl}:${port}/workspace/${idWorkspace}/task`,
+      task
+    );
+  }
 
   deleteTask(taskId: number) {
     return this.http.delete(`${backendUrl}:${port}/task/${taskId}`);
