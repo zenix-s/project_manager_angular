@@ -1,5 +1,5 @@
 import { Workspace } from "@types";
-import { userWorkspaces as data } from "@/assets/data/api/workspaces";
+import { workspaces as data } from "@/assets/data/api/data";
 
 function newUserWorkspace(workspace: Workspace): Workspace {
   workspace.id = 6;

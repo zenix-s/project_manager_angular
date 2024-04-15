@@ -40,7 +40,6 @@ export interface Task {
   // priority: 'none' |'low' | 'medium' | 'high' | 'urgent';
   priority: 0 | 1 | 2 | 3 | 4;
   visibility: "public" | "private";
-	idProject?: number;
 }
 
 export interface Category {
@@ -59,13 +58,7 @@ export interface Team {
   idWorkspace: number;
 }
 
-export interface Project {
-  id: number;
-  name: string;
-  description?: string;
-  createdAt: Date;
-  idWorkspace: number;
-}
+
 
 export interface UserTeam {
   id: number;
@@ -75,13 +68,7 @@ export interface UserTeam {
   createdAt: Date;
 }
 
-export interface UserProject {
-  id: number;
-  idUser: number;
-  idProject: number;
-  role: "admin" | "member" | "guest";
-  createdAt: Date;
-}
+
 
 export interface UserTask {
   id: number;
@@ -99,21 +86,37 @@ export interface TeamTask {
   createdAt: Date;
 }
 
-export interface TeamProject {
-  id: number;
-  idTeam: number;
-  idProject: number;
-  role: "admin" | "member" | "guest";
-  createdAt: Date;
-}
 
 export interface TaskCategory {
-  id: number;
+	id: number;
   idTask: number;
   categoryId: number;
   createdAt: Date;
 }
 
+export interface Project {
+  id: number;
+  name: string;
+  description?: string;
+  createdAt: Date;
+  idWorkspace: number;
+}
+
+export interface UserProject {
+  id: number;
+  idUser: number;
+  idProject: number;
+  role: "admin" | "member" | "guest";
+  createdAt: Date;
+}
+
+export interface TeamProject {
+	id: number;
+	idTeam: number;
+	idProject: number;
+	role: "admin" | "member" | "guest";
+	createdAt: Date;
+}
 
 export interface TaskData {
 	id: number;

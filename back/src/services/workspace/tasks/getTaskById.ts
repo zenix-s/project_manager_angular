@@ -1,5 +1,5 @@
 import { Task } from "@types";
-import { tasks as data } from "@/assets/data/api/tasks";
+import { tasks as data } from "@/assets/data/api/data";
 export function getTaskById(taskId: number): Task | undefined {
   if (taskId === undefined) {
     return undefined;

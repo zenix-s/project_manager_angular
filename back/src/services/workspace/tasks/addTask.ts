@@ -1,6 +1,6 @@
 import { Task } from "@types";
 
-import { tasks as data } from "@/assets/data/api/tasks";
+import { tasks as data } from "@/assets/data/api/data";
 
 export function addTask(task: Task): Task {
 	console.log("addTask", task);

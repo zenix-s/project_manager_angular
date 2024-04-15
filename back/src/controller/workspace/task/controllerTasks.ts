@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { getTasks } from "@/services/workspace/tasks/getTasks";
 import { getTaskById } from "@/services/workspace/tasks/getTaskById";
+import deleteTaskById from "@/services/workspace/tasks/deleteTaskById";
 import { addTask } from "@/services/workspace/tasks/addTask";
 import { Task } from "@types";
 
@@ -19,6 +20,7 @@ export function deleteTaskController(req: Request, res: Response) {
 		res.status(404).send("Task not found");
 		return;
 	}
+	deleteTaskById(taskId);
 	res.json({
 		message: "Task deleted",
 		task,

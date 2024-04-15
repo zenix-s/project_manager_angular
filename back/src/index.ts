@@ -14,6 +14,7 @@ import {
   deleteWorkspaceController,
   postWorkspacesController,
 } from "./controller/workspace/controllerWorkspace";
+import { getWorkspaceCategoryController } from "./controller/workspace/category/controllerCategory";
 
 process.loadEnvFile();
 const app: Express = express();
@@ -28,12 +29,17 @@ app.get("/userWorkspaces", getUserWorkspacesController);
 app.delete("/userWorkspaces/:id", deleteUserWorkspacesController);
 app.put("/userWorkspaces/:id", putUserWorkspacesController);
 
-// app.use("/workspace/:idWorkspace", WorkspaceRouter);
+// workspace
 app.delete("/workspace/:idWorkspace", deleteWorkspaceController);
+app.post("/workspace", postWorkspacesController);
+// workspace/task
 app.get("/workspace/:idWorkspace/task", getWorkspaceTasksController);
 app.post("/workspace/:idWorkspace/task", postTaskController);
-app.post("/workspace", postWorkspacesController);
 
+// workspace/category
+app.get("/workspace/:idWorkspace/category", getWorkspaceCategoryController);
+
+// task
 app.delete("/task/:idTask", deleteTaskController);
 
 app.listen(port, () => console.log("Server running on port " + port));

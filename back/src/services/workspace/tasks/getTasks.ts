@@ -1,4 +1,4 @@
-import { tasks as data } from "@/assets/data/api/tasks";
+import { tasks as data } from "@/assets/data/api/data";
 import { Task, TaskData, Team, User, Category } from "@types";
 
 export function getTasks(workspaceId: number): TaskData[] {
