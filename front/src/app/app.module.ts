@@ -9,6 +9,7 @@ import { CeWorkspacesModule } from '@features/ce-workspaces/ce-workspaces.module
 import { WorkspaceModule } from '@features/workspace/workspace.module';
 import { ShareModule } from './share/share.module';
 import { HttpClientModule } from '@angular/common/http';
+import { TestsModule } from './features/tests/tests.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
     WorkspaceModule,
     ShareModule,
     ReactiveFormsModule,
+    TestsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListWorkspacePageComponent } from '@features/list-workspaces/page/list-workspace-page/list-workspace-page.component';
 import { CEWorkspacePageComponent } from '@features/ce-workspaces/page/new-workspace-page/ce-workspace-page.component';
 import { WorkspacePageComponent } from './features/workspace/workspace-page/workspace-page.component';
+import { PageTestComponent } from './features/tests/page-test/page-test.component';
 
 
 
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     path: 'workspace/:idWorkspace',
     component: WorkspacePageComponent,
+  },
+  {
+    path: 'test',
+    component: PageTestComponent,
   },
   // {
   //   path: 'workspace/:idWorkspace/teams',
