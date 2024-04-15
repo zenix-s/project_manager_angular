@@ -25,7 +25,7 @@ export interface UserWorkspace {
   id: number;
   idUser: number;
   idWorkspace: number;
-  role: "admin" | "member" | "guest";
+  role: "ADMIN" | "MEMBER" | "GUEST";
   createdAt: Date;
 }
 
@@ -37,9 +37,9 @@ export interface Task {
   description?: string;
   completed: boolean;
   deadline?: Date;
-  // priority: 'none' |'low' | 'medium' | 'high' | 'urgent';
-  priority: 0 | 1 | 2 | 3 | 4;
-  visibility: "public" | "private";
+  priority: 'NONE' |'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+  // priority: 0 | 1 | 2 | 3 | 4;
+  visibility: "PUBLIC" | "PRIVATE";
 }
 
 export interface Category {
@@ -64,7 +64,7 @@ export interface UserTeam {
   id: number;
   idUser: number;
   idTeam: number;
-  role: "admin" | "member" | "guest";
+  role: "ADMIN" | "MEMBER" | "GUEST";
   createdAt: Date;
 }
 
@@ -74,7 +74,7 @@ export interface UserTask {
   id: number;
   idUser: number;
   idTask: number;
-  role: "admin" | "member" | "guest";
+  role: "ADMIN" | "MEMBER" | "GUEST";
   createdAt: Date;
 }
 
@@ -82,7 +82,7 @@ export interface TeamTask {
   id: number;
   idTeam: number;
   idTask: number;
-  role: "admin" | "member" | "guest";
+  role: "ADMIN" | "MEMBER" | "GUEST";
   createdAt: Date;
 }
 
@@ -106,7 +106,7 @@ export interface UserProject {
   id: number;
   idUser: number;
   idProject: number;
-  role: "admin" | "member" | "guest";
+  role: "ADMIN" | "MEMBER" | "GUEST";
   createdAt: Date;
 }
 
@@ -114,7 +114,7 @@ export interface TeamProject {
 	id: number;
 	idTeam: number;
 	idProject: number;
-	role: "admin" | "member" | "guest";
+	role: "ADMIN" | "MEMBER" | "GUEST";
 	createdAt: Date;
 }
 
@@ -126,10 +126,12 @@ export interface TaskData {
 	description?: string;
 	completed: boolean;
 	deadline?: Date;
-	priority: 0 | 1 | 2 | 3 | 4;
-	visibility: "public" | "private";
+	priority: 'NONE' |'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+	visibility: "PUBLIC" | "PRIVATE";
 	idProject?: number;
-	categories: Category[];
-	teams: Team[];
-	users: User[];
+	taskCategory: Array<{
+		category: Category;
+	}>;
+	// teams: Team[];
+	// users: User[];
 }

@@ -1,13 +1,33 @@
 import { Task } from "@types";
 
-import { tasks as data } from "@/assets/data/api/data";
-
-export function addTask(task: Task): Task {
-	console.log("addTask", task);
-
-	task.id = data.length + 1;
-
-	data.push(task);
-
-	return task;
+import prisma from "@/lib/prismadb";
+export async function addTask(task: Task): Promise<Task> {
+	const {
+		idWorkspace,
+		name,
+		description,
+		deadline,
+		priority,
+		visibility
+	} = task;
+		
+	
+	try {
+		const newTask = await prisma.task.create({
+			data: {
+				idWorkspace,
+				name,
+				description,
+				deadline,
+				priority,
+				visibility,
+				completed: false,
+				createdAt: new Date()
+			}
+		});
+		return newTask as Task;
+	} catch (error) {
+		console.error(error);
+		return {} as Task;
+	}
 }

@@ -1,21 +1,36 @@
-import { tasks as data } from "@/assets/data/api/data";
 import { Task, TaskData, Team, User, Category } from "@types";
+import prisma from "@/lib/prismadb";
 
-export function getTasks(workspaceId: number): TaskData[] {
-  const tasks: Task[] = data.filter((task) => task.idWorkspace === workspaceId);
+export async function getTasks(workspaceId: number): Promise<TaskData[]> {
+  //   const workspaceId = 1;
 
-  const tasksData: TaskData[] = tasks.map((task) => {
-    const categories: Category[] = [];
-    const teams: Team[] = [];
-    const users: User[] = [];
-
-    return {
-      ...task,
-      categories,
-      teams,
-      users,
-    };
-  });
-
-  return tasksData;
+  try {
+    const tasks = await prisma.task.findMany({
+      where: {
+        idWorkspace: workspaceId,
+      },
+      include: {
+        // Select the category directly instead of including taskCategory
+        taskCategory: {
+          select: {
+            category: true,
+          },
+        },
+        // teamTask: {
+        //   : {
+        //     team: true,
+        //   },
+        // },
+        // userTask: {
+        //   include: {
+        //     user: true,
+        //   },
+        // },
+      },
+    });
+    return tasks as TaskData[];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 }

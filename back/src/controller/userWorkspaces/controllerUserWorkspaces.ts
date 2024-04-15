@@ -8,10 +8,15 @@ import { Workspace } from "@types";
  * /userWorkspaces
  * GET: Devuelve todos los workspaces del usuario
  */
-export function getUserWorkspacesController(req: Request, res: Response) {
+export async function getUserWorkspacesController(req: Request, res: Response) {
   const userId = 1;
-  const userWorkspaces = getUserWorkspaces(userId);
-  res.send(userWorkspaces);
+  try {
+    const userWorkspaces = await getUserWorkspaces(userId);
+    res.json(userWorkspaces); // Envía la respuesta JSON al cliente
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error interno del servidor"); // Maneja el error
+  }
 }
 
 /**
@@ -19,7 +24,6 @@ export function getUserWorkspacesController(req: Request, res: Response) {
  * POST: Crea un nuevo workspace
  *
  */
-
 
 // Modificar un workspace
 // router.put("/:id", (req, res) => {

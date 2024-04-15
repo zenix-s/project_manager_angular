@@ -1,19 +1,23 @@
 import { Workspace } from "@types";
-import {
-  workspaces as workspacesData,
-  userWorkspaces,
-} from "@/assets/data/api/data";
+import prisma from "@/lib/prismadb";
 
-function getUserWorkspaces(userId: number): Workspace[] {
-  const userWorkspaceIds = userWorkspaces
-    .filter((userWorkspace) => userWorkspace.idUser === userId)
-    .map((userWorkspace) => userWorkspace.idWorkspace);
+async function getUserWorkspaces(userId: number): Promise<Workspace[]> {
 
-  const workspaces: Workspace[] = workspacesData.filter((workspace) =>
-    userWorkspaceIds.includes(workspace.id)
-  );
-	console.log(workspaces);
-  return workspaces;
+	try {
+		const workspaces = await prisma.workspace.findMany({
+			where: {
+				userWorkspace:{
+					some:{
+						idUser: userId
+					}
+				}
+			},
+		});
+		return workspaces as Workspace[];
+	} catch (error) {
+		console.error(error);
+		return [];
+	}
 }
 
 export default getUserWorkspaces;

@@ -1,9 +1,9 @@
-import express, { Express } from "express";
+import express, { Request, Response, Express } from "express";
 import bodyParser from "body-parser";
 import {
   getWorkspaceTasksController,
   deleteTaskController,
-	postTaskController
+  postTaskController,
 } from "@/controller/workspace/task/controllerTasks";
 import {
   deleteUserWorkspacesController,
@@ -15,6 +15,12 @@ import {
   postWorkspacesController,
 } from "./controller/workspace/controllerWorkspace";
 import { getWorkspaceCategoryController } from "./controller/workspace/category/controllerCategory";
+
+import { PrismaClient } from "@prisma/client";
+import { Category, TaskData } from "./interfaces/interfaces";
+import { categories } from "./assets/data/api/data";
+
+const prisma = new PrismaClient();
 
 process.loadEnvFile();
 const app: Express = express();
@@ -41,5 +47,39 @@ app.get("/workspace/:idWorkspace/category", getWorkspaceCategoryController);
 
 // task
 app.delete("/task/:idTask", deleteTaskController);
+
+// app.get("/", async (req: Request, res: Response) => {
+//   const workspaceId = 1;
+
+//   try {
+//     const tasks = await prisma.task.findMany({
+//       where: {
+//         idWorkspace: workspaceId,
+//       },
+//       include: {
+//         // Select the category directly instead of including taskCategory
+//         taskCategory: {
+//           select: {
+//             category: true,
+//           },
+//         },
+//         // teamTask: {
+//         //   : {
+//         //     team: true,
+//         //   },
+//         // },
+//         // userTask: {
+//         //   include: {
+//         //     user: true,
+//         //   },
+//         // },
+//       },
+//     });
+//     res.json(tasks as TaskData[]);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send("Internal server error");
+//   }
+// });
 
 app.listen(port, () => console.log("Server running on port " + port));

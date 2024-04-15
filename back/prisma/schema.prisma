@@ -1,0 +1,186 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model category {
+  id           Int            @id @default(autoincrement())
+  name         String         @db.VarChar(50)
+  description  String?        @db.VarChar(255)
+  createdAt    DateTime       @db.DateTime(0)
+  idWorkspace  Int
+  workspace    workspace      @relation(fields: [idWorkspace], references: [id], onUpdate: Restrict, map: "fk_category_workspace")
+  taskCategory taskCategory[]
+
+  @@index([idWorkspace], map: "idWorkspace")
+}
+
+model invitation {
+  id          Int       @id @default(autoincrement())
+  email       String    @db.VarChar(100)
+  idWorkspace Int
+  createdAt   DateTime  @db.DateTime(0)
+  workspace   workspace @relation(fields: [idWorkspace], references: [id], onUpdate: Restrict, map: "fk_invitation_workspace")
+
+  @@index([idWorkspace], map: "idWorkspace")
+}
+
+model task {
+  id           Int             @id @default(autoincrement())
+  name         String          @db.VarChar(50)
+  description  String?         @db.VarChar(255)
+  createdAt    DateTime        @db.DateTime(0)
+  idWorkspace  Int
+  visibility   task_visibility @default(PRIVATE)
+  deadline     DateTime?       @db.DateTime(0)
+  completed    Boolean         @default(false)
+  priority     task_priority   @default(NONE)
+  workspace    workspace       @relation(fields: [idWorkspace], references: [id], onUpdate: Restrict, map: "fk_task_workspace")
+  taskCategory taskCategory[]
+  teamTask     teamTask[]
+  userTask     userTask[]
+
+  @@index([idWorkspace], map: "idWorkspace")
+}
+
+model taskCategory {
+  id         Int      @id @default(autoincrement())
+  idTask     Int
+  idCategory Int
+  createdAt  DateTime @db.DateTime(0)
+  task       task     @relation(fields: [idTask], references: [id], onUpdate: Restrict, map: "taskCategory_ibfk_1")
+  category   category @relation(fields: [idCategory], references: [id], onUpdate: Restrict, map: "taskCategory_ibfk_2")
+
+  @@index([idCategory], map: "idCategory")
+  @@index([idTask], map: "idTask")
+}
+
+model team {
+  id          Int        @id @default(autoincrement())
+  name        String     @db.VarChar(50)
+  description String?    @db.VarChar(255)
+  createdAt   DateTime   @db.DateTime(0)
+  idWorkspace Int
+  workspace   workspace  @relation(fields: [idWorkspace], references: [id], onUpdate: Restrict, map: "fk_team_workspace")
+  teamTask    teamTask[]
+  userTeam    userTeam[]
+
+  @@index([idWorkspace], map: "idWorkspace")
+}
+
+model teamTask {
+  id        Int           @id @default(autoincrement())
+  idTeam    Int
+  idTask    Int
+  role      teamTask_role @default(GUEST)
+  createdAt DateTime      @db.DateTime(0)
+  task      task          @relation(fields: [idTask], references: [id], onUpdate: Restrict, map: "fk_teamTask_task")
+  team      team          @relation(fields: [idTeam], references: [id], onUpdate: Restrict, map: "fk_teamTask_team")
+
+  @@index([idTask], map: "idTask")
+  @@index([idTeam], map: "idTeam")
+}
+
+model user {
+  id            Int             @id @default(autoincrement())
+  username      String          @unique(map: "username") @db.VarChar(50)
+  password      String          @db.VarChar(255)
+  email         String          @unique(map: "email") @db.VarChar(100)
+  createdAt     DateTime        @db.DateTime(0)
+  settings      String?         @db.LongText
+  userTask      userTask[]
+  userTeam      userTeam[]
+  userWorkspace userWorkspace[]
+}
+
+model userTask {
+  id        Int           @id @default(autoincrement())
+  idUser    Int
+  idTask    Int
+  role      userTask_role @default(GUEST)
+  createdAt DateTime      @db.DateTime(0)
+  task      task          @relation(fields: [idTask], references: [id], onUpdate: Restrict, map: "fk_userTask_task")
+  user      user          @relation(fields: [idUser], references: [id], onUpdate: Restrict, map: "fk_userTask_user")
+
+  @@index([idTask], map: "idTask")
+  @@index([idUser], map: "idUser")
+}
+
+model userTeam {
+  id        Int           @id @default(autoincrement())
+  idUser    Int
+  idTeam    Int
+  role      userTeam_role @default(GUEST)
+  createdAt DateTime      @db.DateTime(0)
+  team      team          @relation(fields: [idTeam], references: [id], onUpdate: Restrict, map: "fk_userTeam_team")
+  user      user          @relation(fields: [idUser], references: [id], onUpdate: Restrict, map: "fk_userTeam_user")
+
+  @@index([idTeam], map: "idTeam")
+  @@index([idUser], map: "idUser")
+}
+
+model userWorkspace {
+  id          Int                @id @default(autoincrement())
+  idUser      Int
+  idWorkspace Int
+  role        userWorkspace_role @default(GUEST)
+  createdAt   DateTime           @db.DateTime(0)
+  user        user               @relation(fields: [idUser], references: [id], onUpdate: Restrict, map: "fk_userWorkspace_user")
+  workspace   workspace          @relation(fields: [idWorkspace], references: [id], onUpdate: Restrict, map: "fk_userWorkspace_workspace")
+
+  @@index([idUser], map: "idUser")
+  @@index([idWorkspace], map: "idWorkspace")
+}
+
+model workspace {
+  id            Int             @id @default(autoincrement())
+  name          String          @db.VarChar(50)
+  description   String?         @db.VarChar(255)
+  createdAt     DateTime        @db.DateTime(0)
+  category      category[]
+  invitation    invitation[]
+  task          task[]
+  team          team[]
+  userWorkspace userWorkspace[]
+}
+
+enum userWorkspace_role {
+  ADMIN
+  MEMBER
+  GUEST
+}
+
+enum userTeam_role {
+  ADMIN
+  MEMEBER
+  GUEST
+}
+
+enum userTask_role {
+  ADMIN
+  MEMBER
+  GUEST
+}
+
+enum teamTask_role {
+  ADMIN
+  MEMBER
+  GUEST
+}
+
+enum task_visibility {
+  PUBLIC
+  PRIVATE
+}
+
+enum task_priority {
+  NONE
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
