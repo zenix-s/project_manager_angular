@@ -115,7 +115,7 @@ export const tasks: Task[] = [
   {
     id: 4,
     createdAt: new Date(),
-    idWorkspace: 1,
+    idWorkspace: 2,
     name: "Task 4",
     description: "Description for Task 4",
     completed: false,
