@@ -37,7 +37,7 @@ export interface Task {
   description?: string;
   completed: boolean;
   deadline?: Date;
-  priority: 'NONE' |'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+  priority: "NONE" | "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
   // priority: 0 | 1 | 2 | 3 | 4;
   visibility: "PUBLIC" | "PRIVATE";
 }
@@ -58,8 +58,6 @@ export interface Team {
   idWorkspace: number;
 }
 
-
-
 export interface UserTeam {
   id: number;
   idUser: number;
@@ -67,8 +65,6 @@ export interface UserTeam {
   role: "ADMIN" | "MEMBER" | "GUEST";
   createdAt: Date;
 }
-
-
 
 export interface UserTask {
   id: number;
@@ -86,9 +82,8 @@ export interface TeamTask {
   createdAt: Date;
 }
 
-
 export interface TaskCategory {
-	id: number;
+  id: number;
   idTask: number;
   categoryId: number;
   createdAt: Date;
@@ -111,27 +106,29 @@ export interface UserProject {
 }
 
 export interface TeamProject {
-	id: number;
-	idTeam: number;
-	idProject: number;
-	role: "ADMIN" | "MEMBER" | "GUEST";
-	createdAt: Date;
+  id: number;
+  idTeam: number;
+  idProject: number;
+  role: "ADMIN" | "MEMBER" | "GUEST";
+  createdAt: Date;
+}
+
+interface arrTaskCategory {
+  category: Category;
 }
 
 export interface TaskData {
-	id: number;
-	createdAt: Date;
-	idWorkspace: number;
-	name: string;
-	description?: string;
-	completed: boolean;
-	deadline?: Date;
-	priority: 'NONE' |'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
-	visibility: "PUBLIC" | "PRIVATE";
-	idProject?: number;
-	taskCategory: Array<{
-		category: Category;
-	}>;
-	// teams: Team[];
-	// users: User[];
+  id: number;
+  name: string;
+  description?: string;
+  completed: boolean;
+  deadline?: Date;
+  priority: "NONE" | "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+  visibility: "PUBLIC" | "PRIVATE";
+  createdAt: Date;
+  idWorkspace: number;
+  idCategories: Workspace[];
+  // idProject?: number;
+  // teams: Team[];
+  // users: User[];
 }

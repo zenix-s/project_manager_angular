@@ -1,6 +1,13 @@
-<div class="flex gap-2">
+<div class="flex gap-2 w-full justify-between">
   <div>
     {{ task.id }} - {{ task.name }} - {{ task.deadline | date : 'yyyy-MM-dd' }} - {{ task.completed }}
+  </div>
+  <div>
+    <ul class="flex">
+      <li *ngFor="let taskCategory of task.taskCategory">
+        {{taskCategory.category.name}}
+      </li>
+    </ul>
   </div>
   <div class="gap-2 flex">
     <button (click)="onEdit()">Edit</button>

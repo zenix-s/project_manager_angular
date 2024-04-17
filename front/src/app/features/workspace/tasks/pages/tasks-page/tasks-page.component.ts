@@ -30,7 +30,7 @@ export class TasksPageComponent implements OnInit {
   CreateTask(task: Task) {
     this.tasksService.addTask(this.idWorkspace, task).subscribe((task) => {
       console.log(task);
-      // this.tasks.push(task);
+      this.tasks.push(task);
     });
   }
 
