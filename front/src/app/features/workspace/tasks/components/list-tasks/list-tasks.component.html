@@ -1,39 +1,5 @@
 <div>
-  <app-tasks-item
-    *ngFor="let task of tasks" [task]="task"
-    (onDeleteTask)="DeleteTask($event)"
-    (onEditTask)="EditTask($event)">
-  </app-tasks-item>
-
-  <!-- <tr class="" *ngFor="let task of tasks">
-     <td>
-      {{ task.id }} - {{task.priority}} - {{ task.name }} - {{ task.deadline | date : 'yyyy-MM-dd'
-      }} - {{ task.completed }}
-    </td>
-    <td>
-      {{task.id}}
-    </td>
-    <td>
-      {{task.completed ? '✅' : '❌'}}
-    </td>
-    <td>
-      {{task.priority}}
-    </td>
-    <td>
-      {{task.name}}
-    </td>
-    <td>
-      {{task.deadline | date : 'yyyy-MM-dd'}}
-    </td>
-    <td>
-      <ul class="flex">
-        <li *ngFor="let category of task.categories">{{category.name}}</li>
-      </ul>
-    </td>
-    <td class="gap-2 flex">
-      <button (click)="EditTask(task.id)">Edit</button>
-      <button (click)="DeleteTask(task.id)">Delete</button>
-    </td>
-  </tr> -->
-
+  @for (task of tasks; track $index) {
+  <app-tasks-item [task]="task" (onDeleteTask)="DeleteTask($event)" (onEditTask)="EditTask($event)"></app-tasks-item>
+  }
 </div>

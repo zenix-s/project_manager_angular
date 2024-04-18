@@ -1,20 +1,24 @@
 <div>
   <form [formGroup]="workspaceForm" (ngSubmit)="onSubmit()" class="flex flex-col">
 
-    <span *ngIf="isValidField('name')">
+    @if (isValidField('name')) {
+    <span>
       {{getErrorMessage('name')}}
     </span>
+    }
     <input type="text" formControlName="name" placeholder="Workspace name" />
-    <span *ngIf="isValidField('description')">
+    @if (isValidField('description')) {
+    <span>
       {{getErrorMessage('description')}}
     </span>
+    }
     <input type="text" formControlName="description" placeholder="Workspace description" />
     <button type="submit" [ngClass]="{
         'text-gray-500': loading,
         'text-red-500': errorSaving,
       }" [disabled]="loading">
-      <span *ngIf="loading">Loading...</span>
-      <span *ngIf="!loading">Create</span>
+
+      <span>{{loading ? 'Loading...' : 'Create'}}</span>
     </button>
 
   </form>

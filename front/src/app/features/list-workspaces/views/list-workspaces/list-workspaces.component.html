@@ -1,9 +1,9 @@
 <div>
   <ul>
-    <li *ngFor="let userWorkspace of userWorkspaces">
-      <app-workspace-item
-        [userWorkspace]="userWorkspace"
-      ></app-workspace-item>
+    @for (workspace of userWorkspaces; track $index) {
+    <li>
+      <app-workspace-item [userWorkspace]="workspace"></app-workspace-item>
     </li>
+    }
   </ul>
 </div>

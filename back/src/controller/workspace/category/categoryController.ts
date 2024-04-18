@@ -14,7 +14,7 @@ export class CategoryController {
     const idWorkspace = parseInt(req.params.idWorkspace);
 
     try {
-      const categories = modelCategory.getCategoriesByIdWorkspace(idWorkspace);
+      const categories = await modelCategory.getCategoriesByIdWorkspace(idWorkspace);
       res.json(categories);
     } catch (error) {
       console.error(error);

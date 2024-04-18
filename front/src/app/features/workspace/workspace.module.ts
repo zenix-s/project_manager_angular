@@ -4,9 +4,10 @@ import { TasksModule } from './tasks/tasks.module';
 import { RouterModule } from '@angular/router';
 import { WorkspacePageComponent } from './workspace-page/workspace-page.component';
 import { OptionsModule } from './options/options.module';
+import { CategoriesModule } from './categories/categories.module';
 @NgModule({
   declarations: [WorkspacePageComponent],
-  imports: [CommonModule, TasksModule, RouterModule, OptionsModule],
+  imports: [CommonModule, TasksModule, RouterModule, OptionsModule, CategoriesModule],
   exports: [TasksModule, WorkspacePageComponent],
 })
 export class WorkspaceModule {}

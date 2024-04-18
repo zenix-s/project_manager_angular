@@ -8,11 +8,7 @@ import { Task, TaskData } from '@types';
   templateUrl: './tasks-page.component.html',
 })
 export class TasksPageComponent implements OnInit {
-  constructor(
-    private tasksService: TasksService,
-    private ActivatedRoute: ActivatedRoute,
-    private router: Router
-  ) {}
+  constructor(private tasksService: TasksService) {}
 
   tasks = signal<TaskData[]>([]);
 
@@ -21,8 +17,8 @@ export class TasksPageComponent implements OnInit {
 
   DeleteTask(taskId: number) {
     this.tasksService.deleteTask(taskId).subscribe((idTaskDeleted) => {
-      this.tasks.update((tasks) => {
-        const newTasks = tasks
+      this.tasks.update((tasks) =>
+        tasks
           .filter((task) => task.id !== idTaskDeleted)
           .map((task) => {
             return {
@@ -31,9 +27,8 @@ export class TasksPageComponent implements OnInit {
                 (subtask) => subtask.id !== idTaskDeleted
               ),
             };
-          });
-        return newTasks;
-      });
+          })
+      );
     });
   }
 
@@ -41,8 +36,9 @@ export class TasksPageComponent implements OnInit {
     this.tasksService
       .addTask(this.idWorkspace, task)
       .subscribe((task: TaskData) => {
-        console.log(task);
-        this.tasks.set([...this.tasks(), task]);
+        this.tasks.update((tasks) => {
+          return [...tasks, task];
+        });
       });
   }
 

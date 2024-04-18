@@ -1,8 +1,4 @@
 <div class="flex gap-2 justify-between">
-  <!-- <td>
-    {{ task.id }} - {{task.priority}} - {{ task.name }} - {{ task.deadline | date : 'yyyy-MM-dd'
-    }} - {{ task.completed }}
-  </td> -->
   <div>
     {{task.id}}
   </div>
@@ -20,7 +16,9 @@
   </div>
   <div>
     <ul class="flex">
-      <li *ngFor="let category of task.categories">{{category.name}}</li>
+      @for (category of task.categories; track $index) {
+      <li>{{category.name}}</li>
+      }
     </ul>
   </div>
   <div class="gap-2 flex">
@@ -54,7 +52,9 @@
     </div>
     <div>
       <ul class="flex">
-        <li *ngFor="let category of subtask.categories">{{category.name}}</li>
+        @for (category of subtask.categories; track $index) {
+        <li>{{category.name}}</li>
+        }
       </ul>
     </div>
     <div>
@@ -63,7 +63,4 @@
     </div>
   </div>
   }
-  <!-- <div *ngFor="let subtask of task.subtasks">
-
-  </div> -->
 </div>
