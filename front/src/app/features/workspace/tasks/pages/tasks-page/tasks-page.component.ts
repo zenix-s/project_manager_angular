@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { TasksService } from '@service/workspace-tasks.service';
+import { Component, Input, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, switchMap } from 'rxjs';
+import { TasksService } from '@service/workspace-tasks.service';
 import { Task, TaskData } from '@types';
 
 @Component({
@@ -15,23 +14,36 @@ export class TasksPageComponent implements OnInit {
     private router: Router
   ) {}
 
-  tasks: TaskData[] = [];
+  tasks = signal<TaskData[]>([]);
 
   @Input()
   idWorkspace: number = 0;
 
   DeleteTask(taskId: number) {
-    this.tasksService.deleteTask(taskId).subscribe((data) => {
-      console.log(data);
-      this.tasks = this.tasks.filter((task) => task.id !== taskId);
+    this.tasksService.deleteTask(taskId).subscribe((idTaskDeleted) => {
+      this.tasks.update((tasks) => {
+        const newTasks = tasks
+          .filter((task) => task.id !== idTaskDeleted)
+          .map((task) => {
+            return {
+              ...task,
+              subtasks: task.subtasks.filter(
+                (subtask) => subtask.id !== idTaskDeleted
+              ),
+            };
+          });
+        return newTasks;
+      });
     });
   }
 
   CreateTask(task: Task) {
-    this.tasksService.addTask(this.idWorkspace, task).subscribe((task) => {
-      console.log(task);
-      this.tasks.push(task);
-    });
+    this.tasksService
+      .addTask(this.idWorkspace, task)
+      .subscribe((task: TaskData) => {
+        console.log(task);
+        this.tasks.set([...this.tasks(), task]);
+      });
   }
 
   EditTask(taskId: number) {
@@ -41,7 +53,7 @@ export class TasksPageComponent implements OnInit {
   ngOnInit(): void {
     this.tasksService.getTasks(this.idWorkspace).subscribe((tasks) => {
       console.log(tasks);
-      this.tasks = tasks;
+      this.tasks.set(tasks);
     });
   }
 }

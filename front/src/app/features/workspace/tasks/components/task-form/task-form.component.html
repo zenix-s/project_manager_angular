@@ -8,6 +8,7 @@
     <form class="flex flex-col gap-2" [formGroup]="taskForm" (ngSubmit)="onSubmit(dialog)">
       <input type="text" placeholder="Nombre de la tarea" formControlName="name" />
       <input type="text" placeholder="Descripción de la tarea" formControlName="description" />
+      <app-input-select-priority formControlName="priority"></app-input-select-priority>
       <button type="submit">Guardar</button>
     </form>
   </div>

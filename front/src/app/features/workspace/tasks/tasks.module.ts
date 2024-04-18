@@ -5,6 +5,7 @@ import { TasksPageComponent } from './pages/tasks-page/tasks-page.component';
 import { ListTasksComponent } from './components/list-tasks/list-tasks.component';
 import { TasksItemComponent } from './components/tasks-item/tasks-item.component';
 import { TaskFormComponent } from './components/task-form/task-form.component';
+import { InputSelectPriorityComponent } from './components/task-form/components/input-select-priority/input-select-priority.component';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { TaskFormComponent } from './components/task-form/task-form.component';
     TasksPageComponent,
     ListTasksComponent,
     TasksItemComponent,
-    TaskFormComponent
+    TaskFormComponent,
+    InputSelectPriorityComponent
   ],
   imports: [
     CommonModule,

@@ -1,3 +1,7 @@
+type role = "ADMIN" | "MEMBER" | "GUEST";
+type priority = "NONE" | "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+type visibility = "PUBLIC" | "PRIVATE";
+
 export interface User {
   id: number;
   username: string;
@@ -25,7 +29,7 @@ export interface UserWorkspace {
   id: number;
   idUser: number;
   idWorkspace: number;
-  role: "ADMIN" | "MEMBER" | "GUEST";
+  role: role;
   createdAt: Date;
 }
 
@@ -37,48 +41,41 @@ export interface Task {
   description?: string;
   completed: boolean;
   deadline?: Date;
-  priority: "NONE" | "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
-  // priority: 0 | 1 | 2 | 3 | 4;
-  visibility: "PUBLIC" | "PRIVATE";
+  priority: priority;
+  visibility: visibility;
+  idProject?: number;
+}
+
+export interface project {
+  id: number;
+  name: string;
+  description?: string;
+  createdAt: Date;
+  idWorkspace: number;
+}
+
+export interface UserProject {
+  id: number;
+  idUser: number;
+  idProject: number;
+  role: role;
+  createdAt: Date;
 }
 
 export interface Category {
   id: number;
   name: string;
   description?: string;
-  createdAt: Date;
   idWorkspace: number;
-}
-
-export interface Team {
-  id: number;
-  name: string;
-  description?: string;
-  createdAt: Date;
-  idWorkspace: number;
-}
-
-export interface UserTeam {
-  id: number;
-  idUser: number;
-  idTeam: number;
-  role: "ADMIN" | "MEMBER" | "GUEST";
-  createdAt: Date;
+  color: string;
+  completed: boolean;
 }
 
 export interface UserTask {
   id: number;
   idUser: number;
   idTask: number;
-  role: "ADMIN" | "MEMBER" | "GUEST";
-  createdAt: Date;
-}
-
-export interface TeamTask {
-  id: number;
-  idTeam: number;
-  idTask: number;
-  role: "ADMIN" | "MEMBER" | "GUEST";
+  role: role;
   createdAt: Date;
 }
 
@@ -101,20 +98,23 @@ export interface UserProject {
   id: number;
   idUser: number;
   idProject: number;
-  role: "ADMIN" | "MEMBER" | "GUEST";
+  role: role;
   createdAt: Date;
 }
 
-export interface TeamProject {
+
+export interface subtask {
   id: number;
-  idTeam: number;
-  idProject: number;
-  role: "ADMIN" | "MEMBER" | "GUEST";
+  name: string;
+  description?: string;
+  completed: boolean;
+  deadline?: Date;
+  priority: priority;
+  visibility: visibility;
   createdAt: Date;
-}
-
-interface arrTaskCategory {
-  category: Category;
+  idWorkspace: number;
+  dependentIdTask: number;
+  categories: Category[];
 }
 
 export interface TaskData {
@@ -123,12 +123,46 @@ export interface TaskData {
   description?: string;
   completed: boolean;
   deadline?: Date;
-  priority: "NONE" | "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
-  visibility: "PUBLIC" | "PRIVATE";
+  priority: priority;
+  visibility: visibility;
   createdAt: Date;
   idWorkspace: number;
-  idCategories: Workspace[];
+  dependentIdTask: number;
+  categories: Category[];
+  subtasks: subtask[];
   // idProject?: number;
   // teams: Team[];
   // users: User[];
 }
+
+// export interface Team {
+//   id: number;
+//   name: string;
+//   description?: string;
+//   createdAt: Date;
+//   idWorkspace: number;
+// }
+
+// export interface UserTeam {
+//   id: number;
+//   idUser: number;
+//   idTeam: number;
+//   role: role;
+//   createdAt: Date;
+// }
+
+// export interface TeamProject {
+//   id: number;
+//   idTeam: number;
+//   idProject: number;
+//   role: role;
+//   createdAt: Date;
+// }
+
+// export interface TeamTask {
+//   id: number;
+//   idTeam: number;
+//   idTask: number;
+//   role: role;
+//   createdAt: Date;
+// }

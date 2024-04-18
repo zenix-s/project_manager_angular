@@ -48,11 +48,15 @@ export class ModelWorkspace {
 			WHERE
 				uw.idUser = ?
 			`,
-      [idUser]
+      [idUser],
     );
 
     await connection.end();
 
     return result;
+  }
+
+  async deleteWorkspace(idWorkspace: number): Promise<boolean> {
+    return true;
   }
 }

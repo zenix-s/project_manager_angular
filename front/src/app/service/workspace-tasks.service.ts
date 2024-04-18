@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Task, TaskData } from '@types';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { port, backendUrl } from '@env';
+import { Injectable } from "@angular/core";
+import { Task, TaskData } from "@types";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { port, backendUrl } from "@env";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class TasksService {
   constructor(private http: HttpClient) {}
@@ -13,18 +13,18 @@ export class TasksService {
   getTasks(idWorkspace: number): Observable<TaskData[]> {
     idWorkspace = parseInt(idWorkspace.toString());
     return this.http.get<TaskData[]>(
-      `${backendUrl}:${port}/workspace/${idWorkspace}/task`
-    );
-  }
-
-  addTask(idWorkspace: number, task: Task) {
-    return this.http.post<Task>(
       `${backendUrl}:${port}/workspace/${idWorkspace}/task`,
-      task
     );
   }
 
-  deleteTask(taskId: number) {
-    return this.http.delete(`${backendUrl}:${port}/task/${taskId}`);
+  addTask(idWorkspace: number, task: Task): Observable<TaskData> {
+    return this.http.post<TaskData>(
+      `${backendUrl}:${port}/workspace/${idWorkspace}/task`,
+      task,
+    );
+  }
+
+  deleteTask(taskId: number): Observable<number> {
+    return this.http.delete<number>(`${backendUrl}:${port}/task/${taskId}`);
   }
 }

@@ -16,11 +16,11 @@ export class TasksItemComponent {
   @Output()
   onEditTask = new EventEmitter<number>();
 
-  onDelete() {
-    this.onDeleteTask.emit(this.task.id);
+  onDelete(id: number) {
+    this.onDeleteTask.emit(id);
   }
 
-  onEdit() {
-    this.onEditTask.emit(this.task.id);
+  onEdit(id: number) {
+    this.onEditTask.emit(id);
   }
 }

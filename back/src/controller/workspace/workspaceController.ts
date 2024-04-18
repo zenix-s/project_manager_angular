@@ -16,6 +16,15 @@ export class WorkspaceController {
     }
   }
 
+  public async deleteWorkspace(req: Request, res: Response) {
+    const idWorkspace: number = parseInt(req.params.idWorkspace);
+    const deleted: boolean = await modelWorkspace.deleteWorkspace(idWorkspace);
+    res.json({
+      deleted: deleted,
+      message: "workspace eliminado con id: " + idWorkspace + "",
+    });
+  }
+
   // public async postWorkspacesController(req: Request, res: Response) {
   //   if (!req.body) {
   //     res.status(400).send({
@@ -37,14 +46,5 @@ export class WorkspaceController {
   //       message: "Content can not be empty!",
   //     });
   //   }
-  // }
-
-  // public deleteWorkspaceController(req: Request, res: Response) {
-  //   const idWorkspace: number = parseInt(req.params.idWorkspace);
-  //   const deleted: boolean = deleteWorkspace(idWorkspace);
-  //   res.json({
-  //     deleted: deleted,
-  //     message: "workspace eliminado con id: " + idWorkspace + "",
-  //   });
   // }
 }
