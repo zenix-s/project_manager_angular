@@ -1,66 +1,37 @@
-<div class="flex gap-2 justify-between">
-  <div>
-    {{task.id}}
-  </div>
-  <div>
-    {{task.completed ? '✅' : '❌'}}
-  </div>
-  <div>
-    {{task.priority}}
-  </div>
-  <div>
-    {{task.name}}
-  </div>
-  <div>
-    {{task.deadline | date : 'yyyy-MM-dd'}}
-  </div>
-  <div>
-    <ul class="flex">
-      @for (category of task.categories; track $index) {
-      <li>{{category.name}}</li>
-      }
-    </ul>
-  </div>
-  <div class="gap-2 flex">
-    <button (click)="onEdit(task.id)">Edit</button>
-    <button (click)="onDelete(task.id)">Delete</button>
-  </div>
-</div>
-<div class="flex flex-col">
-  @for (subtask of task.subtasks; track $index) {
-  <div class="flex">
-    @if ($index === task.subtasks.length - 1) {
+<!-- <details #itemTask open="opened()" (click)="null"> -->
+<div #itemTask (click)="null">
+  <div class="flex hover:bg-lightDark/40">
+    <!-- @if (isLast) {
     <span>└──</span>
-    }
-    @else {
+    }@else {
     <span>├──</span>
+    } -->
+    @if(task.subtasks.length > 0){
+    <span (click)="opened = !opened" class="cursor-pointer select-none">
+      {{ opened ? '-' : '+' }}
+    </span>
+    }@else{
+    <span class="cursor-default select-none">-</span>
     }
-    <div>
-      {{subtask.id}}
-    </div>
-    <div>
-      {{subtask.completed ? '✅' : '❌'}}
-    </div>
-    <div>
-      {{subtask.priority}}
-    </div>
-    <div>
-      {{subtask.name}}
-    </div>
-    <div>
-      {{subtask.deadline | date : 'yyyy-MM-dd'}}
-    </div>
-    <div>
-      <ul class="flex">
-        @for (category of subtask.categories; track $index) {
-        <li>{{category.name}}</li>
-        }
-      </ul>
-    </div>
-    <div>
-      <button (click)="onEdit(subtask.id)">Edit</button>
-      <button (click)="onDelete(subtask.id)">Delete</button>
-    </div>
+    <app-task-item [task]="task" (onDeleteTask)="onDelete($event)" (onChangeTask)="onChange($event)"
+      [index]="index"></app-task-item>
   </div>
-  }
+  <div
+  class="flex flex-col"
+  [ngClass]="opened ? 'block' : 'hidden'"
+  >
+    @for (subtask of task.subtasks; track $index) {
+    <div class="flex hover:bg-lightDark/40">
+      @if ($index === task.subtasks.length - 1) {
+      <span>&nbsp;└──</span>
+      <!-- <span>&boxv;&nbsp;&nbsp;└──</span> -->
+      }
+      @else {
+      <span>&nbsp;├──</span>
+      <!-- <span>&boxv;&nbsp;&nbsp;├──</span> -->
+      }
+      <app-task-item [task]="subtask" (onDeleteTask)="onDelete($event)" [index]="$index"></app-task-item>
+    </div>
+    }
+  </div>
 </div>

@@ -1,1 +1,26 @@
-<p>item-category works!</p>
+<div class="flex">
+  <div>
+    {{category.name}}
+  </div>
+  <div
+    class=""
+    [style.backgroundColor]="category.color"
+  >
+    {{category.color}}
+  </div>
+  <div>
+    {{category.completed}}
+  </div>
+  <div>
+    <button
+      (click)="deleteCategory(category)"
+    >
+      Delete
+    </button>
+    <button
+      (click)="editCategory(category)"
+    >
+
+    </button>
+  </div>
+</div>

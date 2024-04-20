@@ -4,11 +4,30 @@ import { Task, TaskData } from '@app/interfaces/interfaces';
 @Component({
   selector: 'app-tasks-item',
   templateUrl: './tasks-item.component.html',
-  styles: ``,
+  styles: `:host {width: 100%;}`,
 })
 export class TasksItemComponent {
   @Input()
   task!: TaskData;
+  @Input()
+  index!: number;
+  @Input()
+  isLast!: boolean;
+  private _hovered = false;
+  public get hovered() {
+    return this._hovered;
+  }
+  public set hovered(value) {
+    this._hovered = value;
+  }
+
+  private _opened = true;
+  public get opened() {
+    return this._opened;
+  }
+  public set opened(value) {
+    this._opened = value;
+  }
 
   @Output()
   onDeleteTask = new EventEmitter<number>();
@@ -16,11 +35,18 @@ export class TasksItemComponent {
   @Output()
   onEditTask = new EventEmitter<number>();
 
+  @Output()
+  onChangeTask = new EventEmitter<Task>();
+
   onDelete(id: number) {
     this.onDeleteTask.emit(id);
   }
 
   onEdit(id: number) {
     this.onEditTask.emit(id);
+  }
+
+  onChange(task: Task) {
+    this.onChangeTask.emit(task);
   }
 }

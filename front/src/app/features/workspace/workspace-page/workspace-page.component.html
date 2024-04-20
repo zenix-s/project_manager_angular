@@ -1,38 +1,58 @@
-<div>
-  <nav>
-    <ul class="flex gap-2">
-      <li>
-        <button (click)="section = 'tasks'">1 - tasks</button>
-      </li>
-      <li>
-        <button (click)="section = 'teams'">2 - teams/users</button>
-      </li>
-      <li>
-        <button (click)="section = 'categories'">3 - categories</button>
-      </li>
-      <li>
-        <button (click)="section = 'options'">4 - options</button>
-      </li>
-    </ul>
-  </nav>
-  <div>
-    @switch (section) {
-      @case ('tasks'){
-        <app-tasks-page
-        [idWorkspace]="idWorkspace">
-        </app-tasks-page>
-      } @case ('teams'){ teams } @case ('categories'){
-        <app-page-categories
-          [idWorkspace]="idWorkspace"
-        >
-        </app-page-categories>
-      } @case ('options'){
-        <app-workspace-options-page
+<div class="w-full h-screen py-4 pr-4">
+  <div class="
+  flex
+  flex-col
+  border
+  border-fountainBlue/40
+  h-full
+  p-2
+  before:content-['workspace']
+  before:relative
+  before:top-[-1.5rem]
+  before:bg-dark
+  text-white
+  before:text-white/80
+  before:w-min
+  before:px-2
+  hover:bo
+  hover:before:text-error
+  hover:border-fountainBlue
+  ">
+    <nav>
+      <ul class="flex gap-2">
+        <li>
+          <button (click)="section = 'tasks'">1 - tasks</button>
+        </li>
+        <li>
+          <button (click)="section = 'teams'">2 - teams/users</button>
+        </li>
+        <li>
+          <button (click)="section = 'categories'">3 - categories</button>
+        </li>
+        <li>
+          <button (click)="section = 'options'">4 - options</button>
+        </li>
+      </ul>
+    </nav>
+    <div>
+      @switch (section) {
+        @case ('tasks'){
+          <app-tasks-page
           [idWorkspace]="idWorkspace">
-        </app-workspace-options-page>
-      } @default {
-        <div>default</div>
+          </app-tasks-page>
+        } @case ('teams'){ teams } @case ('categories'){
+          <app-page-categories
+            [idWorkspace]="idWorkspace"
+          >
+          </app-page-categories>
+        } @case ('options'){
+          <app-workspace-options-page
+            [idWorkspace]="idWorkspace">
+          </app-workspace-options-page>
+        } @default {
+          <div>default</div>
+        }
       }
-    }
+    </div>
   </div>
 </div>

@@ -6,7 +6,7 @@ import { Workspace } from '@types';
 @Component({
   selector: 'app-list-workspace-page',
   templateUrl: './list-workspace-page.component.html',
-  // styleUrl: ''
+  styles: ':host { display: block; width: 100%; }',
 })
 export class ListWorkspacePageComponent implements OnInit {
   constructor(

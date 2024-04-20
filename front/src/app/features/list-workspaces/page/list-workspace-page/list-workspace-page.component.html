@@ -1,7 +1,9 @@
-<div>
-  <a [routerLink]="['/workspace/new']">Create new workspace</a>
-</div>
-<div>
-  <app-list-workspaces [userWorkspaces]="userWorkspaces">
-  </app-list-workspaces>
+<div class="w-full">
+  <div class="w-full">
+    <a [routerLink]="['/workspace/new']">Create new workspace</a>
+  </div>
+  <div>
+    <app-list-workspaces [userWorkspaces]="userWorkspaces">
+    </app-list-workspaces>
+  </div>
 </div>

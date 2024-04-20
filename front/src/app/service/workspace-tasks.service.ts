@@ -27,4 +27,12 @@ export class TasksService {
   deleteTask(taskId: number): Observable<number> {
     return this.http.delete<number>(`${backendUrl}:${port}/task/${taskId}`);
   }
+
+  changeTask(task: Task): Observable<TaskData> {
+    console.log(task);
+    return this.http.put<TaskData>(
+      `${backendUrl}:${port}/task/${task.id}`,
+      task,
+    );
+  }
 }

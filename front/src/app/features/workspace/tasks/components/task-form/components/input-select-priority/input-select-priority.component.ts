@@ -1,16 +1,19 @@
 import { Component } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { listPriority, priority } from '@app/interfaces/interfaces';
 
-type priority = 'NONE' | 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
-
+6
 @Component({
   selector: 'app-input-select-priority',
   templateUrl: './input-select-priority.component.html',
 })
 export class InputSelectPriorityComponent implements ControlValueAccessor {
-  listPriority: priority[] = ['NONE', 'LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
-  isPriority = (value: any): value is priority =>
-    this.listPriority.includes(value);
+  // listPriority: priority[] = ['NONE', 'LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
+  isPriority = (value: any): value is priority => listPriority.includes(value);
+
+  get listPriority() {
+    return listPriority;
+  }
 
   value: priority;
   disabled: boolean;

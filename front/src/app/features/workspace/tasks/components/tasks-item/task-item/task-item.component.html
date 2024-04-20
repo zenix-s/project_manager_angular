@@ -1,0 +1,42 @@
+<div class="flex w-full gap-4 group cursor-default" (mouseenter)="hovered = true"
+  (mouseleave)="hovered = false">
+  <div class="w-4">
+    <!-- @if (!hovered) {
+      {{index+1}} }
+      @else { {{'>'}}
+    } -->
+    {{index+1}}
+  </div>
+  <div class="flex flex-grow gap-4">
+    <div>
+      <input type="checkbox" [checked]="task.completed" />
+    </div>
+    <div>
+      <app-select-priority
+        [priority]="task.priority"
+        (onPriorityChange)="ChangePriority(task.id, $event)"
+      ></app-select-priority>
+    </div>
+    <div>{{task.name}}</div>
+  </div>
+  <div>
+    <ul class="flex gap-2">
+      @for (category of task.categories; track $index) {
+      <!-- <li [style.backgroundColor]="category.color">{{category.name}}</li> -->
+        <li class="flex gap-1 items-center rounded">
+          <div class="w-2 h-2 rounded"
+            [style.backgroundColor]="category.color"
+          >
+          </div>
+          <div>{{category.name}}</div>
+        </li>
+      }
+    </ul>
+  </div>
+  <div>{{task.deadline | date : 'MMMM-dd'}}</div>
+
+  <div class="gap-4 flex">
+    <!-- <button (click)="DeleteTask(task.id)">Delete</button> -->
+    
+  </div>
+</div>

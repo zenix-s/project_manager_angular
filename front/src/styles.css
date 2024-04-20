@@ -2,3 +2,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* * {
+  outline: 1px solid red !important;
+} */
+
+*{
+  /* font-family: Hack; */
+}

@@ -35,96 +35,86 @@ export class ModelTask {
     const [result] = await connection.query<TaskDataBBDD[]>(
       `
 			SELECT
-			t.id,
-			t.name,
-			t.createdAt,
-			t.idWorkspace,
-			t.description,
-			t.completed,
-			t.deadline,
-			t.priority,
-			t.visibility,
-			t.dependentIdTask,
-			CASE
-				WHEN COUNT(c.id) > 0 THEN JSON_ARRAYAGG (
-					JSON_OBJECT (
-						'id',
-						c.id,
-						'name',
-						c.name,
-						'description',
-						c.description,
-						'color',
-						c.color,
-						'completed',
-						c.completed,
-						'idWorkspace',
-						c.idWorkspace
-					)
-				)
-				ELSE JSON_ARRAY ()
-			END AS categories,
-			CASE
-				WHEN COUNT(t2.id) > 0 THEN JSON_ARRAYAGG (
-					JSON_OBJECT (
-						'id',
-						t2.id,
-						'name',
-						t2.name,
-						'description',
-						t2.description,
-						'createdAt',
-						t2.createdAt,
-						'completed',
-						t2.completed,
-						'deadline',
-						t2.deadline,
-						'priority',
-						t2.priority,
-						'visibility',
-						t2.visibility,
-						'dependentIdTask',
-						t2.dependentIdTask,
-						'categories',
-						(
-							SELECT
-								JSON_ARRAYAGG (
-									JSON_OBJECT (
-										'id',
-										c.id,
-										'name',
-										c.name,
-										'description',
-										c.description,
-										'color',
-										c.color,
-										'completed',
-										c.completed,
-										'idWorkspace',
-										c.idWorkspace
-									)
+	t.id,
+	t.name,
+	t.createdAt,
+	t.idWorkspace,
+	t.description,
+	t.completed,
+	t.deadline,
+	t.priority,
+	t.visibility,
+	t.dependentIdTask,
+	(
+		SELECT
+			JSON_ARRAYAGG (
+				JSON_OBJECT (
+					st.id,
+					st.name,
+					st.createdAt,
+					st.idWorkspace,
+					st.description,
+					st.completed,
+					st.deadline,
+					st.priority,
+					st.visibility,
+					st.dependentIdTask,
+					'categories',
+					(
+						SELECT
+							JSON_ARRAYAGG (
+								JSON_OBJECT (
+									sc.id,
+									sc.name,
+									sc.color,
+									sc.description,
+									sc.completed,
+									sc.createdAt,
+									sc.idWorkspace,
+									sc.deleted
 								)
-							FROM
-								taskCategory tc
-								LEFT JOIN category c ON tc.idCategory = c.id
-							WHERE
-								tc.idTask = t2.id
-						)
+							)
+						FROM
+							category sc
+							LEFT JOIN taskCategory stc ON sc.id = stc.idCategory
+						WHERE
+							stc.idTask = st.id
+							AND sc.deleted = 0
 					)
 				)
-				ELSE JSON_ARRAY ()
-			END AS subtasks
+			) AS dependents
 		FROM
-			task t
-			LEFT JOIN taskCategory tc ON t.id = tc.idTask
-			LEFT JOIN category c ON tc.idCategory = c.id
-			LEFT JOIN task t2 ON t2.dependentIdTask = t.id AND t2.deleted = 0
+			task st
 		WHERE
-			t.id = ?
-			AND t.deleted = 0
-		GROUP BY
-			t.id,
-			t.name;
+			st.dependentIdTask = t.id
+			AND st.deleted = 0
+	) AS subtasks,
+	(
+		SELECT
+			JSON_ARRAYAGG (
+				JSON_OBJECT (
+					c.id,
+					c.name,
+					c.color,
+					c.description,
+					c.completed,
+					c.createdAt,
+					c.idWorkspace,
+					c.deleted
+				)
+			)
+		FROM
+			category c
+			LEFT JOIN taskCategory tc ON c.id = tc.idCategory
+		WHERE
+			tc.idTask = t.id
+			AND c.deleted = 0
+	) AS categories
+FROM
+	task t
+WHERE
+	t.id = ?
+	AND t.deleted = 0
 
       `,
       [idTask]
@@ -146,8 +136,10 @@ export class ModelTask {
           createdAt: task.createdAt,
           idWorkspace: task.idWorkspace,
           dependentIdTask: task.dependentIdTask,
-          categories: JSON.parse(task.categories),
-          subtasks: JSON.parse(task.subtasks),
+          // categories: JSON.parse(task.categories),
+          // subtasks: JSON.parse(task.subtasks),
+					categories: task.categories ? JSON.parse(task.categories) as Category[] : [],
+					subtasks: task.subtasks ? JSON.parse(task.subtasks) as subtask[] : [],
         };
       }
     );
@@ -161,97 +153,113 @@ export class ModelTask {
     const [result] = await connection.query<TaskDataBBDD[]>(
       `
 			SELECT
-	t.id,
-	t.name,
-	t.createdAt,
-	t.idWorkspace,
-	t.description,
-	t.completed,
-	t.deadline,
-	t.priority,
-	t.visibility,
-	t.dependentIdTask,
-	CASE
-		WHEN COUNT(c.id) > 0 THEN JSON_ARRAYAGG (
-			JSON_OBJECT (
-				'id',
-				c.id,
-				'name',
-				c.name,
-				'description',
-				c.description,
-				'color',
-				c.color,
-				'completed',
-				c.completed,
-				'idWorkspace',
-				c.idWorkspace
-			)
-		)
-		ELSE JSON_ARRAY ()
-	END AS categories,
-	CASE
-		WHEN COUNT(t2.id) > 0 THEN JSON_ARRAYAGG (
-			JSON_OBJECT (
-				'id',
-				t2.id,
-				'name',
-				t2.name,
-				'description',
-				t2.description,
-				'createdAt',
-				t2.createdAt,
-				'completed',
-				t2.completed,
-				'deadline',
-				t2.deadline,
-				'priority',
-				t2.priority,
-				'visibility',
-				t2.visibility,
-				'dependentIdTask',
-				t2.dependentIdTask,
-				'categories',
-				(
-					SELECT
-						JSON_ARRAYAGG (
-							JSON_OBJECT (
-								'id',
-								c.id,
-								'name',
-								c.name,
-								'description',
-								c.description,
-								'color',
-								c.color,
-								'completed',
-								c.completed,
-								'idWorkspace',
-								c.idWorkspace
+			t.id,
+			t.name,
+			t.createdAt,
+			t.idWorkspace,
+			t.description,
+			t.completed,
+			t.deadline,
+			t.priority,
+			t.visibility,
+			t.dependentIdTask,
+			(
+				SELECT
+					JSON_ARRAYAGG (
+						JSON_OBJECT (
+							'id',
+							st.id,
+							'name',
+							st.name,
+							'createdAt',
+							st.createdAt,
+							'idWorkspace',
+							st.idWorkspace,
+							'description',
+							st.description,
+							'completed',
+							st.completed,
+							'deadline',
+							st.deadline,
+							'priority',
+							st.priority,
+							'visibility',
+							st.visibility,
+							'dependentIdTask',
+							st.dependentIdTask,
+							'categories',
+							(
+								SELECT
+									JSON_ARRAYAGG (
+										JSON_OBJECT (
+											'subtaskId',
+											sc.id,
+											'name',
+											sc.name,
+											'color',
+											sc.color,
+											'description',
+											sc.description,
+											'completed',
+											sc.completed,
+											'createdAt',
+											sc.createdAt,
+											'idWorkspace',
+											sc.idWorkspace,
+											'deleted',
+											sc.deleted
+										)
+									)
+								FROM
+									category sc
+									LEFT JOIN taskCategory stc ON sc.id = stc.idCategory
+								WHERE
+									stc.idTask = st.id
+									AND sc.deleted = 0
 							)
 						)
-					FROM
-						taskCategory tc
-						LEFT JOIN category c ON tc.idCategory = c.id
-					WHERE
-						tc.idTask = t2.id
-				)
-			)
-		)
-		ELSE JSON_ARRAY ()
-	END AS subtasks
-FROM
-	task t
-	LEFT JOIN taskCategory tc ON t.id = tc.idTask
-	LEFT JOIN category c ON tc.idCategory = c.id
-	LEFT JOIN task t2 ON t2.dependentIdTask = t.id AND t2.deleted = 0
-WHERE
-	t.idWorkspace = ?
-	AND t.deleted = 0
-	AND t.dependentIdTask IS NULL
-GROUP BY
-	t.id,
-	t.name;
+					)
+				FROM
+					task st
+				WHERE
+					st.dependentIdTask = t.id
+					AND st.deleted = 0
+			) AS subtasks,
+			(
+				SELECT
+					JSON_ARRAYAGG (
+						JSON_OBJECT (
+							'id',
+							c.id,
+							'name',
+							c.name,
+							'color',
+							c.color,
+							'description',
+							c.description,
+							'completed',
+							c.completed,
+							'createdAt',
+							c.createdAt,
+							'idWorkspace',
+							c.idWorkspace,
+							'deleted',
+							c.deleted
+						)
+					)
+				FROM
+					category c
+					LEFT JOIN taskCategory tc ON c.id = tc.idCategory
+				WHERE
+					tc.idTask = t.id
+					AND c.deleted = 0
+			) AS categories
+		FROM
+			task t
+		WHERE
+			t.idWorkspace = ?
+			AND t.deleted = 0
+			AND t.dependentIdTask IS NULL
 			`,
       [idWorkspace]
     );
@@ -270,8 +278,10 @@ GROUP BY
         priority: task.priority,
         visibility: task.visibility,
         dependentIdTask: task.dependentIdTask,
-        categories: JSON.parse(task.categories) as Category[],
-        subtasks: JSON.parse(task.subtasks) as subtask[],
+        // categories: JSON.parse(task.categories) as Category[],
+				categories: task.categories ? JSON.parse(task.categories) as Category[] : [],
+        // subtasks: JSON.parse(task.subtasks) as subtask[],
+				subtasks: task.subtasks ? JSON.parse(task.subtasks) as subtask[] : [],
       };
     });
   }

@@ -1,6 +1,8 @@
 type role = "ADMIN" | "MEMBER" | "GUEST";
-type priority = "NONE" | "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+export type priority = "NONE" | "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
 type visibility = "PUBLIC" | "PRIVATE";
+
+export const listPriority: priority[] = ['NONE', 'LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
 
 export interface User {
   id: number;
@@ -104,6 +106,20 @@ export interface UserProject {
 
 
 export interface subtask {
+  id: number;
+  name: string;
+  description?: string;
+  completed: boolean;
+  deadline?: Date;
+  priority: priority;
+  visibility: visibility;
+  createdAt: Date;
+  idWorkspace: number;
+  dependentIdTask: number;
+  categories: Category[];
+}
+
+export interface TaskWCategories {
   id: number;
   name: string;
   description?: string;

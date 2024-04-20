@@ -37,6 +37,7 @@ app.get(
 
 // // task
 app.delete("/task/:idTask", controllerTasks.deleteTask);
+app.put("/task/:idTask", controllerTasks.putTask);
 
 // app.get("/", async (req: Request, res: Response) => {
   

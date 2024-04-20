@@ -1,5 +1,11 @@
-<div>
+<div class="flex flex-col">
   @for (task of tasks; track $index) {
-  <app-tasks-item [task]="task" (onDeleteTask)="DeleteTask($event)" (onEditTask)="EditTask($event)"></app-tasks-item>
+  <app-tasks-item
+    [task]="task"
+    [index]="$index"
+    [isLast]="tasks.length - 1 === $index"
+    (onDeleteTask)="DeleteTask($event)"
+    (onChangeTask)="ChangeTask($event)"
+    (onEditTask)="EditTask($event)"></app-tasks-item>
   }
 </div>

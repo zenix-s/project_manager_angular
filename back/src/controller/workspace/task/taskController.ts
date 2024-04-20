@@ -52,6 +52,10 @@ export class TaskController {
       res.status(500).send("Internal server error");
     }
   }
+
+	public async putTask(req: Request, res: Response) {
+		
+	}
 }
 
 // // /workspace/:idWorkspace/task

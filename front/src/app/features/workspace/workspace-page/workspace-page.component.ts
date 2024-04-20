@@ -5,7 +5,7 @@ type _section = 'tasks' | 'teams' | 'categories' | 'options';
 @Component({
   selector: 'app-workspace-page',
   templateUrl: './workspace-page.component.html',
-  styles: ``,
+  styles: `:host { display: block; width: 100%; }`,
 })
 export class WorkspacePageComponent implements OnInit {
   constructor(private ActivatedRoute: ActivatedRoute, private router: Router) {}

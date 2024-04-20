@@ -17,12 +17,19 @@ export class ListTasksComponent{
   @Output()
   onEditTask = new EventEmitter<number>();
 
+  @Output()
+  onChangeTask = new EventEmitter<Task>();
+
   DeleteTask(taskId: number) {
     this.onDeleteTask.emit(taskId);
   }
 
   EditTask(taskId: number) {
     this.onEditTask.emit(taskId);
+  }
+
+  ChangeTask(task:Task){
+    this.onChangeTask.emit(task);
   }
   // @Input()
   // workspaceId!: number;
