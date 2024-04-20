@@ -1,0 +1,25 @@
+<div class="relative">
+  <div>
+    <button
+      (click)="opened = !opened"
+    >
+      abrete sesamo
+    </button>
+  </div>
+  <div
+    class="absolute bg-dark z-10 border border-fountainBlue w-max"
+    [ngClass]="opened ? 'block' : 'hidden'"
+  >
+    <div class="flex flex-col">
+      <!-- <li class="hover:bg-lightDark/70">
+        asdkjfla
+      </li> -->
+      <app-priority-submenu
+        [taskPriority]="task.priority"
+      ></app-priority-submenu>
+      <app-priority-submenu></app-priority-submenu>
+      <app-priority-submenu></app-priority-submenu>
+
+    </div>
+  </div>
+</div>

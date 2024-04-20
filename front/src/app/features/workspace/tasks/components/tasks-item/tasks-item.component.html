@@ -11,7 +11,7 @@
       {{ opened ? '-' : '+' }}
     </span>
     }@else{
-    <span class="cursor-default select-none">-</span>
+    <span class="cursor-default select-none">&nbsp;</span>
     }
     <app-task-item [task]="task" (onDeleteTask)="onDelete($event)" (onChangeTask)="onChange($event)"
       [index]="index"></app-task-item>

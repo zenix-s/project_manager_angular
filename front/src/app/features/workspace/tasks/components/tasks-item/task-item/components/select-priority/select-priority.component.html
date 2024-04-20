@@ -4,28 +4,87 @@
     (click)="isOpen = !isOpen"
     (mouseleave)="isOpen"
     >
-    {{priority}}
+    @switch (priority) {
+      @case ('NONE') {
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 12C8 13.1046 7.10457 14 6 14C4.89543 14 4 13.1046 4 12C4 10.8954 4.89543 10 6 10C7.10457 10 8 10.8954 8 12Z" fill="currentColor" /><path d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z" fill="currentColor" /><path d="M18 14C19.1046 14 20 13.1046 20 12C20 10.8954 19.1046 10 18 10C16.8954 10 16 10.8954 16 12C16 13.1046 16.8954 14 18 14Z" fill="currentColor" /></svg>
+      }
+      @case ('LOW') {
+        <svg width="20" height="20" viewBox="0 0 156 156" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="14.5" y="100.5" width="35" height="41" rx="9.5" fill="currentcolor" stroke="currentcolor"/>
+          <rect x="60.5" y="58.5" width="35" height="83" rx="9.5" fill="grey" stroke="grey"/>
+          <rect x="106.5" y="14.5" width="35" height="127" rx="9.5" fill="grey" stroke="grey"/>
+        </svg>
+
+
+      }
+      @case ('MEDIUM') {
+        <svg width="20" height="20" viewBox="0 0 156 156" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="14.5" y="100.5" width="35" height="41" rx="9.5" fill="currentcolor" stroke="currentcolor"/>
+          <rect x="60.5" y="58.5" width="35" height="83" rx="9.5" fill="currentcolor" stroke="currentcolor"/>
+          <rect x="106.5" y="14.5" width="35" height="127" rx="9.5" fill="grey" stroke="grey"/>
+        </svg>
+      }
+      @case ('HIGH') {
+        <svg width="20" height="20" viewBox="0 0 156 156" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="14.5" y="100.5" width="35" height="41" rx="9.5" fill="currentcolor" stroke="currentcolor"/>
+          <rect x="60.5" y="58.5" width="35" height="83" rx="9.5" fill="currentcolor" stroke="currentcolor"/>
+          <rect x="106.5" y="14.5" width="35" height="127" rx="9.5" fill="currentcolor" stroke="currentcolor"/>
+        </svg>
+      }
+      @case ('CRITICAL') {
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="icon icon-tabler icon-tabler-alert-square-filled"  viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M19 2a3 3 0 0 1 2.995 2.824l.005 .176v14a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-14a3 3 0 0 1 2.824 -2.995l.176 -.005h14zm-6.99 13l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007zm-.01 -8a1 1 0 0 0 -.993 .883l-.007 .117v4l.007 .117a1 1 0 0 0 1.986 0l.007 -.117v-4l-.007 -.117a1 1 0 0 0 -.993 -.883z" stroke-width="0" fill="currentColor" />
+        </svg>
+      }
+    }
   </div>
-  <ul class="flex flex-col bg-dark z-10 border border-fountainBlue w-full" [ngClass]="isOpen ? 'block' : 'hidden'"
+  <ul class="flex flex-col bg-dark z-10 border absolute border-fountainBlue w-max" [ngClass]="isOpen ? 'block' : 'hidden'"
     (mouseleave)="isOpen"
     (mouseenter)="isOpen"
     >
     @for (priority of listPriority; track $index) {
-    <li class="w-full ">
-      <button (click)="select(priority)" class="hover:underline  px-1 group flex">
-        <div class="">
-          <!-- @if (priority === 'NONE') {
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 12C8 13.1046 7.10457 14 6 14C4.89543 14 4 13.1046 4 12C4 10.8954 4.89543 10 6 10C7.10457 10 8 10.8954 8 12Z" fill="currentColor" /><path d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z" fill="currentColor" /><path d="M18 14C19.1046 14 20 13.1046 20 12C20 10.8954 19.1046 10 18 10C16.8954 10 16 10.8954 16 12C16 13.1046 16.8954 14 18 14Z" fill="currentColor" /></svg>
-          } -->
+    <li class="w-full">
+      <button (click)="select(priority)" class="hover:bg-lightDark/70 w-full px-1 gap-2 group flex items-center">
+        <span class="">
           @switch (priority) {
             @case ('NONE') {
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 12C8 13.1046 7.10457 14 6 14C4.89543 14 4 13.1046 4 12C4 10.8954 4.89543 10 6 10C7.10457 10 8 10.8954 8 12Z" fill="currentColor" /><path d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z" fill="currentColor" /><path d="M18 14C19.1046 14 20 13.1046 20 12C20 10.8954 19.1046 10 18 10C16.8954 10 16 10.8954 16 12C16 13.1046 16.8954 14 18 14Z" fill="currentColor" /></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 12C8 13.1046 7.10457 14 6 14C4.89543 14 4 13.1046 4 12C4 10.8954 4.89543 10 6 10C7.10457 10 8 10.8954 8 12Z" fill="currentColor" /><path d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z" fill="currentColor" /><path d="M18 14C19.1046 14 20 13.1046 20 12C20 10.8954 19.1046 10 18 10C16.8954 10 16 10.8954 16 12C16 13.1046 16.8954 14 18 14Z" fill="currentColor" /></svg>
+            }
+            @case ('LOW') {
+              <svg width="20" height="20" viewBox="0 0 156 156" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="14.5" y="100.5" width="35" height="41" rx="9.5" fill="currentcolor" stroke="currentcolor"/>
+                <rect x="60.5" y="58.5" width="35" height="83" rx="9.5" fill="grey" stroke="grey"/>
+                <rect x="106.5" y="14.5" width="35" height="127" rx="9.5" fill="grey" stroke="grey"/>
+              </svg>
+
+
+            }
+            @case ('MEDIUM') {
+              <svg width="20" height="20" viewBox="0 0 156 156" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="14.5" y="100.5" width="35" height="41" rx="9.5" fill="currentcolor" stroke="currentcolor"/>
+                <rect x="60.5" y="58.5" width="35" height="83" rx="9.5" fill="currentcolor" stroke="currentcolor"/>
+                <rect x="106.5" y="14.5" width="35" height="127" rx="9.5" fill="grey" stroke="grey"/>
+              </svg>
+            }
+            @case ('HIGH') {
+              <svg width="20" height="20" viewBox="0 0 156 156" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="14.5" y="100.5" width="35" height="41" rx="9.5" fill="currentcolor" stroke="currentcolor"/>
+                <rect x="60.5" y="58.5" width="35" height="83" rx="9.5" fill="currentcolor" stroke="currentcolor"/>
+                <rect x="106.5" y="14.5" width="35" height="127" rx="9.5" fill="currentcolor" stroke="currentcolor"/>
+              </svg>
+            }
+            @case ('CRITICAL') {
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="icon icon-tabler icon-tabler-alert-square-filled"  viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M19 2a3 3 0 0 1 2.995 2.824l.005 .176v14a3 3 0 0 1 -2.824 2.995l-.176 .005h-14a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-14a3 3 0 0 1 2.824 -2.995l.176 -.005h14zm-6.99 13l-.127 .007a1 1 0 0 0 0 1.986l.117 .007l.127 -.007a1 1 0 0 0 0 -1.986l-.117 -.007zm-.01 -8a1 1 0 0 0 -.993 .883l-.007 .117v4l.007 .117a1 1 0 0 0 1.986 0l.007 -.117v-4l-.007 -.117a1 1 0 0 0 -.993 -.883z" stroke-width="0" fill="currentColor" />
+              </svg>
             }
           }
-        </div>
-        <div>
+        </span>
+        <span>
           {{priority}}
-        </div>
+        </span>
       </button>
     </li>
     }

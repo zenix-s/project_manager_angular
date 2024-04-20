@@ -26,6 +26,11 @@ export class TaskItemComponent {
     this.onChangeTask.emit(this.task);
   }
 
+  ChangeCompleteStatusTask(completed: boolean) {
+    this.task.completed = completed;
+    this.onChangeTask.emit(this.task);
+  }
+
   @Output()
   onDeleteTask = new EventEmitter<number>();
 
