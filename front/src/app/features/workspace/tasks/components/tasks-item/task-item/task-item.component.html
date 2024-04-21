@@ -49,6 +49,8 @@
     <!-- <button (click)="DeleteTask(task.id)">Delete</button> -->
     <app-input-contextual-menu
       [task]="task"
+      (onChangePriority)="ChangePriority(task.id, $event)"
+      (onChangeCompleted)="ChangeCompleteStatusTask($event)"
     ></app-input-contextual-menu>
   </div>
 </div>

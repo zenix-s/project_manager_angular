@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TaskData, listPriority, priority } from '@app/interfaces/interfaces';
 
 @Component({
@@ -11,6 +11,13 @@ export class PrioritySubmenuComponent {
 
   @Input()
   taskPriority!: priority;
+
+  @Output()
+  onChangePriority = new EventEmitter<priority>()
+
+  changePriority(newPriority:priority){
+    this.onChangePriority.emit(newPriority)
+  }
 
   get listPriority() {
     return listPriority;

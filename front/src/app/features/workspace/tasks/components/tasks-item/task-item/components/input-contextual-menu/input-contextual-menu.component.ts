@@ -1,5 +1,5 @@
-import { Component, ElementRef, HostListener, Input } from '@angular/core';
-import { TaskData, TaskWCategories } from '@app/interfaces/interfaces';
+import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { TaskData, TaskWCategories, priority } from '@app/interfaces/interfaces';
 
 @Component({
   selector: 'app-input-contextual-menu',
@@ -11,6 +11,20 @@ export class InputContextualMenuComponent {
 
   @Input()
   task!: TaskWCategories;
+
+  @Output()
+  onChangePriority = new EventEmitter<priority>()
+
+  @Output()
+  onChangeCompleted = new EventEmitter<boolean>()
+
+  changePriority(newPriority:priority){
+    this.onChangePriority.emit(newPriority)
+  }
+
+  changeCompleted(newCompleted:boolean){
+    this.onChangeCompleted.emit(newCompleted)
+  }
 
   constructor(private elementRef: ElementRef<HTMLElement>) {}
   @HostListener('document:click', ['$event'])

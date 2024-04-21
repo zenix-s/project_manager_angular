@@ -11,6 +11,7 @@ import { SelectPriorityComponent } from './components/tasks-item/task-item/compo
 import { InputCompleteTaskComponent } from './components/tasks-item/task-item/components/input-complete-task/input-complete-task.component';
 import { InputContextualMenuComponent } from './components/tasks-item/task-item/components/input-contextual-menu/input-contextual-menu.component';
 import { PrioritySubmenuComponent } from './components/tasks-item/task-item/components/input-contextual-menu/priority-submenu/priority-submenu.component';
+import { CompletedSubmenuComponent } from './components/tasks-item/task-item/components/input-contextual-menu/completed-submenu/completed-submenu.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { PrioritySubmenuComponent } from './components/tasks-item/task-item/comp
     SelectPriorityComponent,
     InputCompleteTaskComponent,
     InputContextualMenuComponent,
-    PrioritySubmenuComponent
+    PrioritySubmenuComponent,
+    CompletedSubmenuComponent
   ],
   imports: [
     CommonModule,
