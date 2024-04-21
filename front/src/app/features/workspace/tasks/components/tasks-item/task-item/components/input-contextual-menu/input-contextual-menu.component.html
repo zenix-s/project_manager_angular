@@ -1,5 +1,5 @@
 <div class="relative flex flex-row-reverse">
-  <div>
+  <div class="flex items-center">
     <button
       (click)="opened = !opened"
     >
@@ -7,7 +7,7 @@
     </button>
   </div>
   <div
-    class="absolute bg-dark z-10 border border-fountainBlue w-max right-full"
+    class="absolute bg-dark z-10 border border-fountainBlue top-1 w-max right-full"
     [ngClass]="opened ? 'block' : 'hidden'"
   >
     <div class="flex flex-col">
