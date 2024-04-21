@@ -51,6 +51,7 @@
       [task]="task"
       (onChangePriority)="ChangePriority(task.id, $event)"
       (onChangeCompleted)="ChangeCompleteStatusTask($event)"
+      (onDelete)="DeleteTask(task.id)"
     ></app-input-contextual-menu>
   </div>
 </div>

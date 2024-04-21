@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { listPriority, priority } from '@app/interfaces/interfaces';
 
@@ -22,10 +22,22 @@ export class InputSelectPriorityComponent implements ControlValueAccessor {
 
   displayed: boolean = false;
 
-  constructor(private ngControl: NgControl) {
+  constructor(
+    private ngControl: NgControl,
+    private elementRef: ElementRef
+  ) {
     this.ngControl.valueAccessor = this;
     this.value = 'NONE';
     this.disabled = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: PointerEvent) {
+    const nativeElement: any = this.elementRef.nativeElement;
+    const clickedInside: boolean = nativeElement.contains(event.target);
+    if (!clickedInside) {
+      this.displayed = false;
+    }
   }
 
   select(value: priority) {

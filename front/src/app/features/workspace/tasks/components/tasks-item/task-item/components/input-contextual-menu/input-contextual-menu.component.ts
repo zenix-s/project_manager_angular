@@ -18,6 +18,9 @@ export class InputContextualMenuComponent {
   @Output()
   onChangeCompleted = new EventEmitter<boolean>()
 
+  @Output()
+  onDelete = new EventEmitter<void>()
+
   changePriority(newPriority:priority){
     this.onChangePriority.emit(newPriority)
   }
@@ -25,6 +28,12 @@ export class InputContextualMenuComponent {
   changeCompleted(newCompleted:boolean){
     this.onChangeCompleted.emit(newCompleted)
   }
+
+  delete(){
+    this.onDelete.emit()
+  }
+
+
 
   constructor(private elementRef: ElementRef<HTMLElement>) {}
   @HostListener('document:click', ['$event'])

@@ -1,9 +1,9 @@
 <div class="relative">
-  <div class="border border-black p-2 cursor-pointer peer " (click)="displayed = !displayed">{{value}}</div>
-  <div [ngClass]="displayed ? 'block' : 'hidden'" class="absolute bg-white border border-black p-2">
+  <div class="border border-fountainBlue/70 hover:border-fountainBlue p-2 cursor-pointer peer " (click)="displayed = !displayed">{{value}}</div>
+  <div [ngClass]="displayed ? 'block' : 'hidden'" class="absolute bg-dark border border-fountainBlue p-2">
     <ul>
       @for (priority of listPriority; track $index) {
-      <div class="cursor-pointer hover:underline" (click)="select(priority)">
+      <div class="cursor-pointer hover:underline w-full hover:bg-lightDark/70" (click)="select(priority)">
         {{priority}}
       </div>
       }
