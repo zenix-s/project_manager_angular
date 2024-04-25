@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { Task, TaskData, TaskWCategories, listPriority, priority } from "@app/interfaces/interfaces";
+import { Category, Task, TaskData, TaskWCategories, listPriority, priority } from "@app/interfaces/interfaces";
 
 @Component({
   selector: "app-task-item",
@@ -12,6 +12,8 @@ export class TaskItemComponent {
   @Input()
   task!: TaskWCategories;
   @Input()
+  categories: Category[] = []
+  @Input()
   index!: number;
   @Input()
   father!: boolean;
@@ -23,7 +25,7 @@ export class TaskItemComponent {
   @Output()
   onChangeTask = new EventEmitter<Task>();
 
-  ChangePriority(idTask:number, priority: priority) {
+  ChangePriority(priority: priority) {
     this.task.priority = priority;
     this.onChangeTask.emit(this.task);
   }

@@ -1,16 +1,20 @@
-import { Component, Input, OnInit, signal } from '@angular/core';
+import { Component, Input, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TasksService } from '@service/workspace-tasks.service';
-import { Task, TaskData } from '@types';
+import { CategoryService } from '@service/category.service';
+import { Category, Task, TaskData } from '@types';
 
 @Component({
   selector: 'app-tasks-page',
   templateUrl: './tasks-page.component.html',
 })
 export class TasksPageComponent implements OnInit {
-  constructor(private tasksService: TasksService) {}
+  tasksService = inject(TasksService);
+  categoryService = inject(CategoryService);
+  // constructor(private tasksService: TasksService) {}
 
   tasks = signal<TaskData[]>([]);
+  categories = signal<Category[]>([]);
 
   @Input()
   idWorkspace: number = 0;
@@ -54,14 +58,22 @@ export class TasksPageComponent implements OnInit {
     //       }
     //       return t;
     //     })
-    //   ); 
+    //   );
     // });
   }
 
   ngOnInit(): void {
-    this.tasksService.getTasks(this.idWorkspace).subscribe((tasks) => {
-      console.log(tasks);
-      this.tasks.set(tasks);
-    });
+    this.tasksService
+      .getTasks(this.idWorkspace)
+      .subscribe((tasks) => {
+        console.log(tasks);
+        this.tasks.set(tasks);
+      });
+    this.categoryService
+      .getWorkspaceCategories(this.idWorkspace)
+      .subscribe((categories) => {
+        console.log(categories);
+        this.categories.set(categories);
+      });
   }
 }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Task, TaskData } from '@app/interfaces/interfaces';
+import { Category, Task, TaskData } from '@app/interfaces/interfaces';
 
 @Component({
   selector: 'app-tasks-item',
@@ -9,6 +9,8 @@ import { Task, TaskData } from '@app/interfaces/interfaces';
 export class TasksItemComponent {
   @Input()
   task!: TaskData;
+  @Input()
+  categories: Category[] = [];
   @Input()
   index!: number;
   @Input()

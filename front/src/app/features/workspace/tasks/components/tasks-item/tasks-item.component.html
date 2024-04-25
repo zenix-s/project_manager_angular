@@ -1,5 +1,6 @@
 <!-- <details #itemTask open="opened()" (click)="null"> -->
-<div #itemTask (click)="null">
+<div>
+  <!-- TASK -->
 	<div class="flex hover:bg-lightDark/40">
 		@if(task.subtasks.length > 0){
 			<span (click)="opened = !opened" class="cursor-pointer select-none">
@@ -8,10 +9,17 @@
 		}@else{
 			<span class="cursor-default select-none">&nbsp;</span>
 		}
-		<app-task-item [task]="task" (onDeleteTask)="onDelete($event)" (onChangeTask)="onChange($event)" [index]="index"
-			[father]="true">
+		<app-task-item
+      [task]="task"
+			[father]="true"
+      [index]="index"
+      [categories]="categories"
+      (onDeleteTask)="onDelete($event)"
+      (onChangeTask)="onChange($event)"
+    >
 		</app-task-item>
 	</div>
+  <!-- SUBTASKS -->
 	<div class="flex flex-col" [ngClass]="opened ? 'block' : 'hidden'">
 		@for (subtask of task.subtasks; track $index) {
 			<div class="flex hover:bg-lightDark/40">
@@ -21,7 +29,12 @@
 				@else {
 					<span>&nbsp;├──</span>
 				}
-				<app-task-item [task]="subtask" (onDeleteTask)="onDelete($event)" [index]="$index"></app-task-item>
+				<app-task-item
+          [task]="subtask"
+          [index]="$index"
+          [categories]="categories"
+          (onDeleteTask)="onDelete($event)"
+        ></app-task-item>
 			</div>
 		}
 	</div>

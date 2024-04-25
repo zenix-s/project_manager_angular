@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { TaskData, TaskWCategories, priority } from '@app/interfaces/interfaces';
+import { Category, TaskData, TaskWCategories, priority } from '@app/interfaces/interfaces';
 
 @Component({
   selector: 'app-input-contextual-menu',
@@ -11,6 +11,8 @@ export class InputContextualMenuComponent {
 
   @Input()
   task!: TaskWCategories;
+  @Input()
+  categories: Category[] = []
 
   @Output()
   onChangePriority = new EventEmitter<priority>()
