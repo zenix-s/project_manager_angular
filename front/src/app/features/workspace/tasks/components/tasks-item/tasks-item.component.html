@@ -1,43 +1,28 @@
 <!-- <details #itemTask open="opened()" (click)="null"> -->
 <div #itemTask (click)="null">
-  <div class="flex hover:bg-lightDark/40">
-    <!-- @if (isLast) {
-    <span>└──</span>
-    }@else {
-    <span>├──</span>
-    } -->
-    @if(task.subtasks.length > 0){
-    <span (click)="opened = !opened" class="cursor-pointer select-none">
-      {{ opened ? '-' : '+' }}
-    </span>
-    }@else{
-    <span class="cursor-default select-none">&nbsp;</span>
-    }
-    <app-task-item
-      [task]="task"
-      (onDeleteTask)="onDelete($event)"
-      (onChangeTask)="onChange($event)"
-      [index]="index"
-      [father]="true"
-      >
-      </app-task-item>
-  </div>
-  <div
-  class="flex flex-col"
-  [ngClass]="opened ? 'block' : 'hidden'"
-  >
-    @for (subtask of task.subtasks; track $index) {
-    <div class="flex hover:bg-lightDark/40">
-      @if ($index === task.subtasks.length - 1) {
-      <span>&nbsp;└──</span>
-      <!-- <span>&boxv;&nbsp;&nbsp;└──</span> -->
-      }
-      @else {
-      <span>&nbsp;├──</span>
-      <!-- <span>&boxv;&nbsp;&nbsp;├──</span> -->
-      }
-      <app-task-item [task]="subtask" (onDeleteTask)="onDelete($event)" [index]="$index"></app-task-item>
-    </div>
-    }
-  </div>
+	<div class="flex hover:bg-lightDark/40">
+		@if(task.subtasks.length > 0){
+			<span (click)="opened = !opened" class="cursor-pointer select-none">
+				{{ opened ? '-' : '+' }}
+			</span>
+		}@else{
+			<span class="cursor-default select-none">&nbsp;</span>
+		}
+		<app-task-item [task]="task" (onDeleteTask)="onDelete($event)" (onChangeTask)="onChange($event)" [index]="index"
+			[father]="true">
+		</app-task-item>
+	</div>
+	<div class="flex flex-col" [ngClass]="opened ? 'block' : 'hidden'">
+		@for (subtask of task.subtasks; track $index) {
+			<div class="flex hover:bg-lightDark/40">
+				@if ($index === task.subtasks.length - 1) {
+					<span>&nbsp;└──</span>
+				}
+				@else {
+					<span>&nbsp;├──</span>
+				}
+				<app-task-item [task]="subtask" (onDeleteTask)="onDelete($event)" [index]="$index"></app-task-item>
+			</div>
+		}
+	</div>
 </div>
