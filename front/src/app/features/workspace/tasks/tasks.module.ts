@@ -11,6 +11,7 @@ import { InputCompleteTaskComponent } from './components/tasks-item/task-item/in
 import { InputContextualMenuComponent } from './components/tasks-item/task-item/input-contextual-menu/input-contextual-menu.component';
 import { PrioritySubmenuComponent } from './components/tasks-item/task-item/input-contextual-menu/priority-submenu/priority-submenu.component';
 import { CompletedSubmenuComponent } from './components/tasks-item/task-item/input-contextual-menu/completed-submenu/completed-submenu.component';
+import { IconsModule } from '@app/share/icons/icons.module';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { CompletedSubmenuComponent } from './components/tasks-item/task-item/inp
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    IconsModule
   ],
   exports: [
     TasksPageComponent
