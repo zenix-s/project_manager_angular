@@ -29,7 +29,7 @@ export class TasksService {
   }
 
   changeTask(task: Task): Observable<TaskData> {
-    console.log(task);
+    console.log("change task ");
     return this.http.put<TaskData>(
       `${backendUrl}:${port}/task/${task.id}`,
       task,

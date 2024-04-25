@@ -21,21 +21,6 @@
 	</div>
   <!-- SUBTASKS -->
 	<div class="flex flex-col" [ngClass]="opened ? 'block' : 'hidden'">
-		@for (subtask of task.subtasks; track $index) {
-			<div class="flex hover:bg-lightDark/40">
-				@if ($index === task.subtasks.length - 1) {
-					<span>&nbsp;└──</span>
-				}
-				@else {
-					<span>&nbsp;├──</span>
-				}
-				<app-task-item
-          [task]="subtask"
-          [index]="$index"
-          [categories]="categories"
-          (onDeleteTask)="onDelete($event)"
-        ></app-task-item>
-			</div>
-		}
+    <ng-content></ng-content>
 	</div>
 </div>

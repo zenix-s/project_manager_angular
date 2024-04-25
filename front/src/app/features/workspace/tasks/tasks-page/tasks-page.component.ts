@@ -49,17 +49,19 @@ export class TasksPageComponent implements OnInit {
   }
 
   ChangeTask(task: Task) {
-    console.log('change task ', task);
-    // this.tasksService.changeTask(task).subscribe((updatedTask: TaskData) => {
-    //   this.tasks.update((tasks) =>
-    //     tasks.map((t) => {
-    //       if (t.id === updatedTask.id) {
-    //         return updatedTask;
-    //       }
-    //       return t;
-    //     })
-    //   );
-    // });
+    this.tasksService
+      .changeTask(task)
+      .subscribe((updatedTask: TaskData) => {
+        // this.tasks.update((tasks) =>
+        //   tasks.map((t) => {
+        //     if (t.id === updatedTask.id) {
+        //       return updatedTask;
+        //     }
+        //     return t;
+        //   })
+        // );
+        console.log("updatedTask", updatedTask);
+      });
   }
 
   ngOnInit(): void {

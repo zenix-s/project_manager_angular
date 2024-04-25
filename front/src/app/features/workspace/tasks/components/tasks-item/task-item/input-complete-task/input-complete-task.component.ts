@@ -22,7 +22,6 @@ export class InputCompleteTaskComponent {
 
   toggle() {
     this._completed = !this._completed;
-    console.log(this.completed)
     this.onToggleChange.emit(this.completed)
   }
 

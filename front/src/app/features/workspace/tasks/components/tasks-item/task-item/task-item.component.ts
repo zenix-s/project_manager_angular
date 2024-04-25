@@ -32,7 +32,7 @@ export class TaskItemComponent {
 
   ChangeCompleteStatusTask(completed: boolean) {
     this.task.completed = completed;
-    this.onChangeTask.emit(this.task);
+    this.onChangeTask.emit({...this.task});
   }
 
   @Output()

@@ -54,7 +54,17 @@ export class TaskController {
   }
 
 	public async putTask(req: Request, res: Response) {
-		
+		const Task: Task = req.body;
+		const idTask: number = parseInt(req.params.idTask);
+
+		try {
+			// const updatedTask = await modelTask.updateTask(idTask, Task);
+			const updatedTask = await modelTask.getTaskById(idTask);
+			res.json(updatedTask);
+		} catch (error) {
+			console.error(error);
+			res.status(500).send("Internal server error");
+		}
 	}
 }
 
