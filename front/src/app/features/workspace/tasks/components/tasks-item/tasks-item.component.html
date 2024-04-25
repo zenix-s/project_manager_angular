@@ -13,8 +13,14 @@
     }@else{
     <span class="cursor-default select-none">&nbsp;</span>
     }
-    <app-task-item [task]="task" (onDeleteTask)="onDelete($event)" (onChangeTask)="onChange($event)"
-      [index]="index"></app-task-item>
+    <app-task-item
+      [task]="task"
+      (onDeleteTask)="onDelete($event)"
+      (onChangeTask)="onChange($event)"
+      [index]="index"
+      [father]="true"
+      >
+      </app-task-item>
   </div>
   <div
   class="flex flex-col"

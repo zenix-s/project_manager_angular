@@ -13,6 +13,8 @@ export class TaskItemComponent {
   task!: TaskWCategories;
   @Input()
   index!: number;
+  @Input()
+  father!: boolean;
 
   get listPriority() {
     return listPriority;

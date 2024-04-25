@@ -1,11 +1,11 @@
 <div class="flex w-full items-center gap-4 group cursor-default" (mouseenter)="hovered = true"
   (mouseleave)="hovered = false">
-  <div class="w-4">
-    <!-- @if (!hovered) {
-      {{index+1}} }
-      @else { {{'>'}}
-    } -->
-    {{index+1}}
+  <div class="flex">
+    @if (father) {
+      <span class="">{{index+1}}</span>
+    }@else {
+      <span class="w-4">{{index+1}}</span>
+    }
   </div>
   <div class="flex flex-grow gap-4 items-center">
     <div>
