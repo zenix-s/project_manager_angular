@@ -28,7 +28,7 @@ export class TaskController {
 
   public async deleteTask(req: Request, res: Response) {
     const taskId = parseInt(req.params.idTask);
-    const task = await modelTask.getTaskById(taskId);
+    const task = await modelTask.getTaskDataById(taskId);
     if (task === undefined) {
       res.status(404).send("Task not found");
       return;
@@ -45,7 +45,7 @@ export class TaskController {
 
     try {
       const idTask: number = await modelTask.addTask(task);
-      const newTask: TaskData = await modelTask.getTaskById(idTask);
+      const newTask: TaskData = await modelTask.getTaskDataById(idTask);
       res.json(newTask);
     } catch (error) {
       console.error(error);
@@ -53,19 +53,39 @@ export class TaskController {
     }
   }
 
-	public async putTask(req: Request, res: Response) {
-		const Task: Task = req.body;
-		const idTask: number = parseInt(req.params.idTask);
+  public async putTask(req: Request, res: Response) {
+    const Task: Task = req.body;
+    const idTask: number = parseInt(req.params.idTask);
 
-		try {
-			// const updatedTask = await modelTask.updateTask(idTask, Task);
-			const updatedTask = await modelTask.getTaskById(idTask);
-			res.json(updatedTask);
-		} catch (error) {
-			console.error(error);
-			res.status(500).send("Internal server error");
-		}
-	}
+    if (!(await modelTask.taskExists(idTask))) {
+      res.status(404).send("Task not found");
+      return;
+    }
+
+    try {
+      await modelTask.updateTask(Task);
+      if (Task.dependentIdTask !== null) {
+        const updatedTask = await modelTask.getTaskDataById(
+          Task.dependentIdTask
+        );
+        if (updatedTask === undefined) {
+          res.status(404).send("Task not found");
+          return;
+        }
+        res.json(updatedTask);
+      } else {
+        const updatedTask = await modelTask.getTaskDataById(idTask);
+				if (updatedTask === undefined) {
+					res.status(404).send("Task not found");
+					return;
+				}
+				res.json(updatedTask);
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal server error");
+    }
+  }
 }
 
 // // /workspace/:idWorkspace/task

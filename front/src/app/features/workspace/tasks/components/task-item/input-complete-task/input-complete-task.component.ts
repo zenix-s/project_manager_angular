@@ -21,8 +21,8 @@ export class InputCompleteTaskComponent {
   onToggleChange = new EventEmitter<boolean>()
 
   toggle() {
-    this._completed = !this._completed;
-    this.onToggleChange.emit(this.completed)
+    // this._completed = !this._completed;
+    this.onToggleChange.emit(!this.completed)
   }
 
   constructor() {}

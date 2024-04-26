@@ -29,7 +29,24 @@ interface TaskDataBBDD extends RowDataPacket {
 export class ModelTask {
   constructor() {}
 
-  async getTaskById(idTask: number): Promise<TaskData> {
+	async taskExists(idTask: number): Promise<boolean> {
+		const connection: Connection = await mysql.createConnection(config);
+
+		const [result] = await connection.query<RowDataPacket[]>(
+			`
+				SELECT id
+				FROM task
+				WHERE id = ?
+			`,
+			[idTask]
+		);
+
+		await connection.end();
+
+		return result.length > 0;
+	}
+
+  async getTaskDataById(idTask: number): Promise<TaskData> {
     const connection: Connection = await mysql.createConnection(config);
 
     const [result] = await connection.query<TaskDataBBDD[]>(
@@ -49,28 +66,46 @@ export class ModelTask {
 		SELECT
 			JSON_ARRAYAGG (
 				JSON_OBJECT (
+					'id',
 					st.id,
+					'name',
 					st.name,
+					'createdAt',
 					st.createdAt,
+					'idWorkspace',
 					st.idWorkspace,
+					'description',
 					st.description,
+					'completed',
 					st.completed,
+					'deadline',
 					st.deadline,
+					'priority',
 					st.priority,
+					'visibility',
 					st.visibility,
+					'dependentIdTask',
 					st.dependentIdTask,
 					'categories',
 					(
 						SELECT
 							JSON_ARRAYAGG (
 								JSON_OBJECT (
+									'id',
 									sc.id,
+									'name',
 									sc.name,
+									'color',
 									sc.color,
+									'description',
 									sc.description,
+									'completed',
 									sc.completed,
+									'createdAt',
 									sc.createdAt,
+									'idWorkspace',
 									sc.idWorkspace,
+									'deleted',
 									sc.deleted
 								)
 							)
@@ -93,13 +128,21 @@ export class ModelTask {
 		SELECT
 			JSON_ARRAYAGG (
 				JSON_OBJECT (
+					'id',
 					c.id,
+					'name',
 					c.name,
+					'color',
 					c.color,
+					'description',
 					c.description,
+					'completed',
 					c.completed,
+					'createdAt',
 					c.createdAt,
+					'idWorkspace',
 					c.idWorkspace,
+					'deleted',
 					c.deleted
 				)
 			)
@@ -326,4 +369,29 @@ WHERE
 
     return idTask;
   }
+
+	async updateTask(task: Task): Promise<number> {
+		const connection: Connection = await mysql.createConnection(config);
+
+		await connection.query(
+			`
+				UPDATE task
+				SET name = ?, description = ?, completed = ?, deadline = ?, priority = ?, visibility = ?
+				WHERE id = ?
+			`,
+			[
+				task.name,
+				task.description,
+				task.completed,
+				task.deadline,
+				task.priority,
+				task.visibility,
+				task.id,
+			]
+		);
+
+		await connection.end();
+
+		return task.id;
+	}
 }

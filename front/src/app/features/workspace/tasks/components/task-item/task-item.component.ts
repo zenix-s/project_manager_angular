@@ -1,9 +1,16 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { Category, Task, TaskData, TaskWCategories, listPriority, priority } from "@app/interfaces/interfaces";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Category,
+  Task,
+  TaskData,
+  TaskWCategories,
+  listPriority,
+  priority,
+} from '@app/interfaces/interfaces';
 
 @Component({
-  selector: "app-task-item",
-  templateUrl: "./task-item.component.html",
+  selector: 'app-task-item',
+  templateUrl: './task-item.component.html',
   styles: `:host {
     width: 100%;
   }`,
@@ -12,7 +19,7 @@ export class TaskItemComponent {
   @Input()
   task!: TaskWCategories;
   @Input()
-  categories: Category[] = []
+  categories: Category[] = [];
   @Input()
   index!: number;
   @Input()
@@ -31,8 +38,11 @@ export class TaskItemComponent {
   }
 
   ChangeCompleteStatusTask(completed: boolean) {
-    this.task.completed = completed;
-    this.onChangeTask.emit({...this.task});
+    // this.task.completed = completed;
+    this.onChangeTask.emit({
+      ...this.task,
+      completed: completed,
+    });
   }
 
   @Output()

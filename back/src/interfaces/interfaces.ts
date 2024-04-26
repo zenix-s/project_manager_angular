@@ -46,6 +46,7 @@ export interface Task {
   priority: priority;
   visibility: visibility;
   idProject?: number;
+	dependentIdTask: number;
 }
 
 export interface project {
@@ -158,6 +159,7 @@ export interface TaskData {
 //   createdAt: Date;
 //   idWorkspace: number;
 // }
+
 
 // export interface UserTeam {
 //   id: number;

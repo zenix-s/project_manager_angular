@@ -52,6 +52,26 @@ export class TasksPageComponent implements OnInit {
     this.tasksService
       .changeTask(task)
       .subscribe((updatedTask: TaskData) => {
+        console.log("updated", updatedTask);
+        this.tasks.update((tasks) =>
+          tasks.map((t) => {
+            if (t.id === updatedTask.id) {
+              return updatedTask;
+            }
+            return t;
+          })
+        );
+        // if (task.dependentIdTask !== null) {
+        //   updatedTask.subtasks.map((subtask) => {
+        //     if (subtask.id === task.id) {
+        //       subtask.completed = task.completed;
+        //     }
+        //     return subtask;
+        //   });
+        // }else{
+        //   updatedTask.completed = task.completed;
+        // }
+
         // this.tasks.update((tasks) =>
         //   tasks.map((t) => {
         //     if (t.id === updatedTask.id) {
@@ -60,7 +80,6 @@ export class TasksPageComponent implements OnInit {
         //     return t;
         //   })
         // );
-        console.log("updatedTask", updatedTask);
       });
   }
 

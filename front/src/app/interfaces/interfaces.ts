@@ -46,6 +46,7 @@ export interface Task {
   priority: priority;
   visibility: visibility;
   idProject?: number;
+  dependentIdTask: number;
 }
 
 export interface project {
