@@ -11,7 +11,7 @@
     [ngClass]="opened ? 'block' : 'hidden'"
   >
     <div class="flex flex-col">
-      <div class="w-full">
+     <!-- <div class="w-full">
         <button
           class="w-full flex gap-2 hover:bg-lightDark/70 px-2"
           (click)="delete()"
@@ -21,7 +21,11 @@
           </span>
           <span>Delete</span>
         </button>
-      </div>
+      </div> -->
+      <app-delete-task-submenu
+        (onDeleteTask)="delete()"
+      >
+      </app-delete-task-submenu>
       <app-completed-submenu
         [taskCompleted]="task.completed"
         (onChangeCompleted)="changeCompleted($event)"

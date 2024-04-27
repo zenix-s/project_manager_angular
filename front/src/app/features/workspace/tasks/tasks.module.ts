@@ -13,6 +13,9 @@ import { PrioritySubmenuComponent } from './components/task-item/input-contextua
 import { CompletedSubmenuComponent } from './components/task-item/input-contextual-menu/completed-submenu/completed-submenu.component';
 import { IconsModule } from '@app/share/icons/icons.module';
 import { SubtaskItemComponent } from './components/subtask-item/subtask-item.component';
+import { ShareModule } from '@app/share/share.module';
+import { DeleteTaskSubmenuComponent } from './components/task-item/input-contextual-menu/delete-task-submenu/delete-task-submenu.component';
+import { DeadlineSubmenuComponent } from './components/task-item/input-contextual-menu/deadline-submenu/deadline-submenu.component';
 
 
 @NgModule({
@@ -27,12 +30,15 @@ import { SubtaskItemComponent } from './components/subtask-item/subtask-item.com
     InputContextualMenuComponent,
     PrioritySubmenuComponent,
     CompletedSubmenuComponent,
-    SubtaskItemComponent
+    SubtaskItemComponent,
+    DeleteTaskSubmenuComponent,
+    DeadlineSubmenuComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    IconsModule
+    IconsModule,
+    ShareModule
   ],
   exports: [
     TasksPageComponent

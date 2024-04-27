@@ -33,6 +33,7 @@ export class InputContextualMenuComponent {
 
   delete(){
     this.onDelete.emit()
+    this.opened = false
   }
 
 

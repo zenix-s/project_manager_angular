@@ -8,17 +8,29 @@
     }
   </div>
   <div class="flex flex-grow gap-4 items-center">
-    <app-input-complete-task
-      [completed]="task.completed"
-      (onToggleChange)="ChangeCompleteStatusTask($event)"
+    <!-- COMPLETE STATUS -->
+    <app-tooltip
+      [text]="task.completed ? 'completed' : 'incomplete'"
+      >
+      <app-input-complete-task
+        [completed]="task.completed"
+        (onToggleChange)="ChangeCompleteStatusTask($event)"
+      >
+      </app-input-complete-task>
+    </app-tooltip>
+    <!-- PRIORITY -->
+    <app-tooltip
+      [text]="task.priority"
     >
-    </app-input-complete-task>
-    <app-select-priority
-      [priority]="task.priority"
-      (onPriorityChange)="ChangePriority($event)"
-    ></app-select-priority>
+      <app-select-priority
+        [priority]="task.priority"
+        (onPriorityChange)="ChangePriority($event)"
+      ></app-select-priority>
+    </app-tooltip>
+    <!-- NAME -->
     <div>{{task.name}}</div>
   </div>
+  <!-- CATEGORIES -->
   <div>
     <ul class="flex gap-2">
       @for (category of task.categories; track $index) {
@@ -32,7 +44,32 @@
       }
     </ul>
   </div>
-  <div>{{task.deadline | date : 'MMMM-dd'}}</div>
+  <div class="flex gap-2">
+    <!-- DEADLINE -->
+    @if (task.deadline) {
+      <app-tooltip
+        [text]="'deadline'"
+      >
+        <div class="flex">
+          <span>
+            {{task.deadline | date : 'MMMM-dd'}}
+          </span>
+          <span>
+            &nbsp;-
+          </span>
+        </div>
+      </app-tooltip>
+    }
+    <!-- CREATED AT -->
+    <app-tooltip
+      [text]="'created at'"
+    >
+      <div class="text-white/70">
+        {{task.createdAt | date : 'MMMM-dd'}}
+      </div>
+    </app-tooltip>
+  </div>
+  <!-- CONTEXTUAL MENU -->
   <div class="gap-4 flex items-center">
     <app-input-contextual-menu
       [task]="task"
