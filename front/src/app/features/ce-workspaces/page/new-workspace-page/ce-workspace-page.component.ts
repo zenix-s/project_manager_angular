@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 @Component({
   selector: "app-new-workspace-page",
   templateUrl: "./ce-workspace-page.component.html",
+  styles: ':host { display: block; width: 100%; }',
 })
 export class CEWorkspacePageComponent {
   constructor(

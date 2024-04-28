@@ -26,16 +26,25 @@ export class AuthenticationService {
     const user = this.users.find(user => user.username === username && user.password === password);
     if (user) {
       this.idUser = user.id;
+      localStorage.setItem('user', JSON.stringify(user));
       this.router.navigate(['/']);
     }
   }
 
   logout() {
     this.idUser = null;
+    localStorage.removeItem('user');
     this.router.navigate(['/login']);
+
   }
 
   get isLogged() {
+    if (this.idUser === null) {
+      const user = localStorage.getItem('user');
+      if (user) {
+        this.idUser = JSON.parse(user).id;
+      }
+    }
     return this.idUser !== null;
   }
 

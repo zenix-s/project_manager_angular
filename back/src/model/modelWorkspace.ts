@@ -1,5 +1,5 @@
-import mysql, { RowDataPacket } from "mysql2/promise";
-import { Category } from "../interfaces/interfaces";
+import mysql, { ResultSetHeader, RowDataPacket } from "mysql2/promise";
+import { Category, Workspace } from "../interfaces/interfaces";
 
 const config = {
   host: "localhost",
@@ -59,4 +59,46 @@ export class ModelWorkspace {
   async deleteWorkspace(idWorkspace: number): Promise<boolean> {
     return true;
   }
+
+	async workspaceExists(idWorkspace: number): Promise<boolean> {
+		const connection = await mysql.createConnection(config);
+
+
+
+		const [result] = await connection.query<RowDataPacket[]>(
+			`
+			SELECT
+				id,
+				name,
+				description,
+				createdAt
+			FROM
+				workspace
+			WHERE
+				id = ? AND deleted = 0
+			`,
+			[idWorkspace],
+		);
+
+		await connection.end();
+
+		return result.length > 0;
+	}
+
+	async addWorkspace(workspace: Workspace): Promise<number> {
+		const connection = await mysql.createConnection(config);
+
+		const [result] = await connection.query<ResultSetHeader>(
+			`
+			INSERT INTO workspace (name, description, createdAt, deleted)
+			VALUES (?, ?, ?, 0)
+			`,
+			[workspace.name, workspace.description, new Date()],
+		);
+
+		await connection.end();
+
+		return result.insertId;
+	}
+
 }

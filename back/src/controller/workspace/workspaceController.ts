@@ -25,6 +25,29 @@ export class WorkspaceController {
     });
   }
 
+	public async postWorkspace(req: Request, res: Response) {
+	
+		const workspace: Workspace = req.body;
+
+		try {
+			const idWorkspace: number = await modelWorkspace.addWorkspace(workspace);
+			if (await modelWorkspace.workspaceExists(idWorkspace)) {
+				res.status(201).json({
+					id: idWorkspace,
+					message: "Workspace created",
+				});
+			} else {
+				res.status(400).json({
+					message: "Workspace not created",
+				});
+			}
+		} catch (error) {
+			console.error(error);
+			res.status(500).send("Internal server error");
+		}
+	
+	}
+
   // public async postWorkspacesController(req: Request, res: Response) {
   //   if (!req.body) {
   //     res.status(400).send({
