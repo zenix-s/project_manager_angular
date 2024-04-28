@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AuthenticationService } from './service/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -6,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'front';
+  authenticationService = inject(AuthenticationService);
+
+  get isLogged() {
+    return this.authenticationService.isLogged;
+  }
+
+  logout() {
+    this.authenticationService.logout();
+  }
 }

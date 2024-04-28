@@ -1,5 +1,5 @@
-import mysql, { Connection, RowDataPacket } from "mysql2/promise";
-
+import mysql, { Connection, ResultSetHeader, RowDataPacket } from "mysql2/promise";
+import { Category } from "@/interfaces/interfaces";
 const config = {
   host: "localhost",
   user: "root",
@@ -35,7 +35,9 @@ export class ModelCategory {
         FROM
           category c
         WHERE
-          c.idWorkspace = ?
+          c.idWorkspace = ? &&
+					c.deleted = 0
+
        `,
       [idWorkspace],
     );
@@ -44,4 +46,68 @@ export class ModelCategory {
 
     return result;
   }
+
+	async getCategoryById(idCategory: number): Promise<Category> {
+		const connection: Connection = await mysql.createConnection(config);
+
+		const [result] = await connection.query<CategoryBBDD[]>(
+			`
+				SELECT
+					c.id,
+					c.name,
+					c.description,
+					c.color,
+					c.completed,
+					c.idWorkspace
+				FROM
+					category c
+				WHERE
+					c.id = ?
+			`,
+			[idCategory]
+		);
+
+		await connection.end();
+
+		return {
+			id: result[0].id,
+			name: result[0].name,
+			description: result[0].description,
+			color: result[0].color,
+			completed: result[0].completed,
+			idWorkspace: result[0].idWorkspace
+		};
+	}
+
+
+	async addCategory(category: Category): Promise<number> {
+	
+		const connection: Connection = await mysql.createConnection(config);
+
+		const [result] = await connection.query<ResultSetHeader>(
+			`INSERT INTO category (name, description, color, completed, idWorkspace) VALUES (?, ?, ?, ?, ?)`,
+			[category.name, category.description, category.color, category.completed, category.idWorkspace]
+		);
+
+		await connection.end();
+
+		return result.insertId;
+	
+	}
+
+	async deleteCategory(idCategory: number): Promise<number> {
+		const connection: Connection = await mysql.createConnection(config);
+
+		await connection.query(
+			`
+				UPDATE category
+				SET deleted = 1
+				WHERE id = ?
+			`,
+			[idCategory]
+		);
+
+		await connection.end();
+		return idCategory;
+	}
 }

@@ -1,4 +1,6 @@
 <div class="flex w-screen h-screen bg-dark">
-  <app-side-bar></app-side-bar>
+  @if (isLogged) {
+    <app-side-bar></app-side-bar>
+  }
   <router-outlet></router-outlet>
 </div>

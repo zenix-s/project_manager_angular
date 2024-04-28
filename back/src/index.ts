@@ -35,12 +35,15 @@ app.get(
   "/workspace/:idWorkspace/categories",
   controllerCategory.getCategoriesByWorkspaceId
 );
+app.post("/workspace/:idWorkspace/categories", controllerCategory.postCategory);
+
 
 // // task
 app.delete("/task/:idTask", controllerTasks.deleteTask);
 app.put("/task/:idTask", controllerTasks.putTask);
 
-// app.get("/", async (req: Request, res: Response) => {
+// category
+app.delete("/category/:idCategory", controllerCategory.deleteCategory);
 
 // });
 

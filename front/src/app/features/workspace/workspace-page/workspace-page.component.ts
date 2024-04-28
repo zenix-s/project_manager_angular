@@ -9,7 +9,7 @@ type _section = 'tasks' | 'teams' | 'categories' | 'options';
 })
 export class WorkspacePageComponent implements OnInit {
   constructor(private ActivatedRoute: ActivatedRoute, private router: Router) {}
-  private _section:_section = 'tasks';
+  private _section: _section = 'tasks';
   private _idWorkspace: number = 0;
 
   set section(section: _section) {
@@ -25,9 +25,8 @@ export class WorkspacePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.ActivatedRoute.snapshot.paramMap.has('idWorkspace')) {
+    if (!this.ActivatedRoute.snapshot.paramMap.has('idWorkspace'))
       this.router.navigate(['/']);
-    }
     const idWorkspace = parseInt(
       this.ActivatedRoute.snapshot.paramMap.get('idWorkspace') as any
     );

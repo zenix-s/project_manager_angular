@@ -101,8 +101,6 @@ export class ModelTask {
 									sc.description,
 									'completed',
 									sc.completed,
-									'createdAt',
-									sc.createdAt,
 									'idWorkspace',
 									sc.idWorkspace,
 									'deleted',
@@ -138,8 +136,6 @@ export class ModelTask {
 					c.description,
 					'completed',
 					c.completed,
-					'createdAt',
-					c.createdAt,
 					'idWorkspace',
 					c.idWorkspace,
 					'deleted',
@@ -245,8 +241,6 @@ WHERE
 											sc.description,
 											'completed',
 											sc.completed,
-											'createdAt',
-											sc.createdAt,
 											'idWorkspace',
 											sc.idWorkspace,
 											'deleted',
@@ -282,8 +276,6 @@ WHERE
 							c.description,
 							'completed',
 							c.completed,
-							'createdAt',
-							c.createdAt,
 							'idWorkspace',
 							c.idWorkspace,
 							'deleted',
@@ -380,7 +372,7 @@ WHERE
 		await connection.query(
 			`
 				UPDATE task
-				SET name = ?, description = ?, completed = ?, deadline = ?j, priority = ?, visibility = ?
+				SET name = ?, description = ?, completed = ?, deadline = ?, priority = ?, visibility = ?
 				WHERE id = ?
 			`,
 			[

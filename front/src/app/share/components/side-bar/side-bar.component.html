@@ -18,8 +18,17 @@
     hover:before:text-error
     hover:border-fountainBlue
   ">
-    <a [routerLink]="['/']">
-      <span>Workspaces</span>
-    </a>
+    <div class="flex flex-col grow">
+      <a [routerLink]="['/']">
+        <span>Workspaces</span>
+      </a>
+    </div>
+    <div class="">
+      <button
+        (click)="logout()"
+      >
+        logout
+      </button>
+    </div>
   </nav>
 </aside>

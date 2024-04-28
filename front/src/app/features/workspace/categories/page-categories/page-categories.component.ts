@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, Input, inject, signal } from '@angular/core';
 import { Category } from '@app/interfaces/interfaces';
 import { CategoryService } from '@app/service/category.service';
 
@@ -8,21 +8,19 @@ import { CategoryService } from '@app/service/category.service';
   styles: ``,
 })
 export class PageCategoriesComponent {
-  @Input()
-  idWorkspace: number;
 
-  constructor(private categoryService: CategoryService) {
-    this.idWorkspace = 0;
-  }
+  categoryService = inject(CategoryService);
+
+  @Input()
+  idWorkspace!: number;
+
 
   categories = signal<Category[]>([]);
 
   ngOnInit(): void {
-    this.categoryService
-      .getWorkspaceCategories(this.idWorkspace)
-      .subscribe((categories) => {
-        this.categories.set(categories);
-        console.log(categories);
-      });
+    this.categoryService.categories$.subscribe((categories) => {
+      this.categories.set(categories);
+    });
+    this.categoryService.getWorkspaceCategories(this.idWorkspace);
   }
 }

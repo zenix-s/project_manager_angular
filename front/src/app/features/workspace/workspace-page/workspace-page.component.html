@@ -19,39 +19,38 @@
   hover:border-fountainBlue
   ">
     <nav>
-      <ul class="flex gap-2">
+      <ul class="flex gap-4">
         <li>
-          <button (click)="section = 'tasks'">1 - tasks</button>
+          <button (click)="section = 'tasks'" [ngClass]="{'underline': section === 'tasks'}">
+            1-tasks
+          </button>
         </li>
         <li>
-          <button (click)="section = 'teams'">2 - teams/users</button>
+          <button (click)="section = 'teams'" [ngClass]="{'underline': section === 'teams'}">2-teams/users</button>
         </li>
         <li>
-          <button (click)="section = 'categories'">3 - categories</button>
+          <button (click)="section = 'categories'"
+            [ngClass]="{'underline': section === 'categories'}">3-categories</button>
         </li>
         <li>
-          <button (click)="section = 'options'">4 - options</button>
+          <button (click)="section = 'options'" [ngClass]="{'underline': section === 'options'}">4-options</button>
         </li>
       </ul>
     </nav>
     <div>
       @switch (section) {
-        @case ('tasks'){
-          <app-tasks-page
-          [idWorkspace]="idWorkspace">
-          </app-tasks-page>
-        } @case ('teams'){ teams } @case ('categories'){
-          <app-page-categories
-            [idWorkspace]="idWorkspace"
-          >
-          </app-page-categories>
-        } @case ('options'){
-          <app-workspace-options-page
-            [idWorkspace]="idWorkspace">
-          </app-workspace-options-page>
-        } @default {
-          <div>default</div>
-        }
+      @case ('tasks'){
+      <app-tasks-page [idWorkspace]="idWorkspace">
+      </app-tasks-page>
+      } @case ('teams'){ teams } @case ('categories'){
+      <app-page-categories [idWorkspace]="idWorkspace">
+      </app-page-categories>
+      } @case ('options'){
+      <app-workspace-options-page [idWorkspace]="idWorkspace">
+      </app-workspace-options-page>
+      } @default {
+      <div>default</div>
+      }
       }
     </div>
   </div>

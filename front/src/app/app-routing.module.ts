@@ -4,6 +4,8 @@ import { ListWorkspacePageComponent } from '@features/list-workspaces/page/list-
 import { CEWorkspacePageComponent } from '@features/ce-workspaces/page/new-workspace-page/ce-workspace-page.component';
 import { WorkspacePageComponent } from './features/workspace/workspace-page/workspace-page.component';
 import { PageTestComponent } from './features/tests/page-test/page-test.component';
+import { AuthenticationPageComponent } from './features/authentication/authentication-page/authentication-page.component';
+import { authGuard } from './auth.guard';
 
 
 
@@ -21,14 +23,17 @@ const routes: Routes = [
   {
     path: '',
     component: ListWorkspacePageComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'workspace/new',
     component: CEWorkspacePageComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'workspace/edit/:idWorkspace',
     component: CEWorkspacePageComponent,
+    canActivate: [authGuard],
   },
   // {
   //   path: 'workspace/:idWorkspace',
@@ -37,10 +42,11 @@ const routes: Routes = [
   {
     path: 'workspace/:idWorkspace',
     component: WorkspacePageComponent,
+    canActivate: [authGuard],
   },
   {
-    path: 'test',
-    component: PageTestComponent,
+    path: 'login',
+    component: AuthenticationPageComponent,
   },
   // {
   //   path: 'workspace/:idWorkspace/teams',

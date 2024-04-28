@@ -1,14 +1,10 @@
+import { Category } from "@/interfaces/interfaces";
 import { ModelCategory } from "@/model/modelCategory";
 import { Request, Response } from "express";
 
 const modelCategory = new ModelCategory();
 
 export class CategoryController {
-  private idWorkspace: number;
-
-  constructor() {
-    this.idWorkspace = 1;
-  }
 
   public async getCategoriesByWorkspaceId(req: Request, res: Response) {
     const idWorkspace = parseInt(req.params.idWorkspace);
@@ -21,4 +17,38 @@ export class CategoryController {
       res.status(500).send("Internal server error");
     }
   }
+
+	public async postCategory(req: Request, res: Response) {
+		const idWorkspace = parseInt(req.params.idWorkspace);
+		const category:Category = req.body; 
+		category.idWorkspace = idWorkspace;
+		category.completed = false;
+
+		try {
+			const idCategory = await modelCategory.addCategory(category);
+			const newCategory:Category = await modelCategory.getCategoryById(idCategory);
+			res.json(newCategory);
+		} catch (error) {
+			console.error(error);
+			res.status(500).send("Internal server error");
+		}
+	}
+
+
+	public async deleteCategory(req: Request, res: Response) {
+		const idCategory = parseInt(req.params.idCategory);
+
+		try {
+			const category = await modelCategory.getCategoryById(idCategory);
+			if (category === undefined) {
+				res.status(404).send("Category not found");
+				return;
+			}
+			const deletedId:number =	await modelCategory.deleteCategory(idCategory);
+			res.json(deletedId);
+		} catch (error) {
+			console.error(error);
+			res.status(500).send("Internal server error");
+		}
+	}
 }

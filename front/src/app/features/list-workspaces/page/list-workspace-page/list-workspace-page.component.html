@@ -1,9 +1,32 @@
-<div class="w-full">
-  <div class="w-full">
-    <a [routerLink]="['/workspace/new']">Create new workspace</a>
-  </div>
-  <div>
-    <app-list-workspaces [userWorkspaces]="userWorkspaces">
-    </app-list-workspaces>
+<div class="w-full h-screen py-4 pr-4">
+  <div class="
+  flex
+  flex-col
+  border
+  border-fountainBlue/40
+  h-full
+  p-2
+  before:content-['Dashboard']
+  before:relative
+  before:top-[-1.5rem]
+  before:bg-dark
+  text-white
+  before:text-white/80
+  before:w-min
+  before:px-2
+  hover:bo
+  hover:before:text-error
+  hover:border-fountainBlue
+  ">
+
+    <div class="w-full">
+      <div class="w-full">
+        <a [routerLink]="['/workspace/new']">Create new workspace</a>
+      </div>
+      <div>
+        <app-list-workspaces [userWorkspaces]="userWorkspaces">
+        </app-list-workspaces>
+      </div>
+    </div>
   </div>
 </div>

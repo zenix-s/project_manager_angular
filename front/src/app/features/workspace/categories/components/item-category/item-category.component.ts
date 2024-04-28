@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Category } from '@app/interfaces/interfaces';
+import { CategoryService } from '@app/service/category.service';
 
 @Component({
   selector: 'app-item-category',
@@ -7,11 +8,13 @@ import { Category } from '@app/interfaces/interfaces';
   styles: ``,
 })
 export class ItemCategoryComponent {
+  categoryService = inject(CategoryService);
+
   @Input()
   category!: Category;
 
   deleteCategory(category: Category) {
-    console.log('delete category');
+    this.categoryService.deleteCategory(category.id);
   }
 
   editCategory(category: Category) {
