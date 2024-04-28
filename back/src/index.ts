@@ -37,6 +37,8 @@ app.get(
 );
 app.post("/workspace/:idWorkspace/categories", controllerCategory.postCategory);
 
+// Workspace
+app.post("/workspace", workspaceController.postWorkspace);
 
 // // task
 app.delete("/task/:idTask", controllerTasks.deleteTask);
