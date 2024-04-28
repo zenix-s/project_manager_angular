@@ -21,6 +21,9 @@ export class InputContextualMenuComponent {
   onChangeCompleted = new EventEmitter<boolean>()
 
   @Output()
+  onDeadlineChange = new EventEmitter<Date | null>()
+
+  @Output()
   onDelete = new EventEmitter<void>()
 
   changePriority(newPriority:priority){
@@ -29,6 +32,11 @@ export class InputContextualMenuComponent {
 
   changeCompleted(newCompleted:boolean){
     this.onChangeCompleted.emit(newCompleted)
+  }
+
+  changeDeadline(newDeadline:Date | null){
+    console.log("new deadline: low", newDeadline)
+    this.onDeadlineChange.emit(newDeadline)
   }
 
   delete(){

@@ -76,6 +76,7 @@
       [categories]="categories"
       (onChangePriority)="ChangePriority($event)"
       (onChangeCompleted)="ChangeCompleteStatusTask($event)"
+      (onDeadlineChange)="ChangeDeadlineTask($event)"
       (onDelete)="DeleteTask(task.id)"
     ></app-input-contextual-menu>
   </div>

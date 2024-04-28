@@ -1,21 +1,45 @@
 <div class="relative flex">
-  <div class="flex items-start gap-2 relative hover:bg-lightDark/70 px-2" (mouseenter)="hovered = true" (mouseleave)="hovered = false">
+  <div
+    class="flex items-start gap-2 relative hover:bg-lightDark/70 px-2 w-full"
+    (mouseenter)="hovered = true"
+    (mouseleave)="hovered = false"
+  >
     <span>
+      <app-none-priority-icon></app-none-priority-icon>
     </span>
-    <span>Prioridad</span>
+    <span>Deadline</span>
   </div>
-  <div class="
-    absolute
-    bg-dark
-    z-10
-    border
-    border-fountainBlue
-    w-max
-    right-full
-  " [ngClass]="hovered ? 'block' : 'hidden'" (mouseenter)="hovered = true" (mouseleave)="hovered = false">
+  <div
+    class="
+      absolute
+      bg-dark
+      z-10
+      border
+      border-fountainBlue
+      w-max
+      right-full
+    "
+    [ngClass]="hovered ? 'block' : 'hidden'"
+    (mouseenter)="hovered = true"
+    (mouseleave)="hovered = false"
+  >
     <ul>
       <li
         class="hover:bg-lightDark/70 px-1 flex items-center gap-2"
+        (click)="clearDeadline()"
+      >
+        <div class="flex grow">
+          <div class="w-5">
+            <app-none-priority-icon></app-none-priority-icon>
+          </div>
+          <span>
+            Eliminar fecha
+          </span>
+        </div>
+      </li>
+      <li
+        class="hover:bg-lightDark/70 px-1 flex items-center gap-2"
+        (click)="changeDeadline(tomorrow)"
       >
         <div class="flex grow">
           <div class="w-5">
@@ -28,6 +52,7 @@
       </li>
       <li
         class="hover:bg-lightDark/70 px-1 flex items-center gap-2"
+        (click)="changeDeadline(nextWeek)"
       >
         <div class="flex grow">
           <div class="w-5">

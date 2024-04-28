@@ -1,5 +1,5 @@
 <div class="relative flex flex-row-reverse">
-  <div class="flex items-center">
+  <div class="flex items-center w-full">
     <button
       (click)="opened = !opened"
     >
@@ -22,19 +22,23 @@
           <span>Delete</span>
         </button>
       </div> -->
-      <app-delete-task-submenu
-        (onDeleteTask)="delete()"
-      >
-      </app-delete-task-submenu>
       <app-completed-submenu
         [taskCompleted]="task.completed"
         (onChangeCompleted)="changeCompleted($event)"
       >
       </app-completed-submenu>
+      <app-deadline-submenu
+        (onChangeDeadline)="changeDeadline($event)"
+      >
+      </app-deadline-submenu>
       <app-priority-submenu
         [taskPriority]="task.priority"
         (onChangePriority)="changePriority($event)"
       ></app-priority-submenu>
+      <app-delete-task-submenu
+        (onDeleteTask)="delete()"
+      >
+      </app-delete-task-submenu>
     </div>
   </div>
 </div>

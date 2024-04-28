@@ -4,7 +4,7 @@ import { TaskData, listPriority, priority } from '@app/interfaces/interfaces';
 @Component({
   selector: 'app-priority-submenu',
   templateUrl: './priority-submenu.component.html',
-  styles: ``
+  styles: `:host {width: 100%;}`
 })
 export class PrioritySubmenuComponent {
   hovered:boolean = false;

@@ -373,10 +373,14 @@ WHERE
 	async updateTask(task: Task): Promise<number> {
 		const connection: Connection = await mysql.createConnection(config);
 
+		if (task.deadline) {
+			task.deadline = new Date(task.deadline);
+		}
+
 		await connection.query(
 			`
 				UPDATE task
-				SET name = ?, description = ?, completed = ?, deadline = ?, priority = ?, visibility = ?
+				SET name = ?, description = ?, completed = ?, deadline = ?j, priority = ?, visibility = ?
 				WHERE id = ?
 			`,
 			[
