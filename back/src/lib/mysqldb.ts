@@ -1,4 +1,4 @@
-import mysql from "mysql2/promise";
+import mysql from 'mysql2/promise'
 
 // const conn = await mysql.createConnection({
 // 	host: 'localhost',
@@ -6,11 +6,11 @@ import mysql from "mysql2/promise";
 // 	password: 'rootpassdev',
 // })
 
-export async function createConnection() {
+export async function createConnection () {
   const conn = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "rootpassdev",
-  });
-  return conn;
+    host: 'localhost',
+    user: 'root',
+    password: 'rootpassdev'
+  })
+  return conn
 }
