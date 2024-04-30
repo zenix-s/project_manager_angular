@@ -1,5 +1,5 @@
 <div class="relative">
-  <div class="border border-fountainBlue/70 hover:border-fountainBlue p-2 cursor-pointer peer " (click)="displayed = !displayed">{{value}}</div>
+  <div class="border border-fountainBlue/70 hover:border-fountainBlue p-1 cursor-pointer peer " (click)="displayed = !displayed">{{value}}</div>
   <div [ngClass]="displayed ? 'block' : 'hidden'" class="absolute bg-dark border border-fountainBlue p-2">
     <ul>
       @for (priority of listPriority; track $index) {

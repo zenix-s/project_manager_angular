@@ -324,6 +324,24 @@ WHERE
   async addTask(task: Task): Promise<number> {
     const connection: Connection = await mysql.createConnection(config);
 
+		if (task.deadline) {
+			task.deadline = new Date(task.deadline);
+		}
+
+		if (task.completed === undefined) {
+			task.completed = false;
+		}
+
+		if (task.priority === undefined || task.priority === null) {
+			task.priority = "NONE";
+		}
+
+		if (task.visibility === undefined || task.visibility === null) {
+			task.visibility = "PUBLIC";
+		}
+
+		
+
     const [result] = await connection.query<ResultSetHeader>(
       `
           INSERT INTO task (name, idWorkspace, description, completed, deadline, priority, visibility, createdAt)

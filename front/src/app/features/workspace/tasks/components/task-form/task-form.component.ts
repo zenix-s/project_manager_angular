@@ -28,6 +28,7 @@ export class TaskFormComponent {
     this.onSubmitTask.emit(this.taskForm.value);
     console.log(this.taskForm.value);
     this.closeDialog(dialog);
+    this.taskForm.reset();
   }
 
   openDialog(dialog: HTMLDialogElement) {

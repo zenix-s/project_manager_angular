@@ -46,7 +46,7 @@ export class ModelWorkspace {
 			ON
 				w.id = uw.idWorkspace
 			WHERE
-				uw.idUser = ?
+				uw.idUser = ? AND w.deleted = 0
 			`,
       [idUser],
     );
@@ -95,6 +95,16 @@ export class ModelWorkspace {
 			`,
 			[workspace.name, workspace.description, new Date()],
 		);
+
+		if ( result.insertId !== 0 ) {
+			await connection.query(
+				`
+				INSERT INTO userWorkspace (idUser, idWorkspace, role, createdAt)
+				VALUES (?, ?, 'ADMIN', ?)
+				`,
+				[1, result.insertId, new Date()],
+			)
+		}
 
 		await connection.end();
 
