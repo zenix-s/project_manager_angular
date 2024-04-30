@@ -1,5 +1,5 @@
 import mysql, { ResultSetHeader, RowDataPacket } from "mysql2/promise";
-import { Category, Workspace } from "../interfaces/interfaces";
+import { Workspace } from "../interfaces/interfaces";
 
 const config = {
   host: "localhost",
@@ -21,10 +21,6 @@ interface TaskDataBBDD extends RowDataPacket {
   categories: string;
 }
 
-interface CategoryDataBBDD extends RowDataPacket {
-  id: number;
-  name: string;
-}
 
 export class ModelWorkspace {
   constructor() {}
@@ -48,7 +44,7 @@ export class ModelWorkspace {
 			WHERE
 				uw.idUser = ? AND w.deleted = 0
 			`,
-      [idUser],
+      [idUser]
     );
 
     await connection.end();
@@ -57,16 +53,15 @@ export class ModelWorkspace {
   }
 
   async deleteWorkspace(idWorkspace: number): Promise<boolean> {
+		console.log("deleteWorkspace", idWorkspace);
     return true;
   }
 
-	async workspaceExists(idWorkspace: number): Promise<boolean> {
-		const connection = await mysql.createConnection(config);
+  async workspaceExists(idWorkspace: number): Promise<boolean> {
+    const connection = await mysql.createConnection(config);
 
-
-
-		const [result] = await connection.query<RowDataPacket[]>(
-			`
+    const [result] = await connection.query<RowDataPacket[]>(
+      `
 			SELECT
 				id,
 				name,
@@ -77,38 +72,37 @@ export class ModelWorkspace {
 			WHERE
 				id = ? AND deleted = 0
 			`,
-			[idWorkspace],
-		);
+      [idWorkspace]
+    );
 
-		await connection.end();
+    await connection.end();
 
-		return result.length > 0;
-	}
+    return result.length > 0;
+  }
 
-	async addWorkspace(workspace: Workspace): Promise<number> {
-		const connection = await mysql.createConnection(config);
+  async addWorkspace(workspace: Workspace): Promise<number> {
+    const connection = await mysql.createConnection(config);
 
-		const [result] = await connection.query<ResultSetHeader>(
-			`
+    const [result] = await connection.query<ResultSetHeader>(
+      `
 			INSERT INTO workspace (name, description, createdAt, deleted)
 			VALUES (?, ?, ?, 0)
 			`,
-			[workspace.name, workspace.description, new Date()],
-		);
+      [workspace.name, workspace.description, new Date()]
+    );
 
-		if ( result.insertId !== 0 ) {
-			await connection.query(
-				`
+    if (result.insertId !== 0) {
+      await connection.query(
+        `
 				INSERT INTO userWorkspace (idUser, idWorkspace, role, createdAt)
 				VALUES (?, ?, 'ADMIN', ?)
 				`,
-				[1, result.insertId, new Date()],
-			)
-		}
+        [1, result.insertId, new Date()]
+      );
+    }
 
-		await connection.end();
+    await connection.end();
 
-		return result.insertId;
-	}
-
+    return result.insertId;
+  }
 }

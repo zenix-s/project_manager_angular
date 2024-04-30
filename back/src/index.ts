@@ -1,11 +1,9 @@
 import bodyParser from "body-parser";
-import express, { Express, Request, Response } from "express";
-import mysql, { RowDataPacket } from "mysql2/promise";
+import express, { Express } from "express";
 import { CategoryController } from "./controller/workspace/category/categoryController";
 import { WorkspaceController } from "./controller/workspace/workspaceController";
 import { TaskController } from "@/controller/workspace/task/taskController";
 
-import http from "node:http";
 
 process.loadEnvFile();
 const app: Express = express();

@@ -10,7 +10,7 @@ export interface User {
   password: string;
   email: string;
   createdAt: Date;
-  settings?: any;
+  settings?: null;
 }
 
 export interface Workspace {
