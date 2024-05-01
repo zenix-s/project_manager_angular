@@ -1,8 +1,14 @@
-type role = "ADMIN" | "MEMBER" | "GUEST";
-export type priority = "NONE" | "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
-type visibility = "PUBLIC" | "PRIVATE";
+type role = 'ADMIN' | 'MEMBER' | 'GUEST';
+export type priority = 'NONE' | 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+type visibility = 'PUBLIC' | 'PRIVATE';
 
-export const listPriority: priority[] = ['NONE', 'LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
+export const listPriority: priority[] = [
+  'NONE',
+  'LOW',
+  'MEDIUM',
+  'HIGH',
+  'CRITICAL',
+];
 
 export interface User {
   id: number;
@@ -10,7 +16,7 @@ export interface User {
   password: string;
   email: string;
   createdAt: Date;
-  settings?: any;
+  settings?: null;
 }
 
 export interface Workspace {
@@ -45,7 +51,6 @@ export interface Task {
   deadline?: Date;
   priority: priority;
   visibility: visibility;
-  idProject?: number;
   dependentIdTask: number;
 }
 
@@ -105,49 +110,10 @@ export interface UserProject {
   createdAt: Date;
 }
 
-
-export interface subtask {
-  id: number;
-  name: string;
-  description?: string;
-  completed: boolean;
-  deadline?: Date;
-  priority: priority;
-  visibility: visibility;
-  createdAt: Date;
-  idWorkspace: number;
-  dependentIdTask: number;
-  categories: Category[];
-}
-
-export interface TaskWCategories {
-  id: number;
-  name: string;
-  description?: string;
-  completed: boolean;
-  deadline?: Date;
-  priority: priority;
-  visibility: visibility;
-  createdAt: Date;
-  idWorkspace: number;
-  dependentIdTask: number;
-  categories: Category[];
-}
-
 export interface TaskData {
-  id: number;
-  name: string;
-  description?: string;
-  completed: boolean;
-  deadline?: Date;
-  priority: priority;
-  visibility: visibility;
-  createdAt: Date;
-  idWorkspace: number;
-  dependentIdTask: number;
+  task: Task;
   categories: Category[];
-  subtasks: subtask[];
-  // idProject?: number;
+  subtasks: TaskData[] | null;
   // teams: Team[];
   // users: User[];
 }

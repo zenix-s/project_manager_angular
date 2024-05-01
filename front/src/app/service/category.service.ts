@@ -28,7 +28,7 @@ export class CategoryService {
       )
       .subscribe((categories) => {
         this._categories.next(categories);
-        console.log('categories', categories);
+        // console.log('categories', categories);
       });
   }
 

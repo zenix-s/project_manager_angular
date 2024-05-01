@@ -23,7 +23,7 @@
         </button>
       </div> -->
       <app-completed-submenu
-        [taskCompleted]="task.completed"
+        [taskCompleted]="task.task.completed"
         (onChangeCompleted)="changeCompleted($event)"
       >
       </app-completed-submenu>
@@ -32,7 +32,7 @@
       >
       </app-deadline-submenu>
       <app-priority-submenu
-        [taskPriority]="task.priority"
+        [taskPriority]="task.task.priority"
         (onChangePriority)="changePriority($event)"
       ></app-priority-submenu>
       <app-delete-task-submenu

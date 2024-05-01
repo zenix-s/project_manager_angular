@@ -10,25 +10,25 @@
   <div class="flex flex-grow gap-4 items-center">
     <!-- COMPLETE STATUS -->
     <app-tooltip
-      [text]="task.completed ? 'completed' : 'incomplete'"
+      [text]="task.task.completed ? 'completed' : 'incomplete'"
       >
       <app-input-complete-task
-        [completed]="task.completed"
+        [completed]="task.task.completed"
         (onToggleChange)="ChangeCompleteStatusTask($event)"
       >
       </app-input-complete-task>
     </app-tooltip>
     <!-- PRIORITY -->
     <app-tooltip
-      [text]="task.priority"
+      [text]="task.task.priority"
     >
       <app-select-priority
-        [priority]="task.priority"
+        [priority]="task.task.priority"
         (onPriorityChange)="ChangePriority($event)"
       ></app-select-priority>
     </app-tooltip>
     <!-- NAME -->
-    <div>{{task.name}}</div>
+    <div>{{task.task.name}}</div>
   </div>
   <!-- CATEGORIES -->
   <div>
@@ -46,13 +46,13 @@
   </div>
   <div class="flex gap-2">
     <!-- DEADLINE -->
-    @if (task.deadline) {
+    @if (task.task.deadline) {
       <app-tooltip
         [text]="'deadline'"
       >
         <div class="flex">
           <span>
-            {{task.deadline | date : 'MMMM-dd'}}
+            {{task.task.deadline | date : 'MMMM-dd'}}
           </span>
           <span>
             &nbsp;-
@@ -65,9 +65,12 @@
       [text]="'created at'"
     >
       <div class="text-white/70">
-        {{task.createdAt | date : 'MMMM-dd'}}
+        {{task.task.createdAt | date : 'MMMM-dd'}}
       </div>
     </app-tooltip>
+  </div>
+  <div>
+    <button (click)="openEditTask()">edit</button>
   </div>
   <!-- CONTEXTUAL MENU -->
   <div class="gap-4 flex items-center">
@@ -77,7 +80,7 @@
       (onChangePriority)="ChangePriority($event)"
       (onChangeCompleted)="ChangeCompleteStatusTask($event)"
       (onDeadlineChange)="ChangeDeadlineTask($event)"
-      (onDelete)="DeleteTask(task.id)"
+      (onDelete)="DeleteTask(task.task.id)"
     ></app-input-contextual-menu>
   </div>
 </div>

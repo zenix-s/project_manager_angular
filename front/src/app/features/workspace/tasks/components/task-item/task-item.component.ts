@@ -1,23 +1,27 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import {
   Category,
   Task,
   TaskData,
-  TaskWCategories,
   listPriority,
   priority,
 } from '@app/interfaces/interfaces';
+import { FormTasksService } from '@app/features/workspace/tasks/services/form-tasks.service';
 
 @Component({
   selector: 'app-task-item',
   templateUrl: './task-item.component.html',
+  // template: '',
   styles: `:host {
     width: 100%;
   }`,
 })
 export class TaskItemComponent {
+
+  formTasksService = inject(FormTasksService)
+
   @Input()
-  task!: TaskWCategories;
+  task!: TaskData;
   @Input()
   categories: Category[] = [];
   @Input()
@@ -33,14 +37,14 @@ export class TaskItemComponent {
   onChangeTask = new EventEmitter<Task>();
 
   ChangePriority(priority: priority) {
-    this.task.priority = priority;
-    this.onChangeTask.emit(this.task);
+    this.task.task.priority = priority;
+    this.onChangeTask.emit(this.task.task);
   }
 
   ChangeCompleteStatusTask(completed: boolean) {
     // this.task.completed = completed;
     this.onChangeTask.emit({
-      ...this.task,
+      ...this.task.task,
       completed: completed,
     });
   }
@@ -48,9 +52,14 @@ export class TaskItemComponent {
   ChangeDeadlineTask(newDeadline: Date | null) {
     console.log('new deadline: item', newDeadline);
     this.onChangeTask.emit({
-      ...this.task,
+      ...this.task.task,
       deadline: newDeadline ? newDeadline : undefined,
     });
+  }
+
+  openEditTask() {
+    this.formTasksService.open();
+    this.formTasksService.setTask(this.task);
   }
 
   @Output()

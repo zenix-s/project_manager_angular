@@ -4,49 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { port, backendUrl } from '@env';
 
-// @Injectable({
-//   providedIn: "root",
-// })
-// export class TasksService {
-//   constructor(private http: HttpClient) {}
-
-//   getTasks(idWorkspace: number): Observable<TaskData[]> {
-//     idWorkspace = parseInt(idWorkspace.toString());
-//     return this.http.get<TaskData[]>(
-//       `${backendUrl}:${port}/workspace/${idWorkspace}/task`,
-//     );
-//   }
-
-//   addTask(idWorkspace: number, task: Task): Observable<TaskData> {
-//     return this.http.post<TaskData>(
-//       `${backendUrl}:${port}/workspace/${idWorkspace}/task`,
-//       task,
-//     );
-//   }
-
-//   deleteTask(taskId: number): Observable<number> {
-//     return this.http.delete<number>(`${backendUrl}:${port}/task/${taskId}`);
-//   }
-
-//   changeTask(task: Task): Observable<TaskData> {
-//     console.log("change task ");
-//     return this.http.put<TaskData>(
-//       `${backendUrl}:${port}/task/${task.id}`,
-//       task,
-//     );
-//   }
-// }
-// interface filter {
-//   search: string;
-//   category: string;
-//   priority: string;
-//   status: boolean;
-// }
 @Injectable({
   providedIn: 'root',
 })
 export class TasksService {
-  http = inject(HttpClient);
+  private http = inject(HttpClient);
 
   private _tasks = new BehaviorSubject<TaskData[]>([]);
 
@@ -70,7 +32,7 @@ export class TasksService {
       .get<TaskData[]>(`${backendUrl}:${port}/workspace/${idWorkspace}/task`)
       .subscribe((tasks) => {
         this._tasks.next(tasks);
-        console.log('tasks', tasks);
+        // console.log('tasks', tasks);
       });
   }
 
@@ -90,7 +52,8 @@ export class TasksService {
       .delete<number>(`${backendUrl}:${port}/task/${taskId}`)
       .subscribe((idTaskDeleted) => {
         this._tasks.next(
-          this._tasks.value.filter((task) => task.id !== idTaskDeleted)
+          // this._tasks.value.filter((task) => task.id !== idTaskDeleted)
+          this._tasks.value.filter((task) => task.task.id !== idTaskDeleted)
         );
       });
   }
@@ -102,7 +65,7 @@ export class TasksService {
       .subscribe((updatedTask: TaskData) => {
         this._tasks.next(
           this._tasks.value.map((t) => {
-            if (t.id === updatedTask.id) {
+            if (t.task.id === updatedTask.task.id) {
               return updatedTask;
             }
             return t;

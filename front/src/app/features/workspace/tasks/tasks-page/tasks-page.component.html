@@ -14,10 +14,12 @@
       (onChangeTask)="ChangeTask($event)"
       (onEditTask)="EditTask($event)"
     >
+    @if(task.subtasks != null && task.subtasks.length > 0){
       @for (subtask of task.subtasks; track $index) {
         <app-subtask-item
-          [isLast]="task.subtasks.length - 1 === $index"
+          [isLast]="task.subtasks != null && task.subtasks.length - 1 === $index"
         >
+        <!-- {{ subtask.task.name }} -->
           <app-task-item
             [task]="subtask"
             [index]="$index"
@@ -27,6 +29,7 @@
           ></app-task-item>
         </app-subtask-item>
       }
+    }
     </app-tasks-item>
   }
 </div>

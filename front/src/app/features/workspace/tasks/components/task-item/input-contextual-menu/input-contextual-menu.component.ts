@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { Category, TaskData, TaskWCategories, priority } from '@app/interfaces/interfaces';
+import { Category, Task, TaskData, priority } from '@app/interfaces/interfaces';
 
 @Component({
   selector: 'app-input-contextual-menu',
@@ -10,7 +10,7 @@ export class InputContextualMenuComponent {
   opened: boolean = false;
 
   @Input()
-  task!: TaskWCategories;
+  task!: TaskData;
   @Input()
   categories: Category[] = []
 
