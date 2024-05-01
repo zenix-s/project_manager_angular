@@ -48,6 +48,10 @@ const routes: Routes = [
     path: 'login',
     component: AuthenticationPageComponent,
   },
+  {
+    path: 'test',
+    component: PageTestComponent,
+  },
   // {
   //   path: 'workspace/:idWorkspace/teams',
   //   component

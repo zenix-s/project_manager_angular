@@ -4,6 +4,7 @@ import { PageTestComponent } from './page-test/page-test.component';
 import { CustomInputComponent } from './components/custom-input/custom-input.component';
 import { CustomFormComponent } from './components/custom-form/custom-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TestCompComponent } from './components/test-comp/test-comp.component';
 
 
 
@@ -11,7 +12,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     PageTestComponent,
     CustomInputComponent,
-    CustomFormComponent
+    CustomFormComponent,
+    TestCompComponent
   ],
   imports: [
     CommonModule,
