@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TasksService } from '@service/workspace-tasks.service';
 import { CategoryService } from '@service/category.service';
 import { Category, Task, TaskData } from '@types';
+import { Subscription } from 'rxjs';
 
 
 interface filter {
@@ -31,6 +32,10 @@ export class TasksPageComponent implements OnInit, OnDestroy {
 
   tasks: WritableSignal<TaskData[]> = signal<TaskData[]>([]);
   categories: WritableSignal<Category[]> = signal<Category[]>([]);
+
+  taskSubscription!: Subscription;
+  categorySubscription!: Subscription;
+
 
   filters: WritableSignal<filter> = signal<filter>({
     search: '',
@@ -76,11 +81,11 @@ export class TasksPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.tasksService.tasks$.subscribe((tasks) => {
+    this.taskSubscription = this.tasksService.tasks$.subscribe((tasks) => {
       this.tasks.set(tasks);
       console.log('tasks', tasks);
     });
-    this.categoryService.categories$.subscribe((categories) => {
+    this.categorySubscription = this.categoryService.categories$.subscribe((categories) => {
       this.categories.set(categories);
     });
 
@@ -91,5 +96,8 @@ export class TasksPageComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.tasksService.cleanTasks();
     this.categoryService.cleanCategories();
+
+    this.taskSubscription.unsubscribe();
+    this.categorySubscription.unsubscribe();
   }
 }
