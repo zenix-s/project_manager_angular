@@ -80,6 +80,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
     }
     this.dialog.nativeElement.close();
     this.taskForm.reset();
+    this.taskFormService.clearTask();
     this.task = null;
     this.taskForm.patchValue({
       priority: 'NONE',
