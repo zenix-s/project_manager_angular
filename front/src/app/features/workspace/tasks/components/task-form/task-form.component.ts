@@ -57,6 +57,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
       Validators.required,
     ],
     dependentIdTask: [null],
+    completed: [false]
   });
 
   closeDialog() {
@@ -86,7 +87,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
   }
   onSubmit() {
     if (this.task) {
-      // this.taskService.changeTask(this.taskForm.value);
+      this.taskService.changeTask(this.taskForm.value);
       // this.taskForm.value.id = this.task.task.id;
       console.log(this.taskForm.value);
 
@@ -97,7 +98,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
       });
       return;
     }
-    // this.taskService.addTask(this.idWorkspace, this.taskForm.value);
+    this.taskService.addTask(this.idWorkspace, this.taskForm.value);
     console.log(this.taskForm.value);
     this.taskForm.reset();
     this.taskFormService.close();
@@ -131,6 +132,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
           priority: task.task.priority,
           visibility: task.task.visibility,
           dependentIdTask: task.task.dependentIdTask,
+          completed: task.task.completed,
         });
       }
     });
