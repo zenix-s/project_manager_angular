@@ -44,6 +44,7 @@ app.put("/task/:idTask", controllerTasks.putTask);
 
 // category
 app.delete("/category/:idCategory", controllerCategory.deleteCategory);
+app.put("/category/:idCategory", controllerCategory.putCategory);
 
 // });
 

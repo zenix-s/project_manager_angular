@@ -51,4 +51,20 @@ export class CategoryController {
 			res.status(500).send("Internal server error");
 		}
 	}
+
+	public async putCategory(req:Request, res:Response){
+		const category:Category = req.body;
+
+		try {
+			const idUpdatedCategory = await modelCategory.updateCategory(category);
+			const updatedCategory = await modelCategory.getCategoryById(idUpdatedCategory);
+			if (updatedCategory === undefined) {
+				res.status(404).send("Category not found");
+				return;
+			}
+		} catch (error) {
+			console.error(error);
+			res.status(500).send("Internal server error");
+		}
+	}
 }
