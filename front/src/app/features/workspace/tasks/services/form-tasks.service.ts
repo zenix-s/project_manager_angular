@@ -14,10 +14,12 @@ export class FormTasksService {
 
   open() {
     this._isOpen.next(true);
+    console.log('open task form');
   }
 
   close() {
     this._isOpen.next(false);
+    console.log('close task form');
   }
 
   setTask(task: TaskData) {

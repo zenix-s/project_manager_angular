@@ -28,7 +28,9 @@
       ></app-select-priority>
     </app-tooltip>
     <!-- NAME -->
-    <div>{{task.task.name}}</div>
+    <div (click)="openEditTask()">
+      {{task.task.name}}
+    </div>
   </div>
   <!-- CATEGORIES -->
   <div>

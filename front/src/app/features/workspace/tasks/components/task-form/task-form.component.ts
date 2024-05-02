@@ -37,23 +37,26 @@ export class TaskFormComponent implements OnInit, OnDestroy {
   isOpen: WritableSignal<boolean> = signal<boolean>(false);
 
   taskForm: FormGroup = this.fb.group({
+    id: [null],
     name: [
-      this.task ? this.task.task.name : '',
+      '',
       [Validators.required, Validators.maxLength(50), Validators.minLength(3)],
     ],
     description: [
-      this.task ? this.task.task.description : '',
+      '',
       [Validators.maxLength(255), Validators.minLength(3)],
     ],
-    deadline: [this.task ? this.task.task.deadline : '', Validators.required],
+    deadline: ['', Validators.required],
     priority: [
-      this.task ? this.task.task.priority : 'NONE',
+      'NONE',
       Validators.required,
     ],
     visibility: [
-      this.task ? this.task.task.visibility : 'PUBLIC',
+      // this.task ? this.task.task.visibility : 'PUBLIC',
+      'PUBLIC', // 'PUBLIC' | 'PRIVATE' | 'PROTECTED
       Validators.required,
     ],
+    dependentIdTask: [null],
   });
 
   closeDialog() {
@@ -82,10 +85,25 @@ export class TaskFormComponent implements OnInit, OnDestroy {
     });
   }
   onSubmit() {
-    this.taskService.addTask(this.idWorkspace, this.taskForm.value);
+    if (this.task) {
+      // this.taskService.changeTask(this.taskForm.value);
+      // this.taskForm.value.id = this.task.task.id;
+      console.log(this.taskForm.value);
+
+      this.taskFormService.close();
+      this.taskForm.reset();
+      this.taskForm.patchValue({
+        priority: 'NONE',
+      });
+      return;
+    }
+    // this.taskService.addTask(this.idWorkspace, this.taskForm.value);
     console.log(this.taskForm.value);
-    this._onCloseDialog();
     this.taskForm.reset();
+    this.taskFormService.close();
+    this.taskForm.patchValue({
+      priority: 'NONE',
+    });
   }
 
   constructor() {
@@ -106,11 +124,13 @@ export class TaskFormComponent implements OnInit, OnDestroy {
       this.task = task;
       if (task) {
         this.taskForm.patchValue({
+          id: task.task.id,
           name: task.task.name,
           description: task.task.description,
           deadline: task.task.deadline,
           priority: task.task.priority,
           visibility: task.task.visibility,
+          dependentIdTask: task.task.dependentIdTask,
         });
       }
     });
