@@ -1,4 +1,4 @@
-import { Category } from "@/interfaces/interfaces";
+import { Category } from "@types";
 import { ModelCategory } from "@/model/modelCategory";
 import { Request, Response } from "express";
 

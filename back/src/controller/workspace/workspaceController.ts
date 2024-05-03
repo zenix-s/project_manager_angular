@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Workspace } from "@/interfaces/interfaces";
+import { Workspace } from "@types";
 import { ModelWorkspace } from "@/model/modelWorkspace";
 
 const modelWorkspace = new ModelWorkspace();

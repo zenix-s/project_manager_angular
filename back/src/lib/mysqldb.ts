@@ -1,16 +1,7 @@
-import mysql from 'mysql2/promise'
-
-// const conn = await mysql.createConnection({
-// 	host: 'localhost',
-// 	user: 'root',
-// 	password: 'rootpassdev',
-// })
-
-export async function createConnection () {
-  const conn = await mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'rootpassdev'
-  })
-  return conn
-}
+export const dbconfig = {
+  host: "localhost",
+  user: "root",
+  password: "rootpassdev",
+  database: "tfgsff_db",
+	port: 3306
+};

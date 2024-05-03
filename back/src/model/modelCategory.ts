@@ -3,13 +3,9 @@ import mysql, {
   ResultSetHeader,
   RowDataPacket,
 } from "mysql2/promise";
-import { Category } from "@/interfaces/interfaces";
-const config = {
-  host: "localhost",
-  user: "root",
-  password: "rootpassdev",
-  database: "tfgsff_db",
-};
+import { Category } from "@types";
+
+import { dbconfig } from "@/lib/mysqldb";
 
 interface CategoryBBDD extends RowDataPacket {
   id: number;
@@ -26,7 +22,7 @@ export class ModelCategory {
   async getCategoriesByIdWorkspace(
     idWorkspace: number
   ): Promise<CategoryBBDD[]> {
-    const connection: Connection = await mysql.createConnection(config);
+    const connection: Connection = await mysql.createConnection(dbconfig);
 
     const [result] = await connection.query<CategoryBBDD[]>(
       ` SELECT
@@ -52,7 +48,7 @@ export class ModelCategory {
   }
 
   async getCategoryById(idCategory: number): Promise<Category> {
-    const connection: Connection = await mysql.createConnection(config);
+    const connection: Connection = await mysql.createConnection(dbconfig);
 
     const [result] = await connection.query<CategoryBBDD[]>(
       `
@@ -66,7 +62,7 @@ export class ModelCategory {
 				FROM
 					category c
 				WHERE
-					c.id = ?
+					c.id = ? && c.deleted = 0
 			`,
       [idCategory]
     );
@@ -80,11 +76,12 @@ export class ModelCategory {
       color: result[0].color,
       completed: result[0].completed,
       idWorkspace: result[0].idWorkspace,
+      deleted: false,
     };
   }
 
   async addCategory(category: Category): Promise<number> {
-    const connection: Connection = await mysql.createConnection(config);
+    const connection: Connection = await mysql.createConnection(dbconfig);
 
     const [result] = await connection.query<ResultSetHeader>(
       `INSERT INTO category (name, description, color, completed, idWorkspace) VALUES (?, ?, ?, ?, ?)`,
@@ -103,7 +100,7 @@ export class ModelCategory {
   }
 
   async deleteCategory(idCategory: number): Promise<number> {
-    const connection: Connection = await mysql.createConnection(config);
+    const connection: Connection = await mysql.createConnection(dbconfig);
 
     await connection.query(
       `
@@ -119,7 +116,7 @@ export class ModelCategory {
   }
 
   async updateCategory(category: Category): Promise<number> {
-    const connection: Connection = await mysql.createConnection(config);
+    const connection: Connection = await mysql.createConnection(dbconfig);
 
     await connection.query(
       `

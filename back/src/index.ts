@@ -1,8 +1,9 @@
 import bodyParser from "body-parser";
 import express, { Express } from "express";
-import { CategoryController } from "./controller/workspace/category/categoryController";
-import { WorkspaceController } from "./controller/workspace/workspaceController";
+import { CategoryController } from "@/controller/workspace/category/categoryController";
+import { WorkspaceController } from "@/controller/workspace/workspaceController";
 import { TaskController } from "@/controller/workspace/task/taskController";
+import { TaskCategoryController } from "@/controller/taskCategoryController";
 
 
 process.loadEnvFile();
@@ -10,63 +11,75 @@ const app: Express = express();
 const port = process.env.PORT || 5000;
 
 const workspaceController = new WorkspaceController();
-const controllerTasks = new TaskController();
-const controllerCategory = new CategoryController();
+const taskController = new TaskController();
+const categoryController = new CategoryController();
+const taskCategoryController = new TaskCategoryController();
 
-// Middleware
+// MIDLEWARES
 app.use(bodyParser.json());
 
-// Routers
+// ROUTERS
+/**
+ * Devuelve los workspaces de un usuario
+ */
 app.get("/userWorkspaces", workspaceController.getWorkspacesByIdUserController);
 // app.delete("/userWorkspaces/:id", userWorkspacesController.deleteUserWorkspacesController);
 // app.put("/userWorkspaces/:id", userWorkspacesController.putUserWorkspacesController);
 
-// // workspace
+/**
+ * Elimina un workspace
+ */
 app.delete("/workspace/:idWorkspace", workspaceController.deleteWorkspace);
-// app.post("/workspace", workspaceController.postWorkspacesController);
-// // workspace/task
-app.get("/workspace/:idWorkspace/task", controllerTasks.getWorkspaceTasks);
-app.post("/workspace/:idWorkspace/task", controllerTasks.postTaskController);
 
-// // workspace/category
+/**
+ * Devuelve las tareas de un workspace
+ */
+app.get("/workspace/:idWorkspace/task", taskController.getWorkspaceTasks);
+
+/**
+ * Crea una tarea en un workspace
+ */
+app.post("/workspace/:idWorkspace/task", taskController.postTaskController);
+
+/**
+ * Devuelve las categorias de un workspace
+ */
 app.get(
   "/workspace/:idWorkspace/categories",
-  controllerCategory.getCategoriesByWorkspaceId
+  categoryController.getCategoriesByWorkspaceId
 );
-app.post("/workspace/:idWorkspace/categories", controllerCategory.postCategory);
+/**
+ * Crea una categoria en un workspace
+ */
+app.post("/workspace/:idWorkspace/categories", categoryController.postCategory);
 
-// Workspace
+/**
+ * Crea un workspace
+ */
 app.post("/workspace", workspaceController.postWorkspace);
 
-// // task
-app.delete("/task/:idTask", controllerTasks.deleteTask);
-app.put("/task/:idTask", controllerTasks.putTask);
+/**
+ * Elimina una tarea
+ */
+app.delete("/task/:idTask", taskController.deleteTask);
+/**
+ * Actualiza una tarea
+ */
+app.put("/task/:idTask", taskController.putTask);
 
-// category
-app.delete("/category/:idCategory", controllerCategory.deleteCategory);
-app.put("/category/:idCategory", controllerCategory.putCategory);
+/**
+ * Elimina una categoria
+ */
+app.delete("/category/:idCategory", categoryController.deleteCategory);
+/**
+ * Actualiza una categoria
+ */
+app.put("/category/:idCategory", categoryController.putCategory);
 
-// });
+/**
+ * Asigna una categoria a una tarea
+ */
+app.post("/taskCategory", taskCategoryController.postTaskCategory);
+
 
 app.listen(port, () => console.log("Server running on port " + port));
-
-// simula los endpoints del anterior servidor
-// http.createServer((req, res) => {
-//   const { headers, method, url } = req;
-// 	if (url === "/userWorkspaces") {
-// 		switch (method) {
-// 			case "GET":
-// 				// get userWorkspaces
-// 				break;
-// 			case "POST":
-// 				// post userWorkspaces
-// 				break;
-// 			case "DELETE":
-// 				// delete userWorkspaces
-// 				break;
-// 			case "PUT":
-// 				// put userWorkspaces
-// 				break;
-// 		}
-// 	}
-// });

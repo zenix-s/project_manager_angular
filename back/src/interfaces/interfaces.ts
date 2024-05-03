@@ -77,6 +77,7 @@ export interface Category {
   idWorkspace: number;
   color: string;
   completed: boolean;
+	deleted: boolean;
 }
 
 export interface UserTask {
@@ -90,25 +91,10 @@ export interface UserTask {
 export interface TaskCategory {
   id: number;
   idTask: number;
-  categoryId: number;
-  createdAt: Date;
+  idCategory: number;
 }
 
-export interface Project {
-  id: number;
-  name: string;
-  description?: string;
-  createdAt: Date;
-  idWorkspace: number;
-}
 
-export interface UserProject {
-  id: number;
-  idUser: number;
-  idProject: number;
-  role: role;
-  createdAt: Date;
-}
 
 export interface TaskData {
   task: Task;
@@ -146,6 +132,22 @@ export interface TaskData {
 //   id: number;
 //   idTeam: number;
 //   idTask: number;
+//   role: role;
+//   createdAt: Date;
+// }
+
+// export interface Project {
+//   id: number;
+//   name: string;
+//   description?: string;
+//   createdAt: Date;
+//   idWorkspace: number;
+// }
+
+// export interface UserProject {
+//   id: number;
+//   idUser: number;
+//   idProject: number;
 //   role: role;
 //   createdAt: Date;
 // }
