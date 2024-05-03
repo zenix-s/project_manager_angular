@@ -1,28 +1,41 @@
-import { Component, ElementRef, Input, ViewChild, WritableSignal, inject, signal, OnInit, OnDestroy, effect } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import {
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+  WritableSignal,
+  inject,
+  signal,
+  OnInit,
+  OnDestroy,
+  effect,
+} from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CategoryService } from '@app/service/category.service';
 import { FormCategoryService } from '@app/features/workspace/categories/services/form-category.service';
 import { Subscription } from 'rxjs';
+import { Category } from '@app/interfaces/interfaces';
 
 @Component({
   selector: 'app-form-category',
   templateUrl: './form-category.component.html',
-  styles: ``
+  styles: ``,
 })
-export class FormCategoryComponent implements OnInit, OnDestroy{
+export class FormCategoryComponent implements OnInit, OnDestroy {
   private _categoryService = inject(CategoryService);
   private _fb = inject(FormBuilder);
-  private _formCategoryService = inject(FormCategoryService)
+  private _formCategoryService = inject(FormCategoryService);
 
   @ViewChild('dialog') dialog: ElementRef<HTMLDialogElement> | undefined;
 
   private _isOpenSubscription!: Subscription;
-
+  private _categorySubscription!: Subscription;
 
   @Input()
   idWorkspace!: number;
 
   isOpen: WritableSignal<boolean> = signal<boolean>(false);
+  category: Category | null = null;
 
   categoryForm: FormGroup = this._fb.group({
     name: [
@@ -31,16 +44,33 @@ export class FormCategoryComponent implements OnInit, OnDestroy{
     ],
     description: ['', [Validators.maxLength(255), Validators.minLength(3)]],
     color: ['#000000', Validators.required],
+    completed: [false],
   });
 
   onSubmit() {
-    if (this.categoryForm.invalid) {
-      return;
+    // if (this.categoryForm.invalid) {
+    //   return;
+    // }
+
+    // this._categoryService.postCategory(this.idWorkspace, this.categoryForm.value);
+    // this.categoryForm.reset();
+    // this.closeDialog();
+
+    if (this.categoryForm.invalid) return;
+    const category = this.categoryForm.value;
+
+    if (this.category) {
+      // this._categoryService.putCategory(category);
+      this._categoryService.putCategory({
+        id: this.category!.id,
+        idWorkspace: this.category!.idWorkspace,
+        ...category,
+      });
+    } else {
+      this._categoryService.postCategory(this.idWorkspace, category);
     }
 
-    this._categoryService.postCategory(this.idWorkspace, this.categoryForm.value);
-    this.categoryForm.reset();
-    this.closeDialog();
+    this._formCategoryService.close();
   }
 
   openDialog() {
@@ -67,7 +97,7 @@ export class FormCategoryComponent implements OnInit, OnDestroy{
 
   constructor() {
     effect(() => {
-      if (this.isOpen()){
+      if (this.isOpen()) {
         this._onOpenDialog();
       } else {
         this._onCloseDialog();
@@ -76,15 +106,31 @@ export class FormCategoryComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    this._isOpenSubscription = this._formCategoryService.isOpen$.subscribe((isOpen) => {
-      this.isOpen.set(isOpen);
-    });
+    this._isOpenSubscription = this._formCategoryService.isOpen$.subscribe(
+      (isOpen) => {
+        this.isOpen.set(isOpen);
+      }
+    );
+    this._categorySubscription = this._formCategoryService.category$.subscribe(
+      (category) => {
+        // category ? this.isEdit.set(true) : this.isEdit.set(false);
+        this.category = category;
+        if (category) {
+          this.categoryForm.patchValue({
+            name: category.name,
+            description: category.description,
+            color: category.color,
+            completed: category.completed,
+          });
+        }
+      }
+    );
   }
 
   ngOnDestroy(): void {
-    this._isOpenSubscription.unsubscribe();
     this._formCategoryService.clearCategory();
     this._formCategoryService.close();
     this.categoryForm.reset();
+    this._isOpenSubscription.unsubscribe();
   }
 }

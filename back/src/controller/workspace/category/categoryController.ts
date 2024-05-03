@@ -62,6 +62,7 @@ export class CategoryController {
 				res.status(404).send("Category not found");
 				return;
 			}
+			res.json(updatedCategory);
 		} catch (error) {
 			console.error(error);
 			res.status(500).send("Internal server error");

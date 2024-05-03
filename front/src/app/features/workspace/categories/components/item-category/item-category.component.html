@@ -2,28 +2,19 @@
   <div class="w-1/3">
     {{category.name}}
   </div>
-  <div
-    class="flex items-center gap-2"
-  >
-    <span
-      class="w-4 h-4 rounded-full"
-      [style.backgroundColor]="category.color"
-    ></span>
+  <div class="flex items-center gap-2">
+    <span class="w-4 h-4 rounded-full" [style.backgroundColor]="category.color"></span>
     {{category.color}}
   </div>
   <!-- <div>
     {{category.completed}}
   </div> -->
-  <div>
-    <button
-      (click)="deleteCategory(category)"
-    >
+  <div class="flex gap-2">
+    <button (click)="deleteCategory(category)">
       Delete
     </button>
-    <button
-      (click)="editCategory(category)"
-    >
-
+    <button (click)="editCategory()">
+      Edit
     </button>
   </div>
 </div>

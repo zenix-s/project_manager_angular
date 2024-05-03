@@ -8,21 +8,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CategoryService {
-  // constructor(private http: HttpClient) {}
-  http = inject(HttpClient);
+  private _http = inject(HttpClient);
 
   private _categories = new BehaviorSubject<Category[]>([]);
 
   categories$ = this._categories.asObservable();
 
-  // getWorkspaceCategories(idWorkspace: number):Observable<Category[]> {
-  //   return this.http.get<Category[]>(
-  //     `${backendUrl}:${port}/workspace/${idWorkspace}/categories`
-  //   );
-  // }
 
   getWorkspaceCategories(idWorkspace: number) {
-    this.http
+    this._http
       .get<Category[]>(
         `${backendUrl}:${port}/workspace/${idWorkspace}/categories`
       )
@@ -33,7 +27,7 @@ export class CategoryService {
   }
 
   postCategory(idWorkspace:number, category: Category) {
-    this.http
+    this._http
       .post<Category>(`${backendUrl}:${port}/workspace/${idWorkspace}/categories`, category)
       .subscribe((category) => {
         this._categories.next([...this._categories.getValue(), category]);
@@ -41,11 +35,23 @@ export class CategoryService {
   }
 
   deleteCategory(idCategory: number) {
-    this.http
+    this._http
       .delete<number>(`${backendUrl}:${port}/category/${idCategory}`)
       .subscribe((deletedIdCategory) => {
         this._categories.next(
           this._categories.getValue().filter((category) => category.id !== deletedIdCategory)
+        );
+      });
+  }
+
+  putCategory(category: Category) {
+    this._http
+      .put<Category>(`${backendUrl}:${port}/category/${category.id}`, category)
+      .subscribe((updatedCategory) => {
+        this._categories.next(
+          this._categories.getValue().map((category) =>
+            category.id === updatedCategory.id ? updatedCategory : category
+          )
         );
       });
   }

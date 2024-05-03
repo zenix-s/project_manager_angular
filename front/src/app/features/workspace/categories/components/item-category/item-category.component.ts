@@ -1,6 +1,7 @@
 import { Component, Input, inject } from '@angular/core';
 import { Category } from '@app/interfaces/interfaces';
 import { CategoryService } from '@app/service/category.service';
+import { FormCategoryService } from '../../services/form-category.service';
 
 @Component({
   selector: 'app-item-category',
@@ -9,6 +10,7 @@ import { CategoryService } from '@app/service/category.service';
 })
 export class ItemCategoryComponent {
   categoryService = inject(CategoryService);
+  private _formCategoryService = inject(FormCategoryService);
 
   @Input()
   category!: Category;
@@ -17,7 +19,8 @@ export class ItemCategoryComponent {
     this.categoryService.deleteCategory(category.id);
   }
 
-  editCategory(category: Category) {
-    console.log('edit category');
+  editCategory() {
+    this._formCategoryService.setCategory(this.category);
+    this._formCategoryService.open();
   }
 }
