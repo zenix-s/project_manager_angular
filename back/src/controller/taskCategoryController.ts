@@ -20,6 +20,8 @@ export class TaskCategoryController {
     // 	return;
     // }
 
+    console.log("req.body", req.body);
+
     if (!req.body) {
       res.status(400).send("Bad request");
       return;
@@ -41,7 +43,7 @@ export class TaskCategoryController {
       res.status(404).send("Category or Task not found");
       return;
     }
-		
+
     if (category.idWorkspace !== task.task.idWorkspace) {
       res.status(400).send("Category and Task are not in the same workspace");
       return;
@@ -60,4 +62,44 @@ export class TaskCategoryController {
       res.status(500).send("Internal server error");
     }
   }
+
+	public async deleteTaskCategory(req: Request, res: Response) {
+
+		const idTask: number = parseInt(req.params.idTask);
+		const idCategory: number = parseInt(req.params.idCategory);
+
+
+		if (!idCategory || !idTask) {
+			res.status(400).send("Bad request tu puta madre");
+			return;
+		}
+
+		const category = await modelCategory.getCategoryById(idCategory);
+		const task = await modelTask.getTaskDataById(idTask);
+
+		if (!category || !task) {
+			res.status(404).send("Category or Task not found");
+			return;
+		}
+
+		if (category.idWorkspace !== task.task.idWorkspace) {
+			res.status(400).send("Category and Task are not in the same workspace");
+			return;
+		}
+
+		const taskCategory: TaskCategory = {
+			id : 0,
+			idTask,
+			idCategory,
+		};
+
+		try {
+			await modelTaskCategory.deleteTaskCategory(taskCategory);
+			console.log("TaskCategory deleted");
+			res.status(200).send("TaskCategory deleted");
+		} catch (error) {
+			console.error(error);
+			res.status(500).send("Internal server error");
+		}
+	}
 }

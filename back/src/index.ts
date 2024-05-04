@@ -5,7 +5,6 @@ import { WorkspaceController } from "@/controller/workspace/workspaceController"
 import { TaskController } from "@/controller/workspace/task/taskController";
 import { TaskCategoryController } from "@/controller/taskCategoryController";
 
-
 process.loadEnvFile();
 const app: Express = express();
 const port = process.env.PORT || 5000;
@@ -81,5 +80,9 @@ app.put("/category/:idCategory", categoryController.putCategory);
  */
 app.post("/taskCategory", taskCategoryController.postTaskCategory);
 
+/**
+ * Elimina una categoria de una tarea
+ */
+app.delete("/taskCategory/:idTask/:idCategory", taskCategoryController.deleteTaskCategory);
 
 app.listen(port, () => console.log("Server running on port " + port));

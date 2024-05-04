@@ -31,4 +31,18 @@ export class ModelTaskCategory{
 
 		return result.insertId;
 	}
+
+	async deleteTaskCategory(taskCategory:TaskCategory) {
+		const connection: Connection = await mysql.createConnection(dbconfig);
+
+		await connection.query(
+			`
+			DELETE FROM taskCategory
+			WHERE idTask = ? AND idCategory = ?
+			`,
+			[taskCategory.idTask, taskCategory.idCategory]
+		);
+
+		await connection.end();
+	}
 } 
