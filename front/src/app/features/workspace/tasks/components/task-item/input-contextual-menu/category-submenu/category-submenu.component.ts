@@ -4,6 +4,7 @@ import {
   OnDestroy,
   OnInit,
   WritableSignal,
+  effect,
   inject,
   signal,
 } from '@angular/core';
@@ -20,7 +21,7 @@ interface CategoryWithSelected {
   selector: 'app-category-submenu',
   // templateUrl: './category-submenu.component.html',
   template: `
-    <div class="flex w-full relative">
+    <!-- <div class="flex w-full relative">
       <div
         class="flex items-center justify-start gap-2 relative hover:bg-lightDark/70 px-2 py-1 w-full"
         (mouseenter)="hovered = true"
@@ -58,64 +59,65 @@ interface CategoryWithSelected {
           }
         </ul>
       </div>
-    </div>
+    </div> -->
   `,
   styles: ``,
 })
-export class CategorySubmenuComponent implements OnInit, OnDestroy {
-  categoryService = inject(CategoryService);
-  taskCategoryService = inject(TaskCategoryService);
+export class CategorySubmenuComponent{
+// export class CategorySubmenuComponent implements OnInit, OnDestroy {
+  // categoryService = inject(CategoryService);
+  // taskCategoryService = inject(TaskCategoryService);
 
-  @Input()
-  taskCategories: Category[] = [];
-  @Input()
-  idTask!: number;
-  @Input()
-  idWorkspace!: number;
+  // @Input()
+  // taskCategories: Category[] = [];
+  // @Input()
+  // idTask!: number;
+  // @Input()
+  // idWorkspace!: number;
 
-  categories: WritableSignal<CategoryWithSelected[]> = signal<
-    CategoryWithSelected[]
-  >([]);
-  hovered = false;
+  // categories: WritableSignal<CategoryWithSelected[]> = signal<
+  //   CategoryWithSelected[]
+  // >([]);
+  // hovered = false;
 
-  addCategory(idCategory: number): void {
-    this.taskCategoryService.addCategoryToTask(
-      {
-        idTask: this.idTask,
-        idCategory,
-      },
-      this.idWorkspace
-    );
-  }
-  removeCategory(idCategory: number): void {
-    // this.categoryService.removeCategoryFromTask(this.idTask, idCategory);
-    this.taskCategoryService.removeCategoryFromTask(
-      {
-        idTask: this.idTask,
-        idCategory,
-      },
-      this.idWorkspace
-    );
-  }
+  // addCategory(idCategory: number): void {
+  //   this.taskCategoryService.addCategoryToTask(
+  //     {
+  //       idTask: this.idTask,
+  //       idCategory,
+  //     },
+  //     this.idWorkspace
+  //   );
+  // }
+  // removeCategory(idCategory: number): void {
+  //   // this.categoryService.removeCategoryFromTask(this.idTask, idCategory);
+  //   this.taskCategoryService.removeCategoryFromTask(
+  //     {
+  //       idTask: this.idTask,
+  //       idCategory,
+  //     },
+  //     this.idWorkspace
+  //   );
+  // }
 
-  ngOnInit(): void {
-    this.categoryService.categories$.subscribe((categories) => {
-      this.categories.set(
-        categories.map((category) => {
-          return {
-            Category: category,
-            isSelected: this.taskCategories.some(
-              (taskCategory) => taskCategory.id === category.id
-            ),
-          };
-        })
-      );
-      // console.log('categories', this.categories);
-    });
-    // console.log('taskCategories', this.taskCategories);
-  }
+  // ngOnInit(): void {
+  //   this.categoryService.categories$.subscribe((categories) => {
+  //     this.categories.set(
+  //       categories.map((category) => {
+  //         return {
+  //           Category: category,
+  //           isSelected: this.taskCategories.some(
+  //             (taskCategory) => taskCategory.id === category.id
+  //           ),
+  //         };
+  //       })
+  //     );
+  //     // console.log('categories', this.categories);
+  //   });
+  //   // console.log('taskCategories', this.taskCategories);
+  // }
 
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
+  // ngOnDestroy(): void {
+  //   throw new Error('Method not implemented.');
+  // }
 }
