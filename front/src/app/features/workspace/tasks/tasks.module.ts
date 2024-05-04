@@ -16,6 +16,7 @@ import { SubtaskItemComponent } from './components/subtask-item/subtask-item.com
 import { ShareModule } from '@app/share/share.module';
 import { DeleteTaskSubmenuComponent } from './components/task-item/input-contextual-menu/delete-task-submenu/delete-task-submenu.component';
 import { DeadlineSubmenuComponent } from './components/task-item/input-contextual-menu/deadline-submenu/deadline-submenu.component';
+import { CategorySubmenuComponent } from './components/task-item/input-contextual-menu/category-submenu/category-submenu.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { DeadlineSubmenuComponent } from './components/task-item/input-contextua
     CompletedSubmenuComponent,
     SubtaskItemComponent,
     DeleteTaskSubmenuComponent,
-    DeadlineSubmenuComponent
+    DeadlineSubmenuComponent,
+    CategorySubmenuComponent
   ],
   imports: [
     CommonModule,
