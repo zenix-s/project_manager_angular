@@ -24,12 +24,12 @@
       </app-deadline-submenu>
       <app-priority-submenu [taskPriority]="task.task.priority"
         (onChangePriority)="changePriority($event)"></app-priority-submenu>
-      <!-- <app-category-submenu
+      <app-category-submenu
         [taskCategories]="task.categories"
         [idTask]="task.task.id"
         [idWorkspace]="task.task.idWorkspace"
       >
-      </app-category-submenu> -->
+      </app-category-submenu>
       <app-delete-task-submenu (onDeleteTask)="delete()">
       </app-delete-task-submenu>
     </div>

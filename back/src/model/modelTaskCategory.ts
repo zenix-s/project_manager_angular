@@ -44,5 +44,7 @@ export class ModelTaskCategory{
 		);
 
 		await connection.end();
+
+		return;
 	}
 } 
