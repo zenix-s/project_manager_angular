@@ -37,7 +37,9 @@ interface CategoryWithSelected {
         (mouseleave)="hovered = false"
       >
         <ul>
-          @for (category of categories(); track $index) {
+          @if (disabled()){
+          <li>Loading...</li>
+          } @else { @for (category of categories(); track $index) {
           <li
             class="flex items-center px-2 py-1 gap-2 hover:bg-lightDark/70 cursor-pointer"
             (click)="
@@ -57,7 +59,7 @@ interface CategoryWithSelected {
             ></span>
             <span>{{ category.Category.name }}</span>
           </li>
-          }
+          } }
         </ul>
       </div>
     </div>
@@ -81,8 +83,10 @@ export class CategorySubmenuComponent implements OnInit, OnDestroy {
     CategoryWithSelected[]
   >([]);
   hovered = false;
+  disabled = signal<boolean>(false);
 
   addCategory(idCategory: number): void {
+    // this.disabled.set(true);
     this.taskCategoryService.addCategoryToTask(
       {
         idTask: this.idTask,
@@ -92,31 +96,32 @@ export class CategorySubmenuComponent implements OnInit, OnDestroy {
     );
   }
   removeCategory(idCategory: number): void {
-    // this.categoryService.removeCategoryFromTask(this.idTask, idCategory);
-    this.taskCategoryService.removeCategoryFromTask(
-      {
-        idTask: this.idTask,
-        idCategory,
-      },
-      this.idWorkspace
-    );
+    // this.disabled.set(true);
+    this.taskCategoryService
+      .removeCategoryFromTask(
+        {
+          idTask: this.idTask,
+          idCategory,
+        },
+        this.idWorkspace
+      )
   }
 
   ngOnInit(): void {
-    this.categoriesSubs = this.categoryService.categories$.subscribe((categories) => {
-      this.categories.set(
-        categories.map((category) => {
-          return {
-            Category: category,
-            isSelected: this.taskCategories.some(
-              (taskCategory) => taskCategory.id === category.id
-            ),
-          };
-        })
-      );
-      console.log('categories', this.categories());
-    });
-    // console.log('taskCategories', this.taskCategories);
+    this.categoriesSubs = this.categoryService.categories$.subscribe(
+      (categories) => {
+        this.categories.set(
+          categories.map((category) => {
+            return {
+              Category: category,
+              isSelected: this.taskCategories.some(
+                (taskCategory) => taskCategory.id === category.id
+              ),
+            };
+          })
+        );
+      }
+    );
   }
 
   ngOnDestroy(): void {

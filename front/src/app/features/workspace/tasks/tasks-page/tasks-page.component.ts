@@ -55,7 +55,6 @@ export class TasksPageComponent implements OnInit, OnDestroy {
   }
 
   EditTask(taskId: number) {
-    console.log('edit task ', taskId);
   }
 
   ChangeTask(task: Task) {
@@ -83,7 +82,6 @@ export class TasksPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.taskSubscription = this.tasksService.tasks$.subscribe((tasks) => {
       this.tasks.set(tasks);
-      console.log('tasks', tasks);
     });
     this.categorySubscription = this.categoryService.categories$.subscribe((categories) => {
       this.categories.set(categories);

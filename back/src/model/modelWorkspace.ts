@@ -53,7 +53,6 @@ export class ModelWorkspace {
   }
 
   async deleteWorkspace(idWorkspace: number): Promise<boolean> {
-		console.log("deleteWorkspace", idWorkspace);
     return true;
   }
 

@@ -32,7 +32,6 @@ export class TasksService {
       .get<TaskData[]>(`${backendUrl}:${port}/workspace/${idWorkspace}/task`)
       .subscribe((tasks) => {
         this._tasks.next(tasks);
-        // console.log('tasks', tasks);
       });
   }
 
@@ -59,7 +58,6 @@ export class TasksService {
   }
 
   changeTask(task: Task) {
-    console.log('change task ', task);
     this.http
       .put<TaskData>(`${backendUrl}:${port}/task/${task.id}`, task)
       .subscribe((updatedTask: TaskData) => {

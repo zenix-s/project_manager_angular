@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { backendUrl, port } from '@env';
 import { TasksService } from './workspace-tasks.service';
 import { CategoryService } from './category.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -24,10 +25,6 @@ export class TaskCategoryService {
     },
     idWorkspace: number
   ) {
-    // console.log('addCategoryToTask', {
-    //   idTask,
-    //   idCategory,
-    // });
     this.http
       .post(`${backendUrl}:${port}/taskCategory`, {
         idTask,
@@ -49,13 +46,11 @@ export class TaskCategoryService {
     },
     idWorkspace: number
   ) {
-    console.log('removeCategoryFromTask', {
-      idTask,
-      idCategory,
-    });
     this.http
-      .delete<number>(`${backendUrl}:${port}/taskCategory/${idTask}/${idCategory}`)
-      .subscribe(() => {
+      .delete<number>(
+        `${backendUrl}:${port}/taskCategory/${idTask}/${idCategory}`
+      )
+      .subscribe((idTask) => {
         this.taskService.getTasks(idWorkspace);
         this.categoryService.getWorkspaceCategories(idWorkspace);
       });

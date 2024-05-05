@@ -90,7 +90,6 @@ export class TaskFormComponent implements OnInit, OnDestroy {
     if (this.task) {
       this.taskService.changeTask(this.taskForm.value);
       // this.taskForm.value.id = this.task.task.id;
-      console.log(this.taskForm.value);
 
       this.taskFormService.close();
       this.taskForm.reset();
@@ -100,7 +99,6 @@ export class TaskFormComponent implements OnInit, OnDestroy {
       return;
     }
     this.taskService.addTask(this.idWorkspace, this.taskForm.value);
-    console.log(this.taskForm.value);
     this.taskForm.reset();
     this.taskFormService.close();
     this.taskForm.patchValue({

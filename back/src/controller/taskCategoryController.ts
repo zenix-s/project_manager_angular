@@ -20,7 +20,6 @@ export class TaskCategoryController {
     // 	return;
     // }
 
-    console.log("req.body", req.body);
 
     if (!req.body) {
       res.status(400).send("Bad request");
@@ -95,7 +94,6 @@ export class TaskCategoryController {
 
 		try {
 			await modelTaskCategory.deleteTaskCategory(taskCategory);
-			console.log("TaskCategory deleted");
 			res.json(idTask);
 		} catch (error) {
 			console.error(error);

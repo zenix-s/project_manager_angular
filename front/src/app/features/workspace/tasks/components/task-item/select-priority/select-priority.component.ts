@@ -22,9 +22,7 @@ export class SelectPriorityComponent {
   @Output()
   onPriorityChange = new EventEmitter<priority>();
 
-  constructor(
-    private elementRef: ElementRef<HTMLDetailsElement>,
-  ) {}
+  constructor(private elementRef: ElementRef<HTMLDetailsElement>) {}
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: PointerEvent) {

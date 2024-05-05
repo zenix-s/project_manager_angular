@@ -35,7 +35,6 @@ export class InputContextualMenuComponent {
   }
 
   changeDeadline(newDeadline:Date | null){
-    console.log("new deadline: low", newDeadline)
     this.onDeadlineChange.emit(newDeadline)
   }
 

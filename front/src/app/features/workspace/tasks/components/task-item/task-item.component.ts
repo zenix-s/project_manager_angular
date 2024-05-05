@@ -50,7 +50,6 @@ export class TaskItemComponent {
   }
 
   ChangeDeadlineTask(newDeadline: Date | null) {
-    console.log('new deadline: item', newDeadline);
     this.onChangeTask.emit({
       ...this.task.task,
       deadline: newDeadline ? newDeadline : undefined,
