@@ -96,7 +96,7 @@ export class TaskCategoryController {
 		try {
 			await modelTaskCategory.deleteTaskCategory(taskCategory);
 			console.log("TaskCategory deleted");
-			res.status(200).send("TaskCategory deleted");
+			res.json(idTask);
 		} catch (error) {
 			console.error(error);
 			res.status(500).send("Internal server error");
