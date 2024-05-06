@@ -113,7 +113,9 @@ export class TasksPageComponent implements OnInit, OnDestroy {
       if (
         (status ? true : task.task.completed == false) &&
         (priority ? task.task.priority === priority : true) &&
-        (category.length > 0 ? task.categories.find((c) => category.includes(c.id)) : true)
+        (category.length > 0
+          ? task.categories.find((c) => category.includes(c.id))
+          : true)
       ) {
         if (task.subtasks && task.subtasks.length > 0 && subtaskFilter) {
           filteredTask.subtasks = this.applyFilter(task.subtasks);
@@ -129,7 +131,7 @@ export class TasksPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.taskSubscription = this.tasksService.tasks$.subscribe((tasks) => {
       this.tasks.set(tasks);
-      this.filteredTasks.set(tasks);
+      this.filteredTasks.set(this.applyFilter(this.tasks()));
     });
     this.categorySubscription = this.categoryService.categories$.subscribe(
       (categories) => {
