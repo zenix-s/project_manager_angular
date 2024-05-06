@@ -41,7 +41,7 @@
     <app-tooltip [text]="'deadline'">
       <div class="flex">
         <span>
-          {{task.task.deadline | date : 'MMMM-dd'}}
+          {{task.task.deadline | date : 'MMM-dd'}}
         </span>
         <span>
           &nbsp;-
@@ -50,9 +50,9 @@
     </app-tooltip>
     }
     <!-- CREATED AT -->
-    <app-tooltip [text]="'created at'">
+    <app-tooltip [text]="'Created at: ' + ((task.task.createdAt | date : 'YYYY-MMMM-dd') ?? '')">
       <div class="text-white/70">
-        {{task.task.createdAt | date : 'MMMM-dd'}}
+        {{task.task.createdAt | date : 'MMM-dd'}}
       </div>
     </app-tooltip>
   </div>
@@ -61,8 +61,13 @@
   </div> -->
   <!-- CONTEXTUAL MENU -->
   <div class="gap-4 flex items-center">
-    <app-input-contextual-menu [task]="task" [categories]="categories" (onChangePriority)="ChangePriority($event)"
-      (onChangeCompleted)="ChangeCompleteStatusTask($event)" (onDeadlineChange)="ChangeDeadlineTask($event)"
-      (onDelete)="DeleteTask(task.task.id)"></app-input-contextual-menu>
+    <app-input-contextual-menu
+      [task]="task"
+      [categories]="categories"
+      (onChangePriority)="ChangePriority($event)"
+      (onChangeCompleted)="ChangeCompleteStatusTask($event)"
+      (onDeadlineChange)="ChangeDeadlineTask($event)"
+      (onDelete)="DeleteTask(task.task.id)"
+    ></app-input-contextual-menu>
   </div>
 </div>

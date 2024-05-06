@@ -14,12 +14,12 @@ import { CategoryService } from '@service/category.service';
 import { Category, Task, TaskData } from '@types';
 import { Subscription } from 'rxjs';
 
-
 interface filter {
-  search: string;
-  category: string;
-  priority: string;
+  search: string | null;
+  category: number[];
+  priority: string | null;
   status: boolean;
+  subtaskFilter: boolean;
 }
 
 @Component({
@@ -31,17 +31,18 @@ export class TasksPageComponent implements OnInit, OnDestroy {
   categoryService = inject(CategoryService);
 
   tasks: WritableSignal<TaskData[]> = signal<TaskData[]>([]);
+  filteredTasks: WritableSignal<TaskData[]> = signal<TaskData[]>([]);
   categories: WritableSignal<Category[]> = signal<Category[]>([]);
 
   taskSubscription!: Subscription;
   categorySubscription!: Subscription;
 
-
   filters: WritableSignal<filter> = signal<filter>({
     search: '',
-    category: '',
-    priority: '',
-    status: false,
+    category: [],
+    priority: null,
+    status: true,
+    subtaskFilter: false,
   });
 
   // tasks: TaskData[] = [];
@@ -54,38 +55,87 @@ export class TasksPageComponent implements OnInit, OnDestroy {
     this.tasksService.addTask(this.idWorkspace, task);
   }
 
-  EditTask(taskId: number) {
-  }
+  EditTask(taskId: number) {}
 
   ChangeTask(task: Task) {
     this.tasksService.changeTask(task);
   }
 
+  clearFilters() {
+    this.filters.set({
+      search: '',
+      category: [],
+      priority: null,
+      status: true,
+      subtaskFilter: false,
+    });
+    this.filteredTasks.set(this.applyFilter(this.tasks()));
+  }
+
+  filterCompleted() {
+    this.filters.set({
+      ...this.filters(),
+      status: !this.filters().status,
+    });
+    this.filteredTasks.set(this.applyFilter(this.tasks()));
+  }
+
+  filterSubtasks() {
+    this.filters.set({
+      ...this.filters(),
+      subtaskFilter: !this.filters().subtaskFilter,
+    });
+    console.log(this.tasks());
+    this.filteredTasks.set(this.applyFilter(this.tasks()));
+  }
+
+  filterBug() {
+    this.filters.set({
+      ...this.filters(),
+      category: this.filters().category.length > 0 ? [] : [1],
+    });
+    this.filteredTasks.set(this.applyFilter(this.tasks()));
+  }
+
   @Input()
   idWorkspace: number = 0;
 
-  constructor() {
-    effect(() => {
-      // any filter change filter tasks
-      // this.tasks.update(
-      //   // this._tasks().filter((task) => {
-      //   //   const { search, category, priority, status } = this.filters();
-      //   //   return (
-      //   //     task.completed === status
-      //   //   );
-      //   // })
-      //   this._tasks()
-      // )
+  constructor() {}
+
+  applyFilter(tasks: TaskData[]): TaskData[] {
+    const filteredTasks: TaskData[] = [];
+    const { search, category, priority, status, subtaskFilter } =
+      this.filters();
+
+    tasks.forEach((task) => {
+      const filteredTask: TaskData = { ...task };
+
+      if (
+        (status ? true : task.task.completed == false) &&
+        (priority ? task.task.priority === priority : true) &&
+        (category.length > 0 ? task.categories.find((c) => category.includes(c.id)) : true)
+      ) {
+        if (task.subtasks && task.subtasks.length > 0 && subtaskFilter) {
+          filteredTask.subtasks = this.applyFilter(task.subtasks);
+        }
+
+        filteredTasks.push(filteredTask);
+      }
     });
+
+    return filteredTasks;
   }
 
   ngOnInit(): void {
     this.taskSubscription = this.tasksService.tasks$.subscribe((tasks) => {
       this.tasks.set(tasks);
+      this.filteredTasks.set(tasks);
     });
-    this.categorySubscription = this.categoryService.categories$.subscribe((categories) => {
-      this.categories.set(categories);
-    });
+    this.categorySubscription = this.categoryService.categories$.subscribe(
+      (categories) => {
+        this.categories.set(categories);
+      }
+    );
 
     this.categoryService.getWorkspaceCategories(this.idWorkspace);
     this.tasksService.getTasks(this.idWorkspace);
