@@ -92,7 +92,10 @@ export class TasksPageComponent implements OnInit, OnDestroy {
   filterBug() {
     this.filters.set({
       ...this.filters(),
-      category: this.filters().category.length > 0 ? [] : [1],
+      // category: this.filters().category.length > 0 ? [] : [1],
+      category: this.filters().category.includes(1)
+        ? this.filters().category.filter((c) => c !== 1)
+        : [...this.filters().category, 1],
     });
     this.filteredTasks.set(this.applyFilter(this.tasks()));
   }
