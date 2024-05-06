@@ -48,6 +48,16 @@ export class AuthenticationService {
     return this.idUser !== null;
   }
 
+  get idUserLogged() {
+    if (this.idUser === null) {
+      const user = localStorage.getItem('user');
+      if (user) {
+        this.idUser = JSON.parse(user).id;
+      }
+    }
+    return this.idUser;
+  }
+
 
   constructor() { }
 }

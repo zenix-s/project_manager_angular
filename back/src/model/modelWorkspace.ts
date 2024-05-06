@@ -79,7 +79,7 @@ export class ModelWorkspace {
     return result.length > 0;
   }
 
-  async addWorkspace(workspace: Workspace): Promise<number> {
+  async addWorkspace(idUser:number, workspace: Workspace): Promise<number> {
     const connection = await mysql.createConnection(config);
 
     const [result] = await connection.query<ResultSetHeader>(
@@ -96,7 +96,7 @@ export class ModelWorkspace {
 				INSERT INTO userWorkspace (idUser, idWorkspace, role, createdAt)
 				VALUES (?, ?, 'ADMIN', ?)
 				`,
-        [1, result.insertId, new Date()]
+        [idUser, result.insertId, new Date()]
       );
     }
 

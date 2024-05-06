@@ -7,8 +7,8 @@ const modelWorkspace = new ModelWorkspace();
 export class WorkspaceController {
   public async getWorkspacesByIdUserController(req: Request, res: Response) {
     try {
-      // const idUser: number = parseInt(req.params.idUser);
-      const idUser: number = 1;
+			const idUser = parseInt(req.headers.authorization as string);
+			console.log('idUser', idUser);
       res.json(await modelWorkspace.getWorkspacesByIdUser(idUser));
     } catch (error) {
       console.error(error);
@@ -28,9 +28,10 @@ export class WorkspaceController {
 	public async postWorkspace(req: Request, res: Response) {
 	
 		const workspace: Workspace = req.body;
+		const idUser = parseInt(req.headers.authorization as string);
 
 		try {
-			const idWorkspace: number = await modelWorkspace.addWorkspace(workspace);
+			const idWorkspace: number = await modelWorkspace.addWorkspace(idUser, workspace);
 			if (await modelWorkspace.workspaceExists(idWorkspace)) {
 				res.status(201).json({
 					id: idWorkspace,
