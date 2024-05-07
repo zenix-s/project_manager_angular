@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 
 import { TaskCategory } from "@types";
 
-import { ModelTaskCategory } from "@/model/modelTaskCategory";
-import { ModelCategory } from "@/model/modelCategory";
-import { ModelTask } from "@/model/modelTask";
+import { ModelTaskCategory } from "@/model/taskCategoryModel";
+import { ModelCategory } from "@/model/categoryModel";
+import { ModelTask } from "@/model/taskModel";
 
 const modelTaskCategory = new ModelTaskCategory();
 const modelCategory = new ModelCategory();

@@ -1,5 +1,5 @@
 import { Category } from "@types";
-import { ModelCategory } from "@/model/modelCategory";
+import { ModelCategory } from "@/model/categoryModel";
 import { Request, Response } from "express";
 
 const modelCategory = new ModelCategory();
