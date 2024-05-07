@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { Workspace } from "@types";
-import { ModelWorkspace } from "@/model/workspaceModel";
+import { WorkspaceModel } from "@/model/workspaceModel";
 
-const modelWorkspace = new ModelWorkspace();
+const modelWorkspace = new WorkspaceModel();
 
 export class WorkspaceController {
   public async getWorkspacesByIdUserController(req: Request, res: Response) {

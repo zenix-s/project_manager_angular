@@ -4,6 +4,7 @@ import { CategoryController } from "@/controller/workspace/category/categoryCont
 import { WorkspaceController } from "@/controller/workspace/workspaceController";
 import { TaskController } from "@/controller/workspace/task/taskController";
 import { TaskCategoryController } from "@/controller/taskCategoryController";
+import { AuthenticationController } from "./controller/authenticationController";
 
 process.loadEnvFile();
 const app: Express = express();
@@ -13,6 +14,7 @@ const workspaceController = new WorkspaceController();
 const taskController = new TaskController();
 const categoryController = new CategoryController();
 const taskCategoryController = new TaskCategoryController();
+const authenticationController = new AuthenticationController();
 
 // MIDLEWARES
 app.use(bodyParser.json());
@@ -84,5 +86,14 @@ app.post("/taskCategory", taskCategoryController.postTaskCategory);
  * Elimina una categoria de una tarea
  */
 app.delete("/taskCategory/:idTask/:idCategory", taskCategoryController.deleteTaskCategory);
+
+/**
+ * Login
+ */
+app.post("/login", authenticationController.login);
+/**
+ * Registro
+ */
+app.post("/register", authenticationController.register);
 
 app.listen(port, () => console.log("Server running on port " + port));

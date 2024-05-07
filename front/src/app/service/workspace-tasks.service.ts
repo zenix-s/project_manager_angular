@@ -14,13 +14,6 @@ export class TasksService {
 
   tasks$ = this._tasks.asObservable();
 
-  // filters = signal<filter>({
-  //   search: '',
-  //   category: '',
-  //   priority: '',
-  //   status: false,
-  // });
-
   cleanTasks() {
     this._tasks.next([]);
   }

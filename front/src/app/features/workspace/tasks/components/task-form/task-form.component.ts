@@ -52,8 +52,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
       Validators.required,
     ],
     visibility: [
-      // this.task ? this.task.task.visibility : 'PUBLIC',
-      'PUBLIC', // 'PUBLIC' | 'PRIVATE' | 'PROTECTED
+      'PUBLIC',
       Validators.required,
     ],
     dependentIdTask: [null],
