@@ -39,6 +39,7 @@ export interface UserWorkspace {
   idWorkspace: number;
   role: role;
   createdAt: Date;
+	deleted: boolean;
 }
 
 export interface Task {
@@ -102,6 +103,15 @@ export interface TaskData {
   subtasks: TaskData[] | null;
   // teams: Team[];
   // users: User[];
+}
+
+export interface workspaceUsersData {
+	id: number;
+	username: string;
+	email: string;
+	createdAt: Date;
+	role: role;
+	idUserWorkspace: number;
 }
 
 // export interface Team {

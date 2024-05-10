@@ -104,6 +104,15 @@ export interface TaskData {
   // users: User[];
 }
 
+export interface workspaceUsersData {
+	id: number;
+	username: string;
+	email: string;
+	createdAt: Date;
+	role: role;
+	idUserWorkspace: number;
+}
+
 // export interface Team {
 //   id: number;
 //   name: string;

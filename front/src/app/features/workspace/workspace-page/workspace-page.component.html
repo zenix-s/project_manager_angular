@@ -26,7 +26,7 @@
           </button>
         </li>
         <li>
-          <button (click)="section = 'teams'" [ngClass]="{'underline': section === 'teams'}">2-teams/users</button>
+          <button (click)="section = 'users'" [ngClass]="{'underline': section === 'users'}">2-teams/users</button>
         </li>
         <li>
           <button (click)="section = 'categories'"
@@ -37,12 +37,17 @@
         </li>
       </ul>
     </nav>
-    <div>
+    <div class="flex grow overflow-y-scroll">
       @switch (section) {
       @case ('tasks'){
       <app-tasks-page [idWorkspace]="idWorkspace">
       </app-tasks-page>
-      } @case ('teams'){ teams } @case ('categories'){
+      }
+      @case ('users'){
+      <app-users-page [idWorkspace]="idWorkspace">
+      </app-users-page>
+      }
+      @case ('categories'){
       <app-page-categories [idWorkspace]="idWorkspace">
       </app-page-categories>
       } @case ('options'){

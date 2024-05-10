@@ -96,4 +96,9 @@ app.post("/login", authenticationController.login);
  */
 app.post("/register", authenticationController.register);
 
+/**
+ * Devuelve los usuarios asociados a un workspace
+ */
+app.get("/workspace/:idWorkspace/users", workspaceController.getWorkspaceUsers);
+
 app.listen(port, () => console.log("Server running on port " + port));
