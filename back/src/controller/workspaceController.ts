@@ -94,27 +94,4 @@ export class WorkspaceController {
       res.status(500).send("Internal server error");
     }
   }
-
-  // public async postWorkspacesController(req: Request, res: Response) {
-  //   if (!req.body) {
-  //     res.status(400).send({
-  //       message: "Content can not be empty!",
-  //     });
-  //     return;
-  //   }
-  //   if (!req.body.name) {
-  //     res.status(400).send({
-  //       message: "Name can not be empty!",
-  //     });
-  //     return;
-  //   }
-  //   try {
-  //     const workspace: Workspace = req.body;
-  //     res.status(201).send(newWorkspace(workspace));
-  //   } catch (error) {
-  //     res.status(400).send({
-  //       message: "Content can not be empty!",
-  //     });
-  //   }
-  // }
 }
