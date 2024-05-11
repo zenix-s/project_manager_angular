@@ -26,7 +26,7 @@ export class TasksService {
     this.http
       .get<TaskData[]>(`${backendUrl}:${port}/workspace/${idWorkspace}/task`, {
         headers: {
-          Authorization: `${this.authenticationService.idUserLogged}`,
+          Authorization: `${this.authenticationService.userToken}`,
         },
       })
       .subscribe((tasks) => {
@@ -41,7 +41,7 @@ export class TasksService {
         task,
         {
           headers: {
-            Authorization: `${this.authenticationService.idUserLogged}`,
+            Authorization: `${this.authenticationService.userToken}`,
           },
         }
       )
@@ -54,7 +54,7 @@ export class TasksService {
     this.http
       .delete<number>(`${backendUrl}:${port}/task/${taskId}`, {
         headers: {
-          Authorization: `${this.authenticationService.idUserLogged}`,
+          Authorization: `${this.authenticationService.userToken}`,
         },
       })
       .subscribe((idTaskDeleted) => {
@@ -68,7 +68,7 @@ export class TasksService {
     this.http
       .put<TaskData>(`${backendUrl}:${port}/task/${task.id}`, task, {
         headers: {
-          Authorization: `${this.authenticationService.idUserLogged}`,
+          Authorization: `${this.authenticationService.userToken}`,
         },
       })
       .subscribe((updatedTask: TaskData) => {

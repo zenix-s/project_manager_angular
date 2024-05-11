@@ -21,7 +21,7 @@ export class WorkspaceUsersService {
         `${backendUrl}:${port}/workspace/${idWorkspace}/users`,
         {
           headers: {
-            Authorization: `${this.authenticationService.idUserLogged}`,
+            Authorization: `${this.authenticationService.userToken}`,
           },
         }
       )

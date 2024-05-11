@@ -81,7 +81,7 @@ export class AuthenticationService {
     return this.idUser !== null;
   }
 
-  get idUserLogged() {
+  get userToken() {
     if (this.idUser === null) {
       const user = localStorage.getItem('user');
       if (user) {

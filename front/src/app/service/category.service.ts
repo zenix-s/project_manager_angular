@@ -22,7 +22,7 @@ export class CategoryService {
         `${backendUrl}:${port}/workspace/${idWorkspace}/categories`,
         {
           headers: {
-            Authorization: `${this.authenticationSerice.idUserLogged}`,
+            Authorization: `${this.authenticationSerice.userToken}`,
           },
         }
       )
@@ -38,7 +38,7 @@ export class CategoryService {
         category,
         {
           headers: {
-            Authorization: `${this.authenticationSerice.idUserLogged}`,
+            Authorization: `${this.authenticationSerice.userToken}`,
           },
         }
       )
@@ -51,7 +51,7 @@ export class CategoryService {
     this._http
       .delete<number>(`${backendUrl}:${port}/category/${idCategory}`, {
         headers: {
-          Authorization: `${this.authenticationSerice.idUserLogged}`,
+          Authorization: `${this.authenticationSerice.userToken}`,
         },
       })
       .subscribe((deletedIdCategory) => {
@@ -70,7 +70,7 @@ export class CategoryService {
         category,
         {
           headers: {
-            Authorization: `${this.authenticationSerice.idUserLogged}`,
+            Authorization: `${this.authenticationSerice.userToken}`,
           },
         }
       )

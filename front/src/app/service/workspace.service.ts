@@ -19,7 +19,7 @@ export class WorkspaceService {
       workspace,
       {
         headers: {
-          Authorization: `${this.authenticationService.idUserLogged}`,
+          Authorization: `${this.authenticationService.userToken}`,
         },
       }
     );
@@ -29,7 +29,7 @@ export class WorkspaceService {
     this.http
       .delete(`${backendUrl}:${port}/workspace/${workspaceId}`, {
         headers: {
-          Authorization: `${this.authenticationService.idUserLogged}`,
+          Authorization: `${this.authenticationService.userToken}`,
         },
       })
       .subscribe((data) => {

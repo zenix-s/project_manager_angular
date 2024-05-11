@@ -36,7 +36,7 @@ export class TaskCategoryService {
         },
         {
           headers: {
-            Authorization: `${this.AuthenticationService.idUserLogged}`,
+            Authorization: `${this.AuthenticationService.userToken}`,
           },
         }
       )
@@ -61,7 +61,7 @@ export class TaskCategoryService {
         `${backendUrl}:${port}/taskCategory/${idTask}/${idCategory}`,
         {
           headers: {
-            Authorization: `${this.AuthenticationService.idUserLogged}`,
+            Authorization: `${this.AuthenticationService.userToken}`,
           },
         }
       )
