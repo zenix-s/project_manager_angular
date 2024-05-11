@@ -3,12 +3,14 @@ import { Task, TaskData } from '@types';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { port, backendUrl } from '@env';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TasksService {
   private http = inject(HttpClient);
+  private authenticationService = inject(AuthenticationService);
 
   private _tasks = new BehaviorSubject<TaskData[]>([]);
 
@@ -22,7 +24,11 @@ export class TasksService {
     idWorkspace = parseInt(idWorkspace.toString());
 
     this.http
-      .get<TaskData[]>(`${backendUrl}:${port}/workspace/${idWorkspace}/task`)
+      .get<TaskData[]>(`${backendUrl}:${port}/workspace/${idWorkspace}/task`, {
+        headers: {
+          Authorization: `${this.authenticationService.idUserLogged}`,
+        },
+      })
       .subscribe((tasks) => {
         this._tasks.next(tasks);
       });
@@ -32,7 +38,12 @@ export class TasksService {
     this.http
       .post<TaskData>(
         `${backendUrl}:${port}/workspace/${idWorkspace}/task`,
-        task
+        task,
+        {
+          headers: {
+            Authorization: `${this.authenticationService.idUserLogged}`,
+          },
+        }
       )
       .subscribe((task: TaskData) => {
         this._tasks.next([...this._tasks.value, task]);
@@ -41,10 +52,13 @@ export class TasksService {
 
   deleteTask(taskId: number) {
     this.http
-      .delete<number>(`${backendUrl}:${port}/task/${taskId}`)
+      .delete<number>(`${backendUrl}:${port}/task/${taskId}`, {
+        headers: {
+          Authorization: `${this.authenticationService.idUserLogged}`,
+        },
+      })
       .subscribe((idTaskDeleted) => {
         this._tasks.next(
-          // this._tasks.value.filter((task) => task.id !== idTaskDeleted)
           this._tasks.value.filter((task) => task.task.id !== idTaskDeleted)
         );
       });
@@ -52,7 +66,11 @@ export class TasksService {
 
   changeTask(task: Task) {
     this.http
-      .put<TaskData>(`${backendUrl}:${port}/task/${task.id}`, task)
+      .put<TaskData>(`${backendUrl}:${port}/task/${task.id}`, task, {
+        headers: {
+          Authorization: `${this.authenticationService.idUserLogged}`,
+        },
+      })
       .subscribe((updatedTask: TaskData) => {
         this._tasks.next(
           this._tasks.value.map((t) => {

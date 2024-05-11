@@ -4,6 +4,7 @@ import { backendUrl, port } from '@env';
 import { TasksService } from './workspace-tasks.service';
 import { CategoryService } from './category.service';
 import { Observable } from 'rxjs';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,7 @@ export class TaskCategoryService {
   http = inject(HttpClient);
   taskService = inject(TasksService);
   categoryService = inject(CategoryService);
+  AuthenticationService = inject(AuthenticationService);
 
   addCategoryToTask(
     {
@@ -26,10 +28,18 @@ export class TaskCategoryService {
     idWorkspace: number
   ) {
     this.http
-      .post(`${backendUrl}:${port}/taskCategory`, {
-        idTask,
-        idCategory,
-      })
+      .post(
+        `${backendUrl}:${port}/taskCategory`,
+        {
+          idTask,
+          idCategory,
+        },
+        {
+          headers: {
+            Authorization: `${this.AuthenticationService.idUserLogged}`,
+          },
+        }
+      )
       .subscribe(() => {
         this.taskService.getTasks(idWorkspace);
         this.categoryService.getWorkspaceCategories(idWorkspace);
@@ -48,7 +58,12 @@ export class TaskCategoryService {
   ) {
     this.http
       .delete<number>(
-        `${backendUrl}:${port}/taskCategory/${idTask}/${idCategory}`
+        `${backendUrl}:${port}/taskCategory/${idTask}/${idCategory}`,
+        {
+          headers: {
+            Authorization: `${this.AuthenticationService.idUserLogged}`,
+          },
+        }
       )
       .subscribe((idTask) => {
         this.taskService.getTasks(idWorkspace);
