@@ -1,8 +1,8 @@
 import bodyParser from "body-parser";
 import express, { Express } from "express";
-import { CategoryController } from "@/controller/workspace/category/categoryController";
-import { WorkspaceController } from "@/controller/workspace/workspaceController";
-import { TaskController } from "@/controller/workspace/task/taskController";
+import { CategoryController } from "@/controller/categoryController";
+import { WorkspaceController } from "@/controller/workspaceController";
+import { TaskController } from "@/controller/taskController";
 import { TaskCategoryController } from "@/controller/taskCategoryController";
 import { AuthenticationController } from "./controller/authenticationController";
 
