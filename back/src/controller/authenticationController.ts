@@ -19,7 +19,7 @@ export class AuthenticationController {
       return res.status(401).json({ message: "Invalid username or password" });
     }
 
-    res.json({ message: "Login successful", user:user });
+    res.json({ message: "Login successful", user: user });
   }
 
   async register(req: Request, res: Response) {
@@ -41,6 +41,6 @@ export class AuthenticationController {
 
     const newUser = await userModel.getUserByUsername(username);
 
-    res.json({ message: "User created", user:newUser });
+    res.json({ message: "User created", user: newUser });
   }
 }

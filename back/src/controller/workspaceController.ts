@@ -18,7 +18,7 @@ export class WorkspaceController {
       res.json(await modelWorkspace.getWorkspacesByIdUser(idUser));
     } catch (error) {
       console.error(error);
-      res.status(500).send("Internal server error");
+      res.status(500).json({ message: "Internal server error" });
     }
   }
 
@@ -32,12 +32,12 @@ export class WorkspaceController {
     );
 
     if (workspaceUser === undefined) {
-      res.status(403).send("Unauthorized");
+      res.status(403).json({ message: "Unauthorized" });
       return;
     }
 
     if (!checkUserEditPermission(workspaceUser.role)) {
-      res.status(403).send("Unauthorized");
+      res.status(403).json({ message: "Unauthorized" });
       return;
     }
 
@@ -51,7 +51,7 @@ export class WorkspaceController {
       });
     } catch (error) {
       console.error(error);
-      res.status(500).send("Internal server error");
+      res.status(500).json({ message: "Internal server error" });
     }
   }
 
@@ -76,7 +76,7 @@ export class WorkspaceController {
       }
     } catch (error) {
       console.error(error);
-      res.status(500).send("Internal server error");
+      res.status(500).json({ message: "Internal server error" });
     }
   }
 
@@ -91,7 +91,7 @@ export class WorkspaceController {
       res.json(workspaceUsers);
     } catch (error) {
       console.error(error);
-      res.status(500).send("Internal server error");
+      res.status(500).json({ message: "Internal server error" });
     }
   }
 }

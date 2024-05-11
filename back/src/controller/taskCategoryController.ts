@@ -16,7 +16,7 @@ const modelWorkspaceUsers = new WorkspaceUsersModel();
 export class TaskCategoryController {
   public async postTaskCategory(req: Request, res: Response) {
     if (!req.body) {
-      res.status(400).send("Bad request");
+			res.status(400).json({ message: "Bad request" });
       return;
     }
 
@@ -25,7 +25,7 @@ export class TaskCategoryController {
 
     // Comprobamos si body tiene los campos necesarios
     if (!taskCategory.idCategory || !taskCategory.idTask) {
-      res.status(400).send("Bad request");
+			res.status(400).json({ message: "Bad request" });
       return;
     }
 
@@ -35,13 +35,13 @@ export class TaskCategoryController {
     );
     const task = await modelTask.getTaskDataById(taskCategory.idTask);
     if (!category || !task) {
-      res.status(404).send("Category or Task not found");
+			res.status(404).json({ message: "Category or Task not found" });
       return;
     }
 
     // Comprobamos si la categoria y la tarea pertenecen al mismo workspace
     if (category.idWorkspace !== task.task.idWorkspace) {
-      res.status(400).send("Category and Task are not in the same workspace");
+			res.status(400).json({ message: "Category and Task are not in the same workspace" });
       return;
     }
 
@@ -52,12 +52,12 @@ export class TaskCategoryController {
     );
 
     if (workspaceUser === undefined) {
-      res.status(403).send("Unauthorized");
+			res.status(403).json({ message: "Unauthorized" });
       return;
     }
 
     if (!checkUserEditPermission(workspaceUser.role)) {
-      res.status(403).send("Unauthorized");
+			res.status(403).json({ message: "Unauthorized" });
       return;
     }
 
@@ -71,7 +71,7 @@ export class TaskCategoryController {
       });
     } catch (error) {
       console.error(error);
-      res.status(500).send("Internal server error");
+			res.status(500).json({ message: "Internal server error" });
     }
   }
 
@@ -81,7 +81,7 @@ export class TaskCategoryController {
     const authToken = req.headers.authorization;
 
     if (!idCategory || !idTask) {
-      res.status(400).send("Bad request tu puta madre");
+			res.status(400).json({ message: "Bad request" });
       return;
     }
 
@@ -89,12 +89,12 @@ export class TaskCategoryController {
     const task = await modelTask.getTaskDataById(idTask);
 
     if (!category || !task) {
-      res.status(404).send("Category or Task not found");
+			res.status(404).json({ message: "Category or Task not found" });
       return;
     }
 
     if (category.idWorkspace !== task.task.idWorkspace) {
-      res.status(400).send("Category and Task are not in the same workspace");
+			res.status(400).json({ message: "Category and Task are not in the same workspace" });
       return;
     }
 
@@ -110,12 +110,12 @@ export class TaskCategoryController {
     );
 
     if (workspaceUser === undefined) {
-      res.status(403).send("Unauthorized");
+			res.status(403).json({ message: "Unauthorized" });
       return;
     }
 
     if (!checkUserEditPermission(workspaceUser.role)) {
-      res.status(403).send("Unauthorized");
+			res.status(403).json({ message: "Unauthorized" });
       return;
     }
 
@@ -124,7 +124,7 @@ export class TaskCategoryController {
       res.json(idTask);
     } catch (error) {
       console.error(error);
-      res.status(500).send("Internal server error");
+			res.status(500).json({ message: "Internal server error" });
     }
   }
 }

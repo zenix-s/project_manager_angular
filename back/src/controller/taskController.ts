@@ -15,7 +15,6 @@ export class TaskController {
 
     // Comprobamos si el workspace existe
     if (!(await workspaceModel.workspaceExists(workspaceId))) {
-      // res.status(404).send("Workspace not found");
 			res.status(404).json({ message: "Workspace not found" });
       return;
     }
@@ -25,7 +24,6 @@ export class TaskController {
       res.json(tasks);
     } catch (error) {
       console.error(error);
-      // res.status(500).send("Internal server error");
 			res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -37,7 +35,6 @@ export class TaskController {
     // Comprobamos si la tarea existe
     const task = await modelTask.getTaskDataById(taskId);
     if (task === undefined) {
-      // res.status(404).send("Task not found");
 			res.status(404).json({ message: "Task not found" });
       return;
     }
@@ -48,13 +45,11 @@ export class TaskController {
     );
 
     if (workspaceUser === undefined) {
-      // res.status(403).send("Unauthorized");
 			res.status(403).json({ message: "Unauthorized" });
       return;
     }
 
     if (!checkUserEditPermission(workspaceUser.role)) {
-      // res.status(403).send("Unauthorized");
 			res.status(403).json({ message: "Unauthorized" });
       return;
     }
@@ -64,7 +59,6 @@ export class TaskController {
       res.json(deletedId);
     } catch (error) {
       console.error(error);
-      // res.status(500).send("Internal server error");
 			res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -78,7 +72,6 @@ export class TaskController {
 
     // Comprobamos si el workspace existe
     if (!(await workspaceModel.workspaceExists(workspaceId))) {
-      // res.status(404).send("Workspace not found");
 			res.status(404).json({ message: "Workspace not found" });
       return;
     }
@@ -90,13 +83,11 @@ export class TaskController {
     );
 
     if (workspaceUser === undefined) {
-      // res.status(403).send("Unauthorized");
 			res.status(403).json({ message: "Unauthorized" });
       return;
     }
 
     if (!checkUserEditPermission(workspaceUser.role)) {
-      // res.status(403).send("Unauthorized");
 			res.status(403).json({ message: "Unauthorized" });
       return;
     }
@@ -107,7 +98,6 @@ export class TaskController {
       res.json(newTask);
     } catch (error) {
       console.error(error);
-      // res.status(500).send("Internal server error");
 			res.status(500).json({ message: "Internal server error" });
     }
   }
@@ -118,7 +108,6 @@ export class TaskController {
     const authToken = req.headers.authorization;
 
     if (!(await modelTask.taskExists(idTask))) {
-      // res.status(404).send("Task not found");
 			res.status(404).json({ message: "Task not found" });
       return;
     }
@@ -130,13 +119,11 @@ export class TaskController {
     );
 
     if (workspaceUser === undefined) {
-      // res.status(403).send("Unauthorized");
 			res.status(403).json({ message: "Unauthorized" });
       return;
     }
 
     if (!checkUserEditPermission(workspaceUser.role)) {
-      // res.status(403).send("Unauthorized");
 			res.status(403).json({ message: "Unauthorized" });
       return;
     }
@@ -148,7 +135,6 @@ export class TaskController {
           Task.dependentIdTask
         );
         if (updatedTask === undefined) {
-          // res.status(404).send("Task not found");
 					res.status(404).json({ message: "Task not found" });
           return;
         }
@@ -156,7 +142,6 @@ export class TaskController {
       } else {
         const updatedTask = await modelTask.getTaskDataById(idTask);
         if (updatedTask === undefined) {
-          // res.status(404).send("Task not found");
 					res.status(404).json({ message: "Task not found" });
           return;
         }
@@ -164,7 +149,6 @@ export class TaskController {
       }
     } catch (error) {
       console.error(error);
-      // res.status(500).send("Internal server error");
 			res.status(500).json({ message: "Internal server error" });
     }
   }

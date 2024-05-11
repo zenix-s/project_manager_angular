@@ -16,7 +16,7 @@ export class CategoryController {
 
     // Comprobamos si el workspace existe
     if (!(await workspaceModel.workspaceExists(idWorkspace))) {
-      res.status(404).send("Workspace not found");
+			res.status(404).json({ message: "Workspace not found" });
       return;
     }
 
@@ -27,12 +27,12 @@ export class CategoryController {
     );
 
     if (workspaceUser === undefined) {
-      res.status(403).send("Unauthorized");
+			res.status(403).json({ message: "Unauthorized" });
       return;
     }
 
     if (!checkUserEditPermission(workspaceUser.role)) {
-      res.status(403).send("Unauthorized");
+			res.status(403).json({ message: "Unauthorized" });
       return;
     }
 
@@ -43,7 +43,7 @@ export class CategoryController {
       res.json(categories);
     } catch (error) {
       console.error(error);
-      res.status(500).send("Internal server error");
+			res.status(500).json({ message: "Internal server error" });
     }
   }
 
@@ -56,7 +56,7 @@ export class CategoryController {
 
     // Comprobamos si el workspace existe
     if (!(await workspaceModel.workspaceExists(idWorkspace))) {
-      res.status(404).send("Workspace not found");
+			res.status(404).json({ message: "Workspace not found" });
       return;
     }
 
@@ -67,12 +67,12 @@ export class CategoryController {
     );
 
     if (workspaceUser === undefined) {
-      res.status(403).send("Unauthorized");
+			res.status(403).json({ message: "Unauthorized" });
       return;
     }
 
     if (!checkUserEditPermission(workspaceUser.role)) {
-      res.status(403).send("Unauthorized");
+			res.status(403).json({ message: "Unauthorized" });
       return;
     }
 
@@ -84,7 +84,7 @@ export class CategoryController {
       res.json(newCategory);
     } catch (error) {
       console.error(error);
-      res.status(500).send("Internal server error");
+			res.status(500).json({ message: "Internal server error" });
     }
   }
 
@@ -95,7 +95,7 @@ export class CategoryController {
     // Comprobamos si la categoria existe
     const category = await modelCategory.getCategoryById(idCategory);
     if (category === undefined) {
-      res.status(404).send("Category not found");
+			res.status(404).json({ message: "Category not found" });
       return;
     }
 
@@ -106,26 +106,26 @@ export class CategoryController {
     );
 
     if (workspaceUser === undefined) {
-      res.status(403).send("Unauthorized");
+			res.status(403).json({ message: "Unauthorized" });
       return;
     }
 
     if (!checkUserEditPermission(workspaceUser.role)) {
-      res.status(403).send("Unauthorized");
+			res.status(403).json({ message: "Unauthorized" });
       return;
     }
 
     try {
       const category = await modelCategory.getCategoryById(idCategory);
       if (category === undefined) {
-        res.status(404).send("Category not found");
+				res.status(404).json({ message: "Category not found" });
         return;
       }
       const deletedId: number = await modelCategory.deleteCategory(idCategory);
       res.json(deletedId);
     } catch (error) {
       console.error(error);
-      res.status(500).send("Internal server error");
+			res.status(500).json({ message: "Internal server error" });
     }
   }
 
@@ -136,7 +136,7 @@ export class CategoryController {
     // Comprobamos si la categoria existe
     const actcategory = await modelCategory.getCategoryById(category.id);
     if (actcategory === undefined) {
-      res.status(404).send("Category not found");
+			res.status(404).json({ message: "Category not found" });
       return;
     }
 
@@ -147,12 +147,12 @@ export class CategoryController {
     );
 
     if (workspaceUser === undefined) {
-      res.status(403).send("Unauthorized");
+			res.status(403).json({ message: "Unauthorized" });
       return;
     }
 
     if (!checkUserEditPermission(workspaceUser.role)) {
-      res.status(403).send("Unauthorized");
+			res.status(403).json({ message: "Unauthorized" });
       return;
     }
 
@@ -162,13 +162,13 @@ export class CategoryController {
         idUpdatedCategory
       );
       if (updatedCategory === undefined) {
-        res.status(404).send("Category not found");
+				res.status(404).json({ message: "Category not found" });
         return;
       }
       res.json(updatedCategory);
     } catch (error) {
       console.error(error);
-      res.status(500).send("Internal server error");
+			res.status(500).json({ message: "Internal server error" });
     }
   }
 }
