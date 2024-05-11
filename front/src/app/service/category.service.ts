@@ -26,8 +26,15 @@ export class CategoryService {
           },
         }
       )
-      .subscribe((categories) => {
-        this._categories.next(categories);
+      .subscribe({
+        next: (categories) => {
+          this._categories.next(categories);
+        },
+        error: (error) => {
+          // console.error(error);
+          // alert('Error al cargar las categorías');
+          alert(error.error.message)
+        },
       });
   }
 
@@ -42,9 +49,16 @@ export class CategoryService {
           },
         }
       )
-      .subscribe((category) => {
-        this._categories.next([...this._categories.getValue(), category]);
-      });
+      .subscribe({
+        next: (category) => {
+          this._categories.next([...this._categories.getValue(), category]);
+        },
+        error: (error) => {
+          // console.error(error);
+          // alert('Error al crear la categoría');
+          alert(error.error.message)
+        },
+      })
   }
 
   deleteCategory(idCategory: number) {
@@ -54,13 +68,20 @@ export class CategoryService {
           Authorization: `${this.authenticationSerice.userToken}`,
         },
       })
-      .subscribe((deletedIdCategory) => {
-        this._categories.next(
-          this._categories
-            .getValue()
-            .filter((category) => category.id !== deletedIdCategory)
-        );
-      });
+      .subscribe({
+        next: (deletedIdCategory) => {
+          this._categories.next(
+            this._categories
+              .getValue()
+              .filter((category) => category.id !== deletedIdCategory)
+          );
+        },
+        error: (error) => {
+          // console.error(error);
+          // alert('Error al borrar la categoría');
+          alert(error.error.message)
+        },
+      })
   }
 
   putCategory(category: Category) {
@@ -74,15 +95,22 @@ export class CategoryService {
           },
         }
       )
-      .subscribe((updatedCategory) => {
-        this._categories.next(
-          this._categories
-            .getValue()
-            .map((category) =>
-              category.id === updatedCategory.id ? updatedCategory : category
-            )
-        );
-      });
+      .subscribe({
+        next: (updatedCategory) => {
+          this._categories.next(
+            this._categories
+              .getValue()
+              .map((category) =>
+                category.id === updatedCategory.id ? updatedCategory : category
+              )
+          );
+        },
+        error: (error) => {
+          // console.error(error);
+          // alert('Error al actualizar la categoría');
+          alert(error.error.message)
+        },
+      })
   }
 
   cleanCategories() {

@@ -45,7 +45,8 @@ export class AuthenticationService {
           this.router.navigate(['/']);
         },
         error: (error) => {
-          console.log(error);
+          // console.log(error.error.message);
+          alert(error.error.message);
         },
       });
   }
@@ -60,7 +61,8 @@ export class AuthenticationService {
           this.router.navigate(['/']);
         },
         error: (error) => {
-          console.log(error);
+          // console.log(error);
+          alert(error.error.message);
         },
       });
   }

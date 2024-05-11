@@ -22,8 +22,7 @@ export class UserWorkspacesService {
         headers: {
           // Authorization: `this.AuthenticationService.idUserLogged`,
           Authorization: `${this.AuthenticationService.userToken}`,
-
-        }
+        },
       }
     );
   }

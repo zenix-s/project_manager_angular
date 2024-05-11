@@ -40,9 +40,18 @@ export class TaskCategoryService {
           },
         }
       )
-      .subscribe(() => {
-        this.taskService.getTasks(idWorkspace);
-        this.categoryService.getWorkspaceCategories(idWorkspace);
+      // .subscribe(() => {
+      //   this.taskService.getTasks(idWorkspace);
+      //   this.categoryService.getWorkspaceCategories(idWorkspace);
+      // });
+      .subscribe({
+        next: () => {
+          this.taskService.getTasks(idWorkspace);
+          this.categoryService.getWorkspaceCategories(idWorkspace);
+        },
+        error: (error) => {
+          alert(error.error.message);
+        },
       });
   }
 
@@ -65,9 +74,18 @@ export class TaskCategoryService {
           },
         }
       )
-      .subscribe((idTask) => {
-        this.taskService.getTasks(idWorkspace);
-        this.categoryService.getWorkspaceCategories(idWorkspace);
+      // .subscribe((idTask) => {
+      //   this.taskService.getTasks(idWorkspace);
+      //   this.categoryService.getWorkspaceCategories(idWorkspace);
+      // });
+      .subscribe({
+        next: () => {
+          this.taskService.getTasks(idWorkspace);
+          this.categoryService.getWorkspaceCategories(idWorkspace);
+        },
+        error: (error) => {
+          alert(error.error.message);
+        },
       });
   }
 }
