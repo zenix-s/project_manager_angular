@@ -25,6 +25,7 @@ interface filter {
 @Component({
   selector: 'app-tasks-page',
   templateUrl: './tasks-page.component.html',
+  host: { class: 'flex flex-col grow' },
 })
 export class TasksPageComponent implements OnInit, OnDestroy {
   tasksService = inject(TasksService);

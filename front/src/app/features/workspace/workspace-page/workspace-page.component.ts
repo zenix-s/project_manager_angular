@@ -33,6 +33,7 @@ export class WorkspacePageComponent implements OnInit {
     if (isNaN(idWorkspace) || !isFinite(idWorkspace) || idWorkspace < 0) {
       this.router.navigate(['/']);
     }
+
     this._idWorkspace = idWorkspace;
   }
 }
