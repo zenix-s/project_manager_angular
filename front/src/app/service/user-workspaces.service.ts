@@ -13,7 +13,6 @@ export class UserWorkspacesService {
   http = inject(HttpClient);
   AuthenticationService = inject(AuthenticationService);
 
-  // constructor(private http: HttpClient) {}
 
   getUserWorkspaces(): Observable<Workspace[]> {
     return this.http.get<Workspace[]>(

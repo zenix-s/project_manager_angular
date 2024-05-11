@@ -40,10 +40,6 @@ export class TaskCategoryService {
           },
         }
       )
-      // .subscribe(() => {
-      //   this.taskService.getTasks(idWorkspace);
-      //   this.categoryService.getWorkspaceCategories(idWorkspace);
-      // });
       .subscribe({
         next: () => {
           this.taskService.getTasks(idWorkspace);
@@ -74,10 +70,6 @@ export class TaskCategoryService {
           },
         }
       )
-      // .subscribe((idTask) => {
-      //   this.taskService.getTasks(idWorkspace);
-      //   this.categoryService.getWorkspaceCategories(idWorkspace);
-      // });
       .subscribe({
         next: () => {
           this.taskService.getTasks(idWorkspace);

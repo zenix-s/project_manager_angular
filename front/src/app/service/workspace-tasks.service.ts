@@ -29,9 +29,6 @@ export class TasksService {
           Authorization: `${this.authenticationService.userToken}`,
         },
       })
-      // .subscribe((tasks) => {
-      //   this._tasks.next(tasks);
-      // });
       .subscribe({
         next: (tasks) => {
           this._tasks.next(tasks);
@@ -53,9 +50,6 @@ export class TasksService {
           },
         }
       )
-      // .subscribe((task: TaskData) => {
-      //   this._tasks.next([...this._tasks.value, task]);
-      // });
       .subscribe({
         next: (task) => {
           this._tasks.next([...this._tasks.value, task]);
@@ -73,11 +67,6 @@ export class TasksService {
           Authorization: `${this.authenticationService.userToken}`,
         },
       })
-      // .subscribe((idTaskDeleted) => {
-      //   this._tasks.next(
-      //     this._tasks.value.filter((task) => task.task.id !== idTaskDeleted)
-      //   );
-      // });
       .subscribe({
         next: (idTaskDeleted) => {
           this._tasks.next(
@@ -97,16 +86,6 @@ export class TasksService {
           Authorization: `${this.authenticationService.userToken}`,
         },
       })
-      // .subscribe((updatedTask: TaskData) => {
-      //   this._tasks.next(
-      //     this._tasks.value.map((t) => {
-      //       if (t.task.id === updatedTask.task.id) {
-      //         return updatedTask;
-      //       }
-      //       return t;
-      //     })
-      //   );
-      // });
       .subscribe({
         next: (updatedTask) => {
           this._tasks.next(

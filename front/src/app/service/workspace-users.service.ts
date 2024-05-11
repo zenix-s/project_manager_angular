@@ -25,7 +25,6 @@ export class WorkspaceUsersService {
           },
         }
       )
-      // .subscribe((data) => this._workspaceUsers.next(data));
       .subscribe({
         next: (data) => this._workspaceUsers.next(data),
         error: (error) => {

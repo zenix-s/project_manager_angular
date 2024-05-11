@@ -32,9 +32,6 @@ export class WorkspaceService {
           Authorization: `${this.authenticationService.userToken}`,
         },
       })
-      // .subscribe((data) => {
-      //   console.log(data);
-      // });
       .subscribe({
         next: (data) => {
           console.log(data);
