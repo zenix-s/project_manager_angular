@@ -1,55 +1,55 @@
 <div class="relative w-full" #details>
-  <div
-    class="flex select-none cursor-pointer"
-    (click)="isOpen = !isOpen"
-    (mouseleave)="isOpen"
-    >
+  <div class="flex select-none cursor-pointer" (click)="isOpen = !isOpen" (mouseleave)="isOpen">
     @switch (priority) {
-      @case ('NONE') {
-        <app-none-priority-icon></app-none-priority-icon>
-      }
-      @case ('LOW') {
-        <app-low-priority-icon></app-low-priority-icon>
-      }
-      @case ('MEDIUM') {
-        <app-medium-priority-icon></app-medium-priority-icon>
-      }
-      @case ('HIGH') {
-        <app-high-priority-icon></app-high-priority-icon>
-      }
-      @case ('CRITICAL') {
-        <app-critical-priority-icon></app-critical-priority-icon>
-      }
+    @case ('NONE') {
+    <app-none-priority-icon></app-none-priority-icon>
+    }
+    @case ('LOW') {
+    <app-low-priority-icon></app-low-priority-icon>
+    }
+    @case ('MEDIUM') {
+    <app-medium-priority-icon></app-medium-priority-icon>
+    }
+    @case ('HIGH') {
+    <app-high-priority-icon></app-high-priority-icon>
+    }
+    @case ('CRITICAL') {
+    <app-critical-priority-icon></app-critical-priority-icon>
+    }
     }
   </div>
-  <ul class="flex flex-col bg-dark z-10 border absolute border-fountainBlue w-max" [ngClass]="isOpen ? 'block' : 'hidden'"
-    (mouseleave)="isOpen"
-    (mouseenter)="isOpen"
-    >
-    @for (priority of listPriority; track $index) {
-    <li class="w-full">
-      <button (click)="select(priority)" class="hover:bg-lightDark/70 w-full px-1 gap-2 group flex items-center">
+  <ul class="flex flex-col bg-dark z-10 border absolute border-fountainBlue w-max"
+    [ngClass]="isOpen ? 'block' : 'hidden'" (mouseleave)="isOpen" (mouseenter)="isOpen">
+    @for (priorityItem of listPriority; track $index) {
+    <li class="w-40">
+      <button (click)="select(priorityItem)"
+        class="hover:bg-lightDark/70 w-full px-2 py-0.5 gap-2 group flex items-center">
         <span class="">
-          @switch (priority) {
-            @case ('NONE') {
-              <app-none-priority-icon></app-none-priority-icon>
-            }
-            @case ('LOW') {
-              <app-low-priority-icon></app-low-priority-icon>
-            }
-            @case ('MEDIUM') {
-              <app-medium-priority-icon></app-medium-priority-icon>
-            }
-            @case ('HIGH') {
-              <app-high-priority-icon></app-high-priority-icon>
-            }
-            @case ('CRITICAL') {
-              <app-critical-priority-icon></app-critical-priority-icon>
-            }
+          @switch (priorityItem) {
+          @case ('NONE') {
+          <app-none-priority-icon></app-none-priority-icon>
+          }
+          @case ('LOW') {
+          <app-low-priority-icon></app-low-priority-icon>
+          }
+          @case ('MEDIUM') {
+          <app-medium-priority-icon></app-medium-priority-icon>
+          }
+          @case ('HIGH') {
+          <app-high-priority-icon></app-high-priority-icon>
+          }
+          @case ('CRITICAL') {
+          <app-critical-priority-icon></app-critical-priority-icon>
+          }
           }
         </span>
-        <span>
-          {{priority}}
+        <span class="grow flex justify-start items-center">
+          {{priorityItem}}
+        </span>
+        <span class="text-lightBlue w-6 flex justify-center items-center">
+          @if (priorityItem === priority) {
+          <app-circle-check-icon></app-circle-check-icon>
+          }
         </span>
       </button>
     </li>

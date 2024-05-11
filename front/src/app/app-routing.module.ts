@@ -7,10 +7,6 @@ import { PageTestComponent } from './features/tests/page-test/page-test.componen
 import { AuthenticationPageComponent } from './features/authentication/authentication-page/authentication-page.component';
 import { authGuard } from './auth.guard';
 
-
-
-
-
 // / --> basic route for the list-workspaces module
 // /workspace --> basic route for the workspace module
 // /workspace/new --> basic route for the ce-workspaces module
@@ -45,7 +41,7 @@ const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'login',
+    path: 'authentication',
     component: AuthenticationPageComponent,
   },
   {

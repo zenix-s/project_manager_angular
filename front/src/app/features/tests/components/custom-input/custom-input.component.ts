@@ -23,11 +23,9 @@ export class CustomInputComponent implements ControlValueAccessor {
 
 
   registerOnChange(fn: any): void {
-    console.log('registerOnChange', fn);
     this.onChanged = fn;
   }
   registerOnTouched(fn: any): void {
-    console.log('registerOnTouched', fn);
     this.onTouched = fn;
   }
   setDisabledState?(isDisabled: boolean): void {
@@ -41,7 +39,6 @@ export class CustomInputComponent implements ControlValueAccessor {
     }
 
     this.enabled = !this.enabled;
-    console.log('toggle', this.enabled);
 
     this.onChanged(this.enabled);
     this.onTouched();
@@ -49,7 +46,6 @@ export class CustomInputComponent implements ControlValueAccessor {
   }
 
   writeValue(obj: any): void {
-    console.log('writeValue', obj);
     this.enabled = obj;
   }
 }

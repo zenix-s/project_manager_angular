@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-type _section = 'tasks' | 'teams' | 'categories' | 'options';
+type _section = 'tasks' | 'users' | 'categories' | 'options';
 @Component({
   selector: 'app-workspace-page',
   templateUrl: './workspace-page.component.html',
@@ -33,6 +33,7 @@ export class WorkspacePageComponent implements OnInit {
     if (isNaN(idWorkspace) || !isFinite(idWorkspace) || idWorkspace < 0) {
       this.router.navigate(['/']);
     }
+
     this._idWorkspace = idWorkspace;
   }
 }

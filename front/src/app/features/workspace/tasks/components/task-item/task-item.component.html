@@ -2,73 +2,63 @@
   (mouseleave)="hovered = false">
   <div class="flex">
     @if (father) {
-      <span class="">{{index+1}}</span>
+    <span class="">{{index+1}}</span>
     }@else {
-      <span class="w-4">{{index+1}}</span>
+    <span class="w-4">{{index+1}}</span>
     }
   </div>
   <div class="flex flex-grow gap-4 items-center">
     <!-- COMPLETE STATUS -->
-    <app-tooltip
-      [text]="task.completed ? 'completed' : 'incomplete'"
-      >
-      <app-input-complete-task
-        [completed]="task.completed"
-        (onToggleChange)="ChangeCompleteStatusTask($event)"
-      >
+    <app-tooltip [text]="task.task.completed ? 'completed' : 'incomplete'">
+      <app-input-complete-task [completed]="task.task.completed" (onToggleChange)="ChangeCompleteStatusTask($event)">
       </app-input-complete-task>
     </app-tooltip>
     <!-- PRIORITY -->
-    <app-tooltip
-      [text]="task.priority"
-    >
-      <app-select-priority
-        [priority]="task.priority"
-        (onPriorityChange)="ChangePriority($event)"
-      ></app-select-priority>
+    <app-tooltip [text]="task.task.priority">
+      <app-select-priority [priority]="task.task.priority"
+        (onPriorityChange)="ChangePriority($event)"></app-select-priority>
     </app-tooltip>
     <!-- NAME -->
-    <div>{{task.name}}</div>
+    <div (click)="openEditTask()" class="cursor-pointer">
+      {{task.task.name}}
+    </div>
   </div>
   <!-- CATEGORIES -->
   <div>
     <ul class="flex gap-2">
       @for (category of task.categories; track $index) {
-        <li class="flex gap-1 items-center rounded">
-          <span class="w-3 h-3 rounded-full"
-            [style.backgroundColor]="category.color"
-          >
-          </span>
-          <span>{{category.name}}</span>
-        </li>
+      <li class="flex gap-1 items-center rounded">
+        <span class="w-3 h-3 rounded-full" [style.backgroundColor]="category.color">
+        </span>
+        <span>{{category.name}}</span>
+      </li>
       }
     </ul>
   </div>
   <div class="flex gap-2">
     <!-- DEADLINE -->
-    @if (task.deadline) {
-      <app-tooltip
-        [text]="'deadline'"
-      >
-        <div class="flex">
-          <span>
-            {{task.deadline | date : 'MMMM-dd'}}
-          </span>
-          <span>
-            &nbsp;-
-          </span>
-        </div>
-      </app-tooltip>
+    @if (task.task.deadline) {
+    <app-tooltip [text]="'deadline'">
+      <div class="flex">
+        <span>
+          {{task.task.deadline | date : 'MMM-dd'}}
+        </span>
+        <span>
+          &nbsp;-
+        </span>
+      </div>
+    </app-tooltip>
     }
     <!-- CREATED AT -->
-    <app-tooltip
-      [text]="'created at'"
-    >
+    <app-tooltip [text]="'Created at: ' + ((task.task.createdAt | date : 'YYYY-MMMM-dd') ?? '')">
       <div class="text-white/70">
-        {{task.createdAt | date : 'MMMM-dd'}}
+        {{task.task.createdAt | date : 'MMM-dd'}}
       </div>
     </app-tooltip>
   </div>
+  <!-- <div>
+    <button (click)="openEditTask()">edit</button>
+  </div> -->
   <!-- CONTEXTUAL MENU -->
   <div class="gap-4 flex items-center">
     <app-input-contextual-menu
@@ -77,7 +67,7 @@
       (onChangePriority)="ChangePriority($event)"
       (onChangeCompleted)="ChangeCompleteStatusTask($event)"
       (onDeadlineChange)="ChangeDeadlineTask($event)"
-      (onDelete)="DeleteTask(task.id)"
+      (onDelete)="DeleteTask(task.task.id)"
     ></app-input-contextual-menu>
   </div>
 </div>

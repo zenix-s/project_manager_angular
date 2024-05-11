@@ -13,7 +13,7 @@ import {
   signal,
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Task } from '@types';
+import { Task, TaskData } from '@types';
 import { FormTasksService } from '@app/features/workspace/tasks/services/form-tasks.service';
 import { TasksService } from '@app/service/workspace-tasks.service';
 
@@ -27,8 +27,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
   taskFormService = inject(FormTasksService);
   taskService = inject(TasksService);
 
-  @Input()
-  task: Task | null = null;
+  task: TaskData | null = null;
 
   @ViewChild('dialog') dialog: ElementRef<HTMLDialogElement> | undefined;
 
@@ -38,25 +37,26 @@ export class TaskFormComponent implements OnInit, OnDestroy {
   isOpen: WritableSignal<boolean> = signal<boolean>(false);
 
   taskForm: FormGroup = this.fb.group({
+    id: [null],
     name: [
-      this.task ? this.task.name : '',
+      '',
       [Validators.required, Validators.maxLength(50), Validators.minLength(3)],
     ],
     description: [
-      this.task ? this.task.description : '',
-      [Validators.maxLength(255), Validators.minLength(3)]
+      '',
+      [Validators.maxLength(255), Validators.minLength(3)],
     ],
-    deadline: [
-      this.task ? this.task.deadline : '',
-      Validators.required],
+    deadline: ['', Validators.required],
     priority: [
-      this.task ? this.task.priority : 'NONE',
-      Validators.required
+      'NONE',
+      Validators.required,
     ],
     visibility: [
-      this.task ? this.task.visibility : 'PUBLIC',
-      Validators.required
+      'PUBLIC',
+      Validators.required,
     ],
+    dependentIdTask: [null],
+    completed: [false]
   });
 
   closeDialog() {
@@ -79,13 +79,30 @@ export class TaskFormComponent implements OnInit, OnDestroy {
     }
     this.dialog.nativeElement.close();
     this.taskForm.reset();
+    this.taskFormService.clearTask();
     this.task = null;
+    this.taskForm.patchValue({
+      priority: 'NONE',
+    });
   }
   onSubmit() {
+    if (this.task) {
+      this.taskService.changeTask(this.taskForm.value);
+      // this.taskForm.value.id = this.task.task.id;
+
+      this.taskFormService.close();
+      this.taskForm.reset();
+      this.taskForm.patchValue({
+        priority: 'NONE',
+      });
+      return;
+    }
     this.taskService.addTask(this.idWorkspace, this.taskForm.value);
-    console.log(this.taskForm.value);
-    this._onCloseDialog();
     this.taskForm.reset();
+    this.taskFormService.close();
+    this.taskForm.patchValue({
+      priority: 'NONE',
+    });
   }
 
   constructor() {
@@ -102,10 +119,29 @@ export class TaskFormComponent implements OnInit, OnDestroy {
     this.taskFormService.isOpen$.subscribe((isOpen) => {
       this.isOpen.set(isOpen);
     });
+    this.taskFormService.task$.subscribe((task) => {
+      this.task = task;
+      if (task) {
+        this.taskForm.patchValue({
+          id: task.task.id,
+          name: task.task.name,
+          description: task.task.description,
+          deadline: task.task.deadline,
+          priority: task.task.priority,
+          visibility: task.task.visibility,
+          dependentIdTask: task.task.dependentIdTask,
+          completed: task.task.completed,
+        });
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this.taskFormService.close();
     this.taskForm.reset();
+    // this.taskForm. set priority to NONE
+    this.taskForm.patchValue({
+      priority: 'NONE',
+    });
   }
 }

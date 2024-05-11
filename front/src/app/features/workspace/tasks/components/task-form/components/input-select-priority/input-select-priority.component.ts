@@ -1,14 +1,15 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, inject } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { listPriority, priority } from '@app/interfaces/interfaces';
 
-6
+6;
 @Component({
   selector: 'app-input-select-priority',
   templateUrl: './input-select-priority.component.html',
 })
 export class InputSelectPriorityComponent implements ControlValueAccessor {
-  // listPriority: priority[] = ['NONE', 'LOW', 'MEDIUM', 'HIGH', 'CRITICAL'];
+  ngControl = inject(NgControl);
+  elementRef = inject(ElementRef);
   isPriority = (value: any): value is priority => listPriority.includes(value);
 
   get listPriority() {
@@ -22,10 +23,7 @@ export class InputSelectPriorityComponent implements ControlValueAccessor {
 
   displayed: boolean = false;
 
-  constructor(
-    private ngControl: NgControl,
-    private elementRef: ElementRef
-  ) {
+  constructor() {
     this.ngControl.valueAccessor = this;
     this.value = 'NONE';
     this.disabled = false;

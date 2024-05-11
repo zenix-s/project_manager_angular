@@ -13,7 +13,6 @@ export class DeadlineSubmenuComponent {
 
   changeDeadline(newDeadline:Date){
     this.onChangeDeadline.emit(newDeadline)
-    console.log("new deadline: low af", newDeadline)
   }
 
   clearDeadline(){

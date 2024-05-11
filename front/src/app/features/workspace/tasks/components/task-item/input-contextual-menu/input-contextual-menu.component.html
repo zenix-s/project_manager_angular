@@ -1,17 +1,13 @@
 <div class="relative flex flex-row-reverse">
   <div class="flex items-center w-full">
-    <button
-      (click)="opened = !opened"
-    >
-    <app-hamburger-icon></app-hamburger-icon>
+    <button (click)="opened = !opened">
+      <app-hamburger-icon></app-hamburger-icon>
     </button>
   </div>
-  <div
-    class="absolute bg-dark z-10 border border-fountainBlue top-1 w-max right-full"
-    [ngClass]="opened ? 'block' : 'hidden'"
-  >
+  <div class="absolute bg-dark z-10 border border-fountainBlue top-1 w-max right-full"
+    [ngClass]="opened ? 'block' : 'hidden'">
     <div class="flex flex-col">
-     <!-- <div class="w-full">
+      <!-- <div class="w-full">
         <button
           class="w-full flex gap-2 hover:bg-lightDark/70 px-2"
           (click)="delete()"
@@ -22,22 +18,19 @@
           <span>Delete</span>
         </button>
       </div> -->
-      <app-completed-submenu
-        [taskCompleted]="task.completed"
-        (onChangeCompleted)="changeCompleted($event)"
-      >
+      <app-completed-submenu [taskCompleted]="task.task.completed" (onChangeCompleted)="changeCompleted($event)">
       </app-completed-submenu>
-      <app-deadline-submenu
-        (onChangeDeadline)="changeDeadline($event)"
-      >
+      <app-deadline-submenu (onChangeDeadline)="changeDeadline($event)">
       </app-deadline-submenu>
-      <app-priority-submenu
-        [taskPriority]="task.priority"
-        (onChangePriority)="changePriority($event)"
-      ></app-priority-submenu>
-      <app-delete-task-submenu
-        (onDeleteTask)="delete()"
+      <app-priority-submenu [taskPriority]="task.task.priority"
+        (onChangePriority)="changePriority($event)"></app-priority-submenu>
+      <app-category-submenu
+        [taskCategories]="task.categories"
+        [idTask]="task.task.id"
+        [idWorkspace]="task.task.idWorkspace"
       >
+      </app-category-submenu>
+      <app-delete-task-submenu (onDeleteTask)="delete()">
       </app-delete-task-submenu>
     </div>
   </div>

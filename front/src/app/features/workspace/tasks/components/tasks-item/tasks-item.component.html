@@ -2,7 +2,7 @@
 <div>
   <!-- TASK -->
 	<div class="flex hover:bg-lightDark/40">
-		@if(task.subtasks.length > 0){
+		@if(task.subtasks != null && task.subtasks.length > 0){
 			<span (click)="opened = !opened" class="cursor-pointer select-none">
 				{{ opened ? '-' : '+' }}
 			</span>

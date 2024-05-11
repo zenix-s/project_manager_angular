@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Task, TaskData } from "@types";
-import { ModelTask } from "@/model/modelTask";
+import { ModelTask } from "@/model/taskModel";
 
 const modelTask = new ModelTask();
 

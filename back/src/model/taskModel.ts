@@ -1,4 +1,4 @@
-import { Category, Task, TaskData, subtask } from "@types";
+import { Category, Task, TaskData  } from "@types";
 import mysql, {
   RowDataPacket,
   Connection,
@@ -165,20 +165,41 @@ WHERE
     const resultParsed: TaskData[] = result.map(
       (task: TaskDataBBDD): TaskData => {
         return {
-          id: task.id,
-          name: task.name,
-          description: task.description,
-          completed: task.completed,
-          deadline: task.deadline,
-          priority: task.priority,
-          visibility: task.visibility,
-          createdAt: task.createdAt,
-          idWorkspace: task.idWorkspace,
-          dependentIdTask: task.dependentIdTask,
+					task : {
+						id: task.id,
+						name: task.name,
+						description: task.description,
+						completed: task.completed,
+						deadline: task.deadline,
+						priority: task.priority,
+						visibility: task.visibility,
+						createdAt: task.createdAt,
+						idWorkspace: task.idWorkspace,
+						dependentIdTask: task.dependentIdTask,
+					},
           // categories: JSON.parse(task.categories),
           // subtasks: JSON.parse(task.subtasks),
 					categories: task.categories ? JSON.parse(task.categories) as Category[] : [],
-					subtasks: task.subtasks ? JSON.parse(task.subtasks) as subtask[] : [],
+					// subtasks: task.subtasks ? JSON.parse(task.subtasks) as TaskData[] : [],
+					subtasks: task.subtasks ? JSON.parse(task.subtasks).map((subtask: TaskDataBBDD): TaskData => {
+						return {
+							task:{
+								id: subtask.id,
+								name: subtask.name,
+								description: subtask.description,
+								completed: subtask.completed,
+								deadline: subtask.deadline,
+								priority: subtask.priority,
+								visibility: subtask.visibility,
+								createdAt: subtask.createdAt,
+								idWorkspace: subtask.idWorkspace,
+								dependentIdTask: subtask.dependentIdTask,
+							},
+							categories: subtask.categories ? JSON.parse(subtask.categories) as Category[] : [],
+							subtasks: [],
+						};
+					}
+					) : [],
         };
       }
     );
@@ -289,12 +310,12 @@ WHERE
 					tc.idTask = t.id
 					AND c.deleted = 0
 			) AS categories
-		FROM
-			task t
-		WHERE
-			t.idWorkspace = ?
-			AND t.deleted = 0
-			AND t.dependentIdTask IS NULL
+			FROM
+				task t
+			WHERE
+				t.idWorkspace = ?
+				AND t.deleted = 0
+				AND t.dependentIdTask IS NULL
 			`,
       [idWorkspace]
     );
@@ -303,20 +324,42 @@ WHERE
 
     return result.map((task: TaskDataBBDD): TaskData => {
       return {
-        id: task.id,
-        name: task.name,
-        createdAt: task.createdAt,
-        idWorkspace: task.idWorkspace,
-        description: task.description,
-        completed: task.completed,
-        deadline: task.deadline,
-        priority: task.priority,
-        visibility: task.visibility,
-        dependentIdTask: task.dependentIdTask,
+				task:{
+					id: task.id,
+					name: task.name,
+					description: task.description,
+					completed: task.completed,
+					deadline: task.deadline,
+					priority: task.priority,
+					visibility: task.visibility,
+					createdAt: task.createdAt,
+					idWorkspace: task.idWorkspace,
+					dependentIdTask: task.dependentIdTask,
+				},
         // categories: JSON.parse(task.categories) as Category[],
 				categories: task.categories ? JSON.parse(task.categories) as Category[] : [],
         // subtasks: JSON.parse(task.subtasks) as subtask[],
-				subtasks: task.subtasks ? JSON.parse(task.subtasks) as subtask[] : [],
+				// subtasks: task.subtasks ? JSON.parse(task.subtasks) as TaskData[] : [],
+				// convert subtasks to TaskData task part and categories part
+				subtasks: task.subtasks ? JSON.parse(task.subtasks).map((subtask: TaskDataBBDD): TaskData => {
+					return {
+						task:{
+							id: subtask.id,
+							name: subtask.name,
+							description: subtask.description,
+							completed: subtask.completed,
+							deadline: subtask.deadline,
+							priority: subtask.priority,
+							visibility: subtask.visibility,
+							createdAt: subtask.createdAt,
+							idWorkspace: subtask.idWorkspace,
+							dependentIdTask: subtask.dependentIdTask,
+						},
+						categories: subtask.categories ? JSON.parse(subtask.categories) as Category[] : [],
+						subtasks: [],
+					};
+				}
+				) : [],
       };
     });
   }

@@ -1,11 +1,11 @@
-<button (click)="openDialog(dialog)">
+<button (click)="openDialog()">
   <span class="text-sm">Nueva Categoria</span>
 </button>
 <dialog #dialog class="text-white w-min border border-fountainBlue bg-dark backdrop:bg-transparent overflow-visible">
   <span class="absolute  bg-dark px-2 text-sm z-10 left-0 -top-2 ">Form</span>
   <div class="p-4 w-72">
-    <button (click)="dialog.close()">Cerrar</button>
-    <form class="flex flex-col gap-2" [formGroup]="categoryForm" (ngSubmit)="onSubmit(dialog)">
+    <button (click)="closeDialog()">Cerrar</button>
+    <form class="flex flex-col gap-2" [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
       <div class="">
         <label for="name">Nombre</label>
         <input

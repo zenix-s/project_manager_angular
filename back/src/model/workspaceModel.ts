@@ -1,12 +1,6 @@
 import mysql, { ResultSetHeader, RowDataPacket } from "mysql2/promise";
-import { Workspace } from "../interfaces/interfaces";
-
-const config = {
-  host: "localhost",
-  user: "root",
-  password: "rootpassdev",
-  database: "tfgsff_db",
-};
+import { Workspace } from "@types";
+import { dbconfig as config } from "@/lib/mysqldb";
 
 interface TaskDataBBDD extends RowDataPacket {
   id: number;
@@ -21,8 +15,7 @@ interface TaskDataBBDD extends RowDataPacket {
   categories: string;
 }
 
-
-export class ModelWorkspace {
+export class WorkspaceModel {
   constructor() {}
 
   async getWorkspacesByIdUser(idUser: number) {
@@ -53,7 +46,6 @@ export class ModelWorkspace {
   }
 
   async deleteWorkspace(idWorkspace: number): Promise<boolean> {
-		console.log("deleteWorkspace", idWorkspace);
     return true;
   }
 
@@ -80,7 +72,7 @@ export class ModelWorkspace {
     return result.length > 0;
   }
 
-  async addWorkspace(workspace: Workspace): Promise<number> {
+  async addWorkspace(idUser: number, workspace: Workspace): Promise<number> {
     const connection = await mysql.createConnection(config);
 
     const [result] = await connection.query<ResultSetHeader>(
@@ -97,7 +89,7 @@ export class ModelWorkspace {
 				INSERT INTO userWorkspace (idUser, idWorkspace, role, createdAt)
 				VALUES (?, ?, 'ADMIN', ?)
 				`,
-        [1, result.insertId, new Date()]
+        [idUser, result.insertId, new Date()]
       );
     }
 
@@ -105,4 +97,5 @@ export class ModelWorkspace {
 
     return result.insertId;
   }
+	
 }

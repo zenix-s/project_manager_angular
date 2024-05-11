@@ -1,5 +1,5 @@
 <div class="relative flex w-full">
-  <div class="flex items-start gap-2 relative hover:bg-lightDark/70 px-2 w-full" (mouseenter)="hovered = true" (mouseleave)="hovered = false">
+  <div class="flex items-center justify-start gap-2 relative hover:bg-lightDark/70 px-2 w-full" (mouseenter)="hovered = true" (mouseleave)="hovered = false">
     <span>
       @switch (taskPriority) {
         @case ('NONE') {
@@ -34,7 +34,7 @@
       @for (priority of listPriority; track $index) {
       <li class="hover:bg-lightDark/70 px-1 flex items-center gap-2" (click)="changePriority(priority)">
 
-        <div class="flex grow">
+        <div class="flex items-center grow gap-2">
           <div class="w-5">
             @switch (priority) {
             @case ('NONE') {

@@ -1,5 +1,5 @@
-import { Category } from "@/interfaces/interfaces";
-import { ModelCategory } from "@/model/modelCategory";
+import { Category } from "@types";
+import { ModelCategory } from "@/model/categoryModel";
 import { Request, Response } from "express";
 
 const modelCategory = new ModelCategory();
@@ -46,6 +46,23 @@ export class CategoryController {
 			}
 			const deletedId:number =	await modelCategory.deleteCategory(idCategory);
 			res.json(deletedId);
+		} catch (error) {
+			console.error(error);
+			res.status(500).send("Internal server error");
+		}
+	}
+
+	public async putCategory(req:Request, res:Response){
+		const category:Category = req.body;
+
+		try {
+			const idUpdatedCategory = await modelCategory.updateCategory(category);
+			const updatedCategory = await modelCategory.getCategoryById(idUpdatedCategory);
+			if (updatedCategory === undefined) {
+				res.status(404).send("Category not found");
+				return;
+			}
+			res.json(updatedCategory);
 		} catch (error) {
 			console.error(error);
 			res.status(500).send("Internal server error");

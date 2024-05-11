@@ -1,20 +1,30 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Workspace } from '@types';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { port, backendUrl } from '@env';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserWorkspacesService {
   private resourceUrl = 'userWorkspaces';
+  http = inject(HttpClient);
+  AuthenticationService = inject(AuthenticationService);
 
-  constructor(private http: HttpClient) {}
+  // constructor(private http: HttpClient) {}
 
   getUserWorkspaces(): Observable<Workspace[]> {
     return this.http.get<Workspace[]>(
-      `${backendUrl}:${port}/${this.resourceUrl}`
+      `${backendUrl}:${port}/${this.resourceUrl}`,
+      {
+        headers: {
+          // Authorization: `this.AuthenticationService.idUserLogged`,
+          Authorization: `${this.AuthenticationService.userToken}`,
+
+        }
+      }
     );
   }
 
