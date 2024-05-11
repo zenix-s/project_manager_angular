@@ -2,26 +2,26 @@
 # version: '3.1'
 
 services:
-  db:
-    image: mariadb
-    restart: always
-    environment:
-      MARIADB_ROOT_PASSWORD: rootpassdev
-    volumes:
-      - ./data:/var/lib/mysql
-    ports:
-      - 3306:3306
+    db:
+      image: mariadb
+      restart: always
+      environment:
+        MARIADB_ROOT_PASSWORD: rootpassdev
+      volumes:
+        - ./data:/var/lib/mysql
+      ports:
+        - 3306:3306
 
-  # adminer:
-  #   image: adminer
-  #   restart: always
-  #   ports:
-  #     - 8081:8080
+#   adminer:
+#     image: adminer
+#     restart: always
+#     ports:
+#       - 8081:8080
 
-  phpmyadmin:
-    image: phpmyadmin
-    restart: always
-    ports:
-      - 8080:80
-    environment:
-      - PMA_ARBITRARY=1
+    phpmyadmin:
+      image: phpmyadmin
+      restart: always
+      ports:
+        - 8080:80
+      environment:
+        - PMA_ARBITRARY=1

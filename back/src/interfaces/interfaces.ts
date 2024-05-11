@@ -1,6 +1,6 @@
-type role = 'ADMIN' | 'MEMBER' | 'GUEST';
+export type role = 'ADMIN' | 'MEMBER' | 'GUEST';
 export type priority = 'NONE' | 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
-type visibility = 'PUBLIC' | 'PRIVATE';
+export type visibility = 'PUBLIC' | 'PRIVATE';
 
 export const listPriority: priority[] = [
   'NONE',

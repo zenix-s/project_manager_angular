@@ -2,6 +2,10 @@ import { Request, Response } from "express";
 import { Workspace } from "@types";
 import { WorkspaceModel } from "@/model/workspaceModel";
 import { WorkspaceUsersModel } from "@/model/workspaceUsersModel";
+import {
+  checkUserAdminPermission,
+  checkUserEditPermission,
+} from "@/services/userPermissions";
 
 const modelWorkspace = new WorkspaceModel();
 const modelWorkspaceUsers = new WorkspaceUsersModel();
@@ -20,11 +24,35 @@ export class WorkspaceController {
 
   public async deleteWorkspace(req: Request, res: Response) {
     const idWorkspace: number = parseInt(req.params.idWorkspace);
-    const deleted: boolean = await modelWorkspace.deleteWorkspace(idWorkspace);
-    res.json({
-      deleted: deleted,
-      message: "workspace eliminado con id: " + idWorkspace + "",
-    });
+    const authToken = req.headers.authorization;
+
+    const workspaceUser = await modelWorkspaceUsers.getWorkspaceUserById(
+      idWorkspace,
+      parseInt(authToken as string)
+    );
+
+    if (workspaceUser === undefined) {
+      res.status(403).send("Unauthorized");
+      return;
+    }
+
+    if (!checkUserEditPermission(workspaceUser.role)) {
+      res.status(403).send("Unauthorized");
+      return;
+    }
+
+    try {
+      const deleted: boolean = await modelWorkspace.deleteWorkspace(
+        idWorkspace
+      );
+      res.json({
+        deleted: deleted,
+        message: "workspace eliminado con id: " + idWorkspace + "",
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal server error");
+    }
   }
 
   public async postWorkspace(req: Request, res: Response) {
@@ -54,7 +82,7 @@ export class WorkspaceController {
 
   public async getWorkspaceUsers(req: Request, res: Response) {
     // const idWorkspace: number = parseInt(req.params.idWorkspace);
-    const idWorkspace: number = 1; 
+    const idWorkspace: number = 1;
 
     try {
       const workspaceUsers = await modelWorkspaceUsers.getWorkspaceUsers(

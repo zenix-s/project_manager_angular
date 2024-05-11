@@ -1,21 +1,23 @@
 import { Request, Response } from "express";
 import { Task, TaskData } from "@types";
 import { ModelTask } from "@/model/taskModel";
+import { WorkspaceModel } from "@/model/workspaceModel";
+import { WorkspaceUsersModel } from "@/model/workspaceUsersModel";
+import { checkUserEditPermission } from "@/services/userPermissions";
 
 const modelTask = new ModelTask();
+const workspaceModel = new WorkspaceModel();
+const workspaceUsersModel = new WorkspaceUsersModel();
 
 export class TaskController {
-  private idWorkspace: number;
-
-  // private modelTask: ModelTask;
-
-  constructor() {
-    this.idWorkspace = 1;
-    // this.modelTask = new ModelTask();
-  }
-
   public async getWorkspaceTasks(req: Request, res: Response) {
     const workspaceId = parseInt(req.params.idWorkspace);
+
+    // Comprobamos si el workspace existe
+    if (!(await workspaceModel.workspaceExists(workspaceId))) {
+      res.status(404).send("Workspace not found");
+      return;
+    }
 
     try {
       const tasks = await modelTask.getTasksByIdWorkspace(workspaceId);
@@ -28,20 +30,67 @@ export class TaskController {
 
   public async deleteTask(req: Request, res: Response) {
     const taskId = parseInt(req.params.idTask);
+    const authToken = req.headers.authorization;
+
+    // Comprobamos si la tarea existe
     const task = await modelTask.getTaskDataById(taskId);
     if (task === undefined) {
       res.status(404).send("Task not found");
       return;
     }
-    const deletedId: number = await modelTask.deleteTaskById(taskId);
-    res.json(deletedId);
+
+    const workspaceUser = await workspaceUsersModel.getWorkspaceUserById(
+      task.task.idWorkspace,
+      parseInt(authToken as string)
+    );
+
+    if (workspaceUser === undefined) {
+      res.status(403).send("Unauthorized");
+      return;
+    }
+
+    if (!checkUserEditPermission(workspaceUser.role)) {
+      res.status(403).send("Unauthorized");
+      return;
+    }
+
+    try {
+      const deletedId: number = await modelTask.deleteTaskById(taskId);
+      res.json(deletedId);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Internal server error");
+    }
   }
 
   public async postTaskController(req: Request, res: Response) {
     const workspaceId = parseInt(req.params.idWorkspace);
+    const authToken = req.headers.authorization;
     const task: Task = req.body;
     task.idWorkspace = workspaceId;
     task.completed = false;
+
+    // Comprobamos si el workspace existe
+    if (!(await workspaceModel.workspaceExists(workspaceId))) {
+      res.status(404).send("Workspace not found");
+      return;
+    }
+
+    // Comprobamos si el usuario tiene permisos para crear tareas
+    const workspaceUser = await workspaceUsersModel.getWorkspaceUserById(
+      workspaceId,
+      parseInt(authToken as string)
+    );
+
+    if (workspaceUser === undefined) {
+      res.status(403).send("Unauthorized");
+      return;
+    }
+
+    if (!checkUserEditPermission(workspaceUser.role)) {
+      res.status(403).send("Unauthorized");
+      return;
+    }
 
     try {
       const idTask: number = await modelTask.addTask(task);
@@ -56,9 +105,26 @@ export class TaskController {
   public async putTask(req: Request, res: Response) {
     const Task: Task = req.body;
     const idTask: number = parseInt(req.params.idTask);
+    const authToken = req.headers.authorization;
 
     if (!(await modelTask.taskExists(idTask))) {
       res.status(404).send("Task not found");
+      return;
+    }
+
+    // Comprobamos si el usuario tiene permisos para editar tareas
+    const workspaceUser = await workspaceUsersModel.getWorkspaceUserById(
+      Task.idWorkspace,
+      parseInt(authToken as string)
+    );
+
+    if (workspaceUser === undefined) {
+      res.status(403).send("Unauthorized");
+      return;
+    }
+
+    if (!checkUserEditPermission(workspaceUser.role)) {
+      res.status(403).send("Unauthorized");
       return;
     }
 
@@ -75,11 +141,11 @@ export class TaskController {
         res.json(updatedTask);
       } else {
         const updatedTask = await modelTask.getTaskDataById(idTask);
-				if (updatedTask === undefined) {
-					res.status(404).send("Task not found");
-					return;
-				}
-				res.json(updatedTask);
+        if (updatedTask === undefined) {
+          res.status(404).send("Task not found");
+          return;
+        }
+        res.json(updatedTask);
       }
     } catch (error) {
       console.error(error);
@@ -87,50 +153,3 @@ export class TaskController {
     }
   }
 }
-
-// // /workspace/:idWorkspace/task
-// export async function getWorkspaceTasksController(req: Request, res: Response) {
-//   const workspaceId = parseInt(req.params.idWorkspace);
-
-// 	try {
-// 		const tasks = await getTasks(workspaceId);
-// 		res.json(tasks);
-// 	} catch (error) {
-// 		console.error(error);
-// 		res.status(500).send("Internal server error");
-// 	}
-
-//   // const tasks = getTasks(workspaceId);
-//   // res.send(tasks);
-// }
-
-// // /task/:idTask
-// export function deleteTaskController(req: Request, res: Response) {
-//   const taskId = parseInt(req.params.idTask);
-//   const task = getTaskById(taskId);
-//   if (task === undefined) {
-//     res.status(404).send("Task not found");
-//     return;
-//   }
-//   deleteTaskById(taskId);
-//   res.json({
-//     message: "Task deleted",
-//     task,
-//   });
-// }
-
-// // /workspace/:idWorkspace/task
-// export async function postTaskController(req: Request, res: Response) {
-//   const workspaceId = parseInt(req.params.idWorkspace);
-//   const task: Task = req.body;
-//   task.idWorkspace = workspaceId;
-
-//   try {
-//     const newTask = await addTask(task);
-
-//     res.json(newTask);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send("Internal server error");
-//   }
-// }
