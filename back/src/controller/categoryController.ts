@@ -31,11 +31,6 @@ export class CategoryController {
       return;
     }
 
-    if (!checkUserEditPermission(workspaceUser.role)) {
-			res.status(403).json({ message: "Unauthorized" });
-      return;
-    }
-
     try {
       const categories = await modelCategory.getCategoriesByIdWorkspace(
         idWorkspace
