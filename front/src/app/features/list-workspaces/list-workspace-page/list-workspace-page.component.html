@@ -28,7 +28,7 @@
           <ul>
             @for (workspace of workspaces(); track $index) {
             <li>
-              <a [routerLink]="['/workspace', workspace.id]">{{ workspace.name }}</a>
+              <app-workspace-item [userWorkspace]="workspace"></app-workspace-item>
             </li>
             }
           </ul>
