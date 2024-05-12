@@ -1,0 +1,25 @@
+<div class="flex flex-col w-full border p-2 rounded-lg bg-dark"
+  [ngClass]="{
+    'border-green-400' : toast.type === 'success',
+    'border-red-400' : toast.type === 'error',
+  }"
+>
+  <div class="flex justify-between py-2">
+    <span>{{ toast.action }}</span>
+    <button (click)="this.ToasterService.removeToast(toast.id)">
+      <span>
+        <app-circle-check-icon></app-circle-check-icon>
+      </span>
+    </button>
+  </div>
+  <hr
+    class="border"
+    [ngClass]="{
+      'border-green-400' : toast.type === 'success',
+      'border-red-400' : toast.type === 'error',
+    }"
+  >
+  <div class="py-2">
+    <span>{{ toast.message }}</span>
+  </div>
+</div>

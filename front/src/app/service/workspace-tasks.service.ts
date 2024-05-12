@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { port, backendUrl } from '@env';
 import { AuthenticationService } from './authentication.service';
+import { ToasterService } from './toaster.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ import { AuthenticationService } from './authentication.service';
 export class TasksService {
   private http = inject(HttpClient);
   private authenticationService = inject(AuthenticationService);
+  private ToasterService = inject(ToasterService);
 
   private _tasks = new BehaviorSubject<TaskData[]>([]);
 
@@ -53,9 +55,11 @@ export class TasksService {
       .subscribe({
         next: (task) => {
           this._tasks.next([...this._tasks.value, task]);
+          this.ToasterService.addToast('Añadir tarea', 'Nueva tarea agregada', 'success');
         },
         error: (error) => {
-          alert(error.error.message);
+          // alert(error.error.message);
+          this.ToasterService.addToast('Añadir tarea', error.error.message, 'error');
         },
       });
   }

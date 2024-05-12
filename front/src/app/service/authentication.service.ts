@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { backendUrl, port } from '@env';
 import { BehaviorSubject, catchError } from 'rxjs';
+import { ToasterService } from './toaster.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,7 @@ import { BehaviorSubject, catchError } from 'rxjs';
 export class AuthenticationService {
   router = inject(Router);
   http = inject(HttpClient);
+  ToasterService = inject(ToasterService);
 
   private _mode = new BehaviorSubject<'login' | 'register'>('login');
 
@@ -30,10 +32,12 @@ export class AuthenticationService {
           this._idUser = res.user.id;
           localStorage.setItem('user', JSON.stringify(res.user));
           this.router.navigate(['/']);
+          this.ToasterService.addToast('Login', 'Sesión iniciada', 'success');
         },
         error: (error) => {
           // console.log(error.error.message);
-          alert(error.error.message);
+          // alert(error.error.message);
+          this.ToasterService.addToast('Error', error.error.message, 'error');
         },
       });
   }
@@ -49,7 +53,8 @@ export class AuthenticationService {
         },
         error: (error) => {
           // console.log(error);
-          alert(error.error.message);
+          // alert(error.error.message);
+          this.ToasterService.addToast('Error', error.error.message, 'error');
         },
       });
   }
@@ -58,11 +63,9 @@ export class AuthenticationService {
     this._idUser = null;
     localStorage.removeItem('user');
     this.router.navigate(['/authentication']);
+    this.ToasterService.addToast('Logout', 'Sesión cerrada', 'success');
   }
 
-  private _errorHandler() {
-    this.logout();
-  }
 
   get isLogged() {
     if (this._idUser === null) {
@@ -70,7 +73,6 @@ export class AuthenticationService {
       if (user) {
         this._idUser = JSON.parse(user).id;
       } else {
-        this._errorHandler();
         return false;
       }
     }
@@ -83,7 +85,6 @@ export class AuthenticationService {
       if (user) {
         this._idUser = JSON.parse(user).id;
       } else {
-        this._errorHandler();
         return '';
       }
     }
@@ -96,7 +97,6 @@ export class AuthenticationService {
       if (user) {
         this._username = JSON.parse(user).username;
       } else {
-        this._errorHandler();
         return '';
       }
     }

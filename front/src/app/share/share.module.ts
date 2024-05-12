@@ -4,6 +4,8 @@ import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { RouterLink } from '@angular/router';
 import { IconsModule } from './icons/icons.module';
 import { TooltipComponent } from './components/tooltip/tooltip.component';
+import { ToasterComponent } from './components/toaster/toaster.component';
+import { ToasterItemComponent } from './components/toaster-item/toaster-item.component';
 
 
 
@@ -11,6 +13,8 @@ import { TooltipComponent } from './components/tooltip/tooltip.component';
   declarations: [
     SideBarComponent,
     TooltipComponent,
+    ToasterComponent,
+    ToasterItemComponent,
   ],
   imports: [
     CommonModule,
@@ -19,7 +23,8 @@ import { TooltipComponent } from './components/tooltip/tooltip.component';
   ],
   exports: [
     SideBarComponent,
-    TooltipComponent
+    TooltipComponent,
+    ToasterComponent,
   ]
 })
 export class ShareModule { }

@@ -14,7 +14,6 @@ export class WorkspaceController {
   public async getWorkspacesByIdUserController(req: Request, res: Response) {
     try {
       const idUser = parseInt(req.headers.authorization as string);
-      console.log("idUser", idUser);
       res.json(await modelWorkspace.getWorkspacesByIdUser(idUser));
     } catch (error) {
       console.error(error);

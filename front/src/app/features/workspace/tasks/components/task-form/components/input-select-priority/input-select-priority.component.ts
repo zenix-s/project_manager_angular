@@ -42,7 +42,6 @@ export class InputSelectPriorityComponent implements ControlValueAccessor {
     if (this.disabled) return;
     if (!this.isPriority(value)) return;
     this.value = value;
-    console.log(this.value);
     this.displayed = false;
     this.onChange(this.value);
     this.onTouch();
