@@ -4,12 +4,14 @@ import { Category } from '@app/interfaces/interfaces';
 import { backendUrl, port } from '@env';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
+import { ToasterService } from './toaster.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CategoryService {
   private _http = inject(HttpClient);
+  private ToasterService = inject(ToasterService);
   authenticationSerice = inject(AuthenticationService);
 
   private _categories = new BehaviorSubject<Category[]>([]);
@@ -31,9 +33,7 @@ export class CategoryService {
           this._categories.next(categories);
         },
         error: (error) => {
-          // console.error(error);
-          // alert('Error al cargar las categorías');
-          alert(error.error.message)
+          // alert(error.error.message)
         },
       });
   }
@@ -52,11 +52,13 @@ export class CategoryService {
       .subscribe({
         next: (category) => {
           this._categories.next([...this._categories.getValue(), category]);
+          this.ToasterService.addToast('Añadir categoría', 'Nueva categoría agregada', 'success');
         },
         error: (error) => {
           // console.error(error);
           // alert('Error al crear la categoría');
-          alert(error.error.message)
+          // alert(error.error.message)
+          this.ToasterService.addToast('Añadir categoría', error.error.message, 'error');
         },
       })
   }
@@ -75,11 +77,10 @@ export class CategoryService {
               .getValue()
               .filter((category) => category.id !== deletedIdCategory)
           );
+          this.ToasterService.addToast('Eliminar categoría', 'Categoría eliminada', 'success');
         },
         error: (error) => {
-          // console.error(error);
-          // alert('Error al borrar la categoría');
-          alert(error.error.message)
+          this.ToasterService.addToast('Eliminar categoría', error.error.message, 'error');
         },
       })
   }
@@ -104,11 +105,10 @@ export class CategoryService {
                 category.id === updatedCategory.id ? updatedCategory : category
               )
           );
+          this.ToasterService.addToast('Actualizar categoría', 'Categoría actualizada', 'success');
         },
         error: (error) => {
-          // console.error(error);
-          // alert('Error al actualizar la categoría');
-          alert(error.error.message)
+          this.ToasterService.addToast('Actualizar categoría', error.error.message, 'error');
         },
       })
   }

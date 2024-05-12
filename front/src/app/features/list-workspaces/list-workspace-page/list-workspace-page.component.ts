@@ -6,7 +6,6 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { UserWorkspacesService } from '@service/user-workspaces.service';
 import { WorkspaceService } from '@app/service/workspace.service';
 import { Workspace } from '@types';
 import { Subscription } from 'rxjs';

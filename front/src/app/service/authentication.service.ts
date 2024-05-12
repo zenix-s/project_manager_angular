@@ -35,8 +35,6 @@ export class AuthenticationService {
           this.ToasterService.addToast('Login', 'Sesión iniciada', 'success');
         },
         error: (error) => {
-          // console.log(error.error.message);
-          // alert(error.error.message);
           this.ToasterService.addToast('Error', error.error.message, 'error');
         },
       });

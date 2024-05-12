@@ -76,9 +76,11 @@ export class TasksService {
           this._tasks.next(
             this._tasks.value.filter((task) => task.task.id !== idTaskDeleted)
           );
+          this.ToasterService.addToast('Eliminar tarea', 'Tarea eliminada', 'success');
         },
         error: (error) => {
-          alert(error.error.message);
+          // alert(error.error.message);
+          this.ToasterService.addToast('Eliminar tarea', error.error.message, 'error');
         },
       });
   }

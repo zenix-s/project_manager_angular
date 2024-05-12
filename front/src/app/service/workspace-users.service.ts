@@ -4,12 +4,14 @@ import { workspaceUsersData } from '@types';
 import { backendUrl, port } from '@env';
 import { BehaviorSubject } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
+import { ToasterService } from './toaster.service';
 @Injectable({
   providedIn: 'root',
 })
 export class WorkspaceUsersService {
   private http = inject(HttpClient);
   private authenticationService = inject(AuthenticationService);
+  private ToasterService = inject(ToasterService);
 
   private _workspaceUsers = new BehaviorSubject<workspaceUsersData[]>([]);
 
@@ -28,7 +30,8 @@ export class WorkspaceUsersService {
       .subscribe({
         next: (data) => this._workspaceUsers.next(data),
         error: (error) => {
-          alert(error.error.message);
+          // alert(error.error.message);
+          this.ToasterService.addToast('Error', error.error.message, 'error');
         },
       });
   }

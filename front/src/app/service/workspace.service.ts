@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { port, backendUrl } from '@env';
 import { AuthenticationService } from './authentication.service';
+import { ToasterService } from './toaster.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ export class WorkspaceService {
   // constructor(private http: HttpClient) {}
   private http = inject(HttpClient);
   private authenticationService = inject(AuthenticationService);
+  private ToasterService = inject(ToasterService);
 
   private _workspaces: BehaviorSubject<Workspace[]> = new BehaviorSubject<
     Workspace[]
@@ -35,7 +37,8 @@ export class WorkspaceService {
           this._workspaces.next(workspaces);
         },
         error: (error) => {
-          alert(error.error.message);
+          // alert(error.error.message);
+          this.ToasterService.addToast('Error', error.error.message, 'error');
         },
       });
   }
@@ -65,11 +68,10 @@ export class WorkspaceService {
       })
       .subscribe({
         next: (data:any) => {
-          // console.log(data.deleted);
-          alert(data.message);
+          this.ToasterService.addToast('Eliminar espacio de trabajo', data.message, 'success');
         },
         error: (error) => {
-          alert(error.error.message);
+          this.ToasterService.addToast('Eliminar espacio de trabajo', error.error.message, 'error');
         },
       });
   }

@@ -5,6 +5,7 @@ import { TasksService } from './workspace-tasks.service';
 import { CategoryService } from './category.service';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
+import { ToasterService } from './toaster.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,7 @@ export class TaskCategoryService {
   taskService = inject(TasksService);
   categoryService = inject(CategoryService);
   AuthenticationService = inject(AuthenticationService);
+  ToasterService = inject(ToasterService);
 
   addCategoryToTask(
     {
@@ -44,9 +46,15 @@ export class TaskCategoryService {
         next: () => {
           this.taskService.getTasks(idWorkspace);
           this.categoryService.getWorkspaceCategories(idWorkspace);
+          // this.ToasterService.addToast(
+          //   'Añadir categoría',
+          //   'Categoría añadida a la tarea',
+          //   'success'
+          // );
         },
         error: (error) => {
-          alert(error.error.message);
+          // alert(error.error.message);
+          this.ToasterService.addToast('Añadir categoría', error.error.message, 'error');
         },
       });
   }
@@ -74,9 +82,15 @@ export class TaskCategoryService {
         next: () => {
           this.taskService.getTasks(idWorkspace);
           this.categoryService.getWorkspaceCategories(idWorkspace);
+          // this.ToasterService.addToast(
+          //   'Eliminar categoría',
+          //   'Categoría eliminada de la tarea',
+          //   'success'
+          // );
         },
         error: (error) => {
-          alert(error.error.message);
+          // alert(error.error.message);
+          this.ToasterService.addToast('Eliminar categoría', error.error.message, 'error');
         },
       });
   }
