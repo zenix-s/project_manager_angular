@@ -19,28 +19,15 @@ export class AuthenticationService {
     this._mode.next(mode);
   }
 
-  private idUser: number | null = null;
-  users = [
-    {
-      id: 1,
-      username: 'admin',
-      password: 'admin',
-      role: 'admin',
-    },
-    {
-      id: 2,
-      username: 'user',
-      password: 'user',
-      role: 'user',
-    },
-  ];
+  private _idUser: number | null = null;
+  private _username: string | null = null;
 
   login(username: string, password: string) {
     this.http
       .post(`${backendUrl}:${port}/login`, { username, password })
       .subscribe({
         next: (res: any) => {
-          this.idUser = res.user.id;
+          this._idUser = res.user.id;
           localStorage.setItem('user', JSON.stringify(res.user));
           this.router.navigate(['/']);
         },
@@ -56,7 +43,7 @@ export class AuthenticationService {
       .post(`${backendUrl}:${port}/register`, { username, email, password })
       .subscribe({
         next: (res: any) => {
-          this.idUser = res.user.id;
+          this._idUser = res.user.id;
           localStorage.setItem('user', JSON.stringify(res.user));
           this.router.navigate(['/']);
         },
@@ -68,29 +55,52 @@ export class AuthenticationService {
   }
 
   logout() {
-    this.idUser = null;
+    this._idUser = null;
     localStorage.removeItem('user');
     this.router.navigate(['/authentication']);
   }
 
+  private _errorHandler() {
+    this.logout();
+  }
+
   get isLogged() {
-    if (this.idUser === null) {
+    if (this._idUser === null) {
       const user = localStorage.getItem('user');
       if (user) {
-        this.idUser = JSON.parse(user).id;
+        this._idUser = JSON.parse(user).id;
+      } else {
+        this._errorHandler();
+        return false;
       }
     }
-    return this.idUser !== null;
+    return this._idUser !== null;
   }
 
   get userToken() {
-    if (this.idUser === null) {
+    if (this._idUser === null) {
       const user = localStorage.getItem('user');
       if (user) {
-        this.idUser = JSON.parse(user).id;
+        this._idUser = JSON.parse(user).id;
+      } else {
+        this._errorHandler();
+        return '';
       }
     }
-    return this.idUser;
+    return this._idUser;
+  }
+
+  get username() {
+    if (this._username === null) {
+      const user = localStorage.getItem('user');
+      if (user) {
+        this._username = JSON.parse(user).username;
+      } else {
+        this._errorHandler();
+        return '';
+      }
+    }
+    return this._username;
   }
 
   constructor() {}
