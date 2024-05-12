@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListWorkspacePageComponent } from '@features/list-workspaces/page/list-workspace-page/list-workspace-page.component';
+import { ListWorkspacePageComponent } from '@app/features/list-workspaces/list-workspace-page/list-workspace-page.component';
 import { CEWorkspacePageComponent } from '@features/ce-workspaces/page/new-workspace-page/ce-workspace-page.component';
 import { WorkspacePageComponent } from './features/workspace/workspace-page/workspace-page.component';
 import { PageTestComponent } from './features/tests/page-test/page-test.component';
@@ -31,14 +31,16 @@ const routes: Routes = [
     component: CEWorkspacePageComponent,
     canActivate: [authGuard],
   },
-  // {
-  //   path: 'workspace/:idWorkspace',
-  //   component: TasksPageComponent,
-  // },
   {
     path: 'workspace/:idWorkspace',
     component: WorkspacePageComponent,
     canActivate: [authGuard],
+    children: [
+      {
+        path: 'users',
+        component: WorkspacePageComponent,
+      },
+    ],
   },
   {
     path: 'authentication',
@@ -48,24 +50,6 @@ const routes: Routes = [
     path: 'test',
     component: PageTestComponent,
   },
-  // {
-  //   path: 'workspace/:idWorkspace/teams',
-  //   component
-  // }
-  // {
-  //   path: '',
-  //   loadChildren: () =>
-  //     import('./features/list-workspaces/list-workspaces.module').then(
-  //       (m) => m.ListWorkspacesModule
-  //     ),
-  // },
-  // {
-  //   path: 'workspace',
-  //   loadChildren: () =>
-  //     import('./features/workspace/workspace.module').then(
-  //       (m) => m.WorkspaceModule
-  //     ),
-  // },
 ];
 
 @NgModule({

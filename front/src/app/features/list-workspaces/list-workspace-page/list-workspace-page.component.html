@@ -24,8 +24,15 @@
         <a [routerLink]="['/workspace/new']">Create new workspace</a>
       </div>
       <div>
-        <app-list-workspaces [userWorkspaces]="userWorkspaces">
-        </app-list-workspaces>
+        <div>
+          <ul>
+            @for (workspace of workspaces(); track $index) {
+            <li>
+              <a [routerLink]="['/workspace', workspace.id]">{{ workspace.name }}</a>
+            </li>
+            }
+          </ul>
+        </div>
       </div>
     </div>
   </div>
