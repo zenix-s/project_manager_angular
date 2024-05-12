@@ -35,12 +35,6 @@ const routes: Routes = [
     path: 'workspace/:idWorkspace',
     component: WorkspacePageComponent,
     canActivate: [authGuard],
-    children: [
-      {
-        path: 'users',
-        component: WorkspacePageComponent,
-      },
-    ],
   },
   {
     path: 'authentication',
