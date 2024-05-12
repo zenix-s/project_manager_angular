@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { WorkspaceService } from '@service/workspace.service';
 
 @Component({
@@ -6,10 +7,8 @@ import { WorkspaceService } from '@service/workspace.service';
   templateUrl: './workspace-options-page.component.html',
 })
 export class WorkspaceOptionsPageComponent {
-
-  constructor(
-    private workspaceService: WorkspaceService
-  ) {}
+  workspaceService = inject(WorkspaceService);
+  router = inject(Router);
 
   @Input()
   idWorkspace: number = 0;
@@ -19,6 +18,7 @@ export class WorkspaceOptionsPageComponent {
       return;
     }
     this.workspaceService.deleteWorkspace(this.idWorkspace)
+    this.router.navigate(['/']);
   }
 
 }

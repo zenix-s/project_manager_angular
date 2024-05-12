@@ -45,8 +45,25 @@ export class WorkspaceModel {
     return result;
   }
 
-  async deleteWorkspace(idWorkspace: number): Promise<boolean> {
-    return true;
+  async deleteWorkspace(idWorkspace: number): Promise<number> {
+    // return true;
+		const connection = await mysql.createConnection(config);
+
+		await connection.query(
+			`
+			UPDATE
+				workspace
+			SET
+				deleted = 1
+			WHERE
+				id = ?
+			`,
+			[idWorkspace]
+		);
+
+		await connection.end();
+
+		return idWorkspace;
   }
 
   async workspaceExists(idWorkspace: number): Promise<boolean> {
@@ -86,10 +103,10 @@ export class WorkspaceModel {
     if (result.insertId !== 0) {
       await connection.query(
         `
-				INSERT INTO userWorkspace (idUser, idWorkspace, role, createdAt)
-				VALUES (?, ?, 'ADMIN', ?)
+				INSERT INTO userWorkspace (idUser, idWorkspace, role, deleted)
+				VALUES (?, ?, 'ADMIN', 0)
 				`,
-        [idUser, result.insertId, new Date()]
+        [idUser, result.insertId]
       );
     }
 

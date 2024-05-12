@@ -53,6 +53,10 @@ export class WorkspaceService {
   }
 
   deleteWorkspace(workspaceId: number) {
+    interface Response {
+      deleted: number;
+      message: string;
+    }
     this.http
       .delete(`${backendUrl}:${port}/workspace/${workspaceId}`, {
         headers: {
@@ -60,8 +64,9 @@ export class WorkspaceService {
         },
       })
       .subscribe({
-        next: (data) => {
-          console.log(data);
+        next: (data:any) => {
+          // console.log(data.deleted);
+          alert(data.message);
         },
         error: (error) => {
           alert(error.error.message);
