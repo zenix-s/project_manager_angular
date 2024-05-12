@@ -61,13 +61,8 @@
   </div> -->
   <!-- CONTEXTUAL MENU -->
   <div class="gap-4 flex items-center">
-    <app-input-contextual-menu
-      [task]="task"
-      [categories]="categories"
-      (onChangePriority)="ChangePriority($event)"
-      (onChangeCompleted)="ChangeCompleteStatusTask($event)"
-      (onDeadlineChange)="ChangeDeadlineTask($event)"
-      (onDelete)="DeleteTask(task.task.id)"
-    ></app-input-contextual-menu>
+    <app-input-contextual-menu [task]="task" [categories]="categories" (onChangePriority)="ChangePriority($event)"
+      (onChangeCompleted)="ChangeCompleteStatusTask($event)" (onDeadlineChange)="ChangeDeadlineTask($event)"
+      (onDelete)="DeleteTask(task.task.id)"></app-input-contextual-menu>
   </div>
 </div>

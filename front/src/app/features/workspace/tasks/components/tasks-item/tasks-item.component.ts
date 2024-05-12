@@ -34,8 +34,6 @@ export class TasksItemComponent {
   @Output()
   onDeleteTask = new EventEmitter<number>();
 
-  @Output()
-  onEditTask = new EventEmitter<number>();
 
   @Output()
   onChangeTask = new EventEmitter<Task>();
@@ -44,9 +42,6 @@ export class TasksItemComponent {
     this.onDeleteTask.emit(id);
   }
 
-  onEdit(id: number) {
-    this.onEditTask.emit(id);
-  }
 
   onChange(task: Task) {
     this.onChangeTask.emit(task);

@@ -50,49 +50,9 @@ export class TasksPageComponent implements OnInit, OnDestroy {
     this.tasksService.addTask(this.idWorkspace, task);
   }
 
-  EditTask(taskId: number) {}
 
   ChangeTask(task: Task) {
     this.tasksService.changeTask(task);
-  }
-
-  clearFilters() {
-    this.filters.set({
-      search: '',
-      category: [],
-      priority: null,
-      status: true,
-      subtaskFilter: false,
-    });
-    this.filteredTasks.set(this.applyFilter(this.tasks()));
-  }
-
-  filterCompleted() {
-    this.filters.set({
-      ...this.filters(),
-      status: !this.filters().status,
-    });
-    this.filteredTasks.set(this.applyFilter(this.tasks()));
-  }
-
-  filterSubtasks() {
-    this.filters.set({
-      ...this.filters(),
-      subtaskFilter: !this.filters().subtaskFilter,
-    });
-    console.log(this.tasks());
-    this.filteredTasks.set(this.applyFilter(this.tasks()));
-  }
-
-  filterBug() {
-    this.filters.set({
-      ...this.filters(),
-      // category: this.filters().category.length > 0 ? [] : [1],
-      category: this.filters().category.includes(1)
-        ? this.filters().category.filter((c) => c !== 1)
-        : [...this.filters().category, 1],
-    });
-    this.filteredTasks.set(this.applyFilter(this.tasks()));
   }
 
   @Input()

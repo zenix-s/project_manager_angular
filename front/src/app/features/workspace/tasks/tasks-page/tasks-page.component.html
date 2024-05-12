@@ -29,7 +29,6 @@
       [isLast]="tasks.length - 1 === $index"
       (onDeleteTask)="DeleteTask($event)"
       (onChangeTask)="ChangeTask($event)"
-      (onEditTask)="EditTask($event)"
     >
     @if(task.subtasks != null && task.subtasks.length > 0){
       @for (subtask of task.subtasks; track $index) {
