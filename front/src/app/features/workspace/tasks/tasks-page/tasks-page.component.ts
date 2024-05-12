@@ -13,14 +13,7 @@ import { TasksService } from '@service/workspace-tasks.service';
 import { CategoryService } from '@service/category.service';
 import { Category, Task, TaskData } from '@types';
 import { Subscription } from 'rxjs';
-
-interface filter {
-  search: string | null;
-  category: number[];
-  priority: string | null;
-  status: boolean;
-  subtaskFilter: boolean;
-}
+import { TaskFilterService, filter } from '@app/features/workspace/tasks/services/task-filter.service';
 
 @Component({
   selector: 'app-tasks-page',
@@ -30,6 +23,7 @@ interface filter {
 export class TasksPageComponent implements OnInit, OnDestroy {
   tasksService = inject(TasksService);
   categoryService = inject(CategoryService);
+  filterService = inject(TaskFilterService);
 
   tasks: WritableSignal<TaskData[]> = signal<TaskData[]>([]);
   filteredTasks: WritableSignal<TaskData[]> = signal<TaskData[]>([]);
@@ -142,6 +136,10 @@ export class TasksPageComponent implements OnInit, OnDestroy {
         this.categories.set(categories);
       }
     );
+    this.filterService.filters$.subscribe((filters) => {
+      this.filters.set(filters);
+      this.filteredTasks.set(this.applyFilter(this.tasks()));
+    });
 
     this.categoryService.getWorkspaceCategories(this.idWorkspace);
     this.tasksService.getTasks(this.idWorkspace);

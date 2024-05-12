@@ -4,7 +4,7 @@
   ></app-task-form>
 </div>
 
-<div class="flex gap-2">
+<!-- <div class="flex gap-2">
   <button (click)="clearFilters()" class="hover:bg-lightDark">
     clear filters
   </button>
@@ -17,7 +17,8 @@
   <button (click)="filterBug()" class="hover:bg-lightDark">
     bug
   </button>
-</div>
+</div> -->
+<app-filters></app-filters>
 
 <div class="flex flex-col">
   @for (task of filteredTasks(); track $index) {
