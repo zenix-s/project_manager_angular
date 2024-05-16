@@ -18,6 +18,7 @@ import { DeleteTaskSubmenuComponent } from './components/task-item/input-context
 import { DeadlineSubmenuComponent } from './components/task-item/input-contextual-menu/deadline-submenu/deadline-submenu.component';
 import { CategorySubmenuComponent } from './components/task-item/input-contextual-menu/category-submenu/category-submenu.component';
 import { FiltersComponent } from './components/filters/filters.component';
+import { CategoryFilterComponent } from './components/filters/category-filter/category-filter.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { FiltersComponent } from './components/filters/filters.component';
     DeleteTaskSubmenuComponent,
     DeadlineSubmenuComponent,
     CategorySubmenuComponent,
-    FiltersComponent
+    FiltersComponent,
+    CategoryFilterComponent
   ],
   imports: [
     CommonModule,
