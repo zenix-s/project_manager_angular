@@ -1,0 +1,37 @@
+<div class="w-full h-screen p-4">
+  <app-section [title]="'Authentication'">
+    <div class="flex h-full justify-center items-center">
+      <div class="w-full max-w-96 ">
+        <app-section
+          [title]="mode === 'login' ? 'Login' : 'Register'"
+        >
+          <div class="flex w-full">
+            <!-- if mode login bg red -->
+            <button class="border w-full border-white p-2" (click)="switchMode('login')"
+              [class]="mode === 'login' ? 'bg-white text-black' : ''">
+              Login
+            </button>
+            <button (click)="switchMode('register')" class="border w-full border-white p-2"
+              [class]="mode === 'register' ? 'bg-white text-black' : ''">
+              Register
+            </button>
+          </div>
+          <form class="flex flex-col gap-8 mt-4" [formGroup]="loginForm">
+            <div class="flex flex-col gap-2">
+              @if (mode === 'register') {
+              <app-input [label]="'Email'" [type]="'email'" [name]="'email'" formControlName="email"></app-input>
+              }
+              <app-input [label]="'Username'" [type]="'text'" [name]="'username'"
+                formControlName="username"></app-input>
+              <app-input [label]="'Password'" [type]="'password'" [name]="'password'"
+                formControlName="password"></app-input>
+            </div>
+            <app-button [theme]="'primary'" (onClick)="onSubmit()" [outline]="true">
+              {{ mode === 'login' ? 'Login' : 'Register' }}
+            </app-button>
+          </form>
+        </app-section>
+      </div>
+    </div>
+  </app-section>
+</div>

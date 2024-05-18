@@ -1,0 +1,11 @@
+@if (toasts().length > 0) {
+  <div
+    class="w-full gap-2 flex flex-col p-8"
+  >
+  @for (toast of toasts(); track $index) {
+    <app-toast
+      [toast]="toast"
+    ></app-toast>
+  }
+  </div>
+}
