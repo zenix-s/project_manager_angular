@@ -110,7 +110,7 @@ export class WorkspaceCategoriesService {
       })
   }
 
-  cleanCategories() {
+  clearCategories() {
     this._categories.next([]);
   }
 }

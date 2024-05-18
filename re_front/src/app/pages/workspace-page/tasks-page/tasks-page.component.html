@@ -2,6 +2,11 @@
   <div class="flex-grow p-4">
   <app-section [title]="'Tasks'">
     <p>tasks-page works!</p>
+    @for (task of tasks(); track $index) {
+      <div>
+        {{task.task.name}}
+      </div>
+    }
   </app-section>
   </div>
 </div>

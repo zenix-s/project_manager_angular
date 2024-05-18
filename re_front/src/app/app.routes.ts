@@ -26,7 +26,7 @@ export const routes: Routes = [
         component: DashboardPageComponent,
       },
       {
-        path: 'workspace/:id',
+        path: 'workspace/:idWorkspace',
         component: WorkspacePageComponent,
         children: [
           {

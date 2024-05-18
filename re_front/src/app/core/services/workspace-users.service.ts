@@ -17,7 +17,7 @@ export class WorkspaceUsersService {
 
   private _workspaceUsers = new BehaviorSubject<workspaceUsersData[]>([]);
 
-  workspaceUsers$ = this._workspaceUsers.asObservable();
+  users$ = this._workspaceUsers.asObservable();
 
   getWorkspaceUsers(idWorkspace: number) {
     this.http
@@ -35,5 +35,9 @@ export class WorkspaceUsersService {
           this.toasterService.error(error.error.message);
         },
       });
+  }
+
+  clearUsers() {
+    this._workspaceUsers.next([]);
   }
 }

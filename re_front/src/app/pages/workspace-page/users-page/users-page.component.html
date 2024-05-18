@@ -2,6 +2,11 @@
   <div class="flex-grow p-4">
     <app-section [title]="'Users'">
       <p>users-page works!</p>
+      @for (user of users(); track $index) {
+        <div>
+          {{user.username}}
+        </div>
+      }
     </app-section>
   </div>
 </div>

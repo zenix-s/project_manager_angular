@@ -2,6 +2,11 @@
   <div class="flex-grow p-4">
     <app-section [title]="'Categories'">
       <p>categories-page works!</p>
+      @for (category of categories(); track $index) {
+      <div>
+        {{category.name}}
+      </div>
+      }
     </app-section>
   </div>
 </div>
