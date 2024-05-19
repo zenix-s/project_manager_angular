@@ -76,4 +76,7 @@ export class UserWorkspacesService {
       });
   }
 
+  getWorkspacesSnapshot() {
+    return this._workspaces.getValue();
+  }
 }

@@ -1,26 +1,28 @@
-<div class="w-full h-full flex flex-col gap-2">
-  <div class="h-min pt-4 px-4">
-    <app-section [title]="'workspace'">
-      <nav>
-        <ul class="flex gap-4">
-          <li>
-            <a [routerLink]="['tasks']" routerLinkActive="underline">1-tasks</a>
-          </li>
-          <li>
-            <a [routerLink]="['users']" routerLinkActive="underline">2-teams/users</a>
-          </li>
-          <li>
-            <a [routerLink]="['categories']" routerLinkActive="underline">3-categories</a>
-          </li>
-          <li>
-            <a [routerLink]="['options']" routerLinkActive="underline">4-options</a>
-          </li>
-        </ul>
-      </nav>
-    </app-section>
+<div class="flex h-full w-full">
+  <app-sidebar></app-sidebar>
+  <div class="w-full h-full flex flex-col gap-2">
+    <div class="h-min pt-4 px-4">
+      <app-section [title]="'workspace'">
+        <nav>
+          <ul class="flex gap-4">
+            <li>
+              <a [routerLink]="['tasks']" routerLinkActive="underline">1-tasks</a>
+            </li>
+            <li>
+              <a [routerLink]="['users']" routerLinkActive="underline">2-teams/users</a>
+            </li>
+            <li>
+              <a [routerLink]="['categories']" routerLinkActive="underline">3-categories</a>
+            </li>
+            <li>
+              <a [routerLink]="['options']" routerLinkActive="underline">4-options</a>
+            </li>
+          </ul>
+        </nav>
+      </app-section>
+    </div>
+    <div class="flex-grow">
+      <router-outlet />
+    </div>
   </div>
-  <div class="flex-grow">
-    <router-outlet />
-  </div>
-
 </div>

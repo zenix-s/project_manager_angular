@@ -1,0 +1,43 @@
+<div class="w-full h-full p-4 max-w-56 min-w-52">
+  <app-section [title]="'sidebar'">
+    <div class="flex flex-col w-full h-full gap-4">
+      <div>
+        <app-dropdown>
+          <div role="selector">
+            workspace
+          </div>
+          <div role="list">
+            <app-dropdown-list>
+              @for (workspace of this.userWorkspacesService.getWorkspacesSnapshot(); track $index) {
+                <div>
+                  hola
+                </div>
+              }
+            </app-dropdown-list>
+          </div>
+        </app-dropdown>
+      </div>
+      <nav class="flex-grow">
+        <ul class="flex flex-col gap-2">
+          <li>
+            <a [routerLink]="['tasks']" routerLinkActive="underline">tasks</a>
+          </li>
+          <li>
+            <a [routerLink]="['users']" routerLinkActive="underline">teams/users</a>
+          </li>
+          <li>
+            <a [routerLink]="['categories']" routerLinkActive="underline">categories</a>
+          </li>
+          <li>
+            <a [routerLink]="['options']" routerLinkActive="underline">options</a>
+          </li>
+        </ul>
+      </nav>
+      <div>
+        <app-button [theme]="'primary'" [outline]="true" (onClick)="this.authenticationService.logout()">
+          logout
+        </app-button>
+      </div>
+    </div>
+  </app-section>
+</div>

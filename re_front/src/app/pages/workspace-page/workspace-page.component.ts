@@ -16,13 +16,14 @@ import { WorkspaceCategoriesService } from '@app/core/services/workspace-categor
 import { WorkspaceTasksService } from '@app/core/services/workspace-tasks.service';
 import { WorkspaceUsersService } from '@app/core/services/workspace-users.service';
 import { SectionComponent } from '@app/shared/components/section/section.component';
+import { SidebarComponent } from '@app/shared/components/sidebar/sidebar.component';
 import { Category, TaskData, workspaceUsersData } from '@env/interface.env';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-workspace-page',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, SectionComponent],
+  imports: [RouterOutlet, RouterLink, SectionComponent, SidebarComponent],
   templateUrl: './workspace-page.component.html',
   styleUrl: './workspace-page.component.css',
 })
