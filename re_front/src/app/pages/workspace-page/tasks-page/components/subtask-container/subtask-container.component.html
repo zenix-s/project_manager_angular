@@ -1,0 +1,9 @@
+<div class="flex hover:bg-comment/40 pl-2">
+  @if (isLast) {
+  <span>└──</span>
+  }
+  @else {
+  <span>├──</span>
+  }
+  <ng-content></ng-content>
+</div>

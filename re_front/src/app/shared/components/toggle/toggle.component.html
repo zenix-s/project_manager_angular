@@ -1,0 +1,10 @@
+<!-- <p>toggle works!</p> -->
+<div tabindex="0" class="cursor-pointer select-none text-xl flex justify-center items-center"
+  (click)="checkedChange.emit(!checked)">
+  @if(checked){
+  <i class="ri-checkbox-line"></i>
+  }
+  @else {
+  <i class="ri-checkbox-blank-line"></i>
+  }
+</div>

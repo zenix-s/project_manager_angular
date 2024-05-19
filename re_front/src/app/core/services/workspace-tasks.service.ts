@@ -26,14 +26,14 @@ export class WorkspaceTasksService {
     idWorkspace = parseInt(idWorkspace.toString());
 
     this.http
-      .get<TaskData[]>(`${backendUrl}:${port}/workspace/${idWorkspace}/task`, {
+      .get(`${backendUrl}:${port}/workspace/${idWorkspace}/task`, {
         headers: {
           Authorization: `${this.authenticationService.userToken}`,
         },
       })
       .subscribe({
         next: (tasks) => {
-          this._tasks.next(tasks);
+          this._tasks.next(tasks as TaskData[]);
         },
         error: (error) => {
           this.toasterService.error(error.error.message);

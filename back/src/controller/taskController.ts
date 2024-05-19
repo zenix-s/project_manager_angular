@@ -21,10 +21,11 @@ export class TaskController {
 
     try {
       const tasks = await modelTask.getTasksByIdWorkspace(workspaceId);
+			console.log(tasks);
       res.json(tasks);
     } catch (error) {
       console.error(error);
-			res.status(500).json({ message: "Internal server error" });
+			res.status(500).json({ message: "Internal server error xxx" });
     }
   }
 

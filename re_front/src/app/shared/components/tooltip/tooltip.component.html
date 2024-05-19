@@ -1,6 +1,6 @@
 <div class="relative" (mouseenter)="hover = true" (mouseleave)="hover = false">
   @if (hover) {
-  <span class="absolute z-10 p-2 text-xs text-white bg-black rounded-lg select-none w-max"
+  <span class="border border-white absolute z-10 p-2 text-xs text-white bg-bg rounded-lg select-none w-max"
     [ngStyle]="{ top: '-160%', left: '50%', transform: 'translateX(-50%)' }" (mouseenter)="hover = false">
     {{ text }}
   </span>

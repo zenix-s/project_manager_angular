@@ -4,13 +4,9 @@ import mysql, {
   Connection,
   ResultSetHeader,
 } from "mysql2/promise";
+import {dbconfig as config} from "@/lib/mysqldb"
+import { json } from "express";
 
-const config = {
-  host: "localhost",
-  user: "root",
-  password: "rootpassdev",
-  database: "tfgsff_db",
-};
 interface TaskDataBBDD extends RowDataPacket {
   id: number;
   name: string;
@@ -181,7 +177,19 @@ WHERE
           // subtasks: JSON.parse(task.subtasks),
 					categories: task.categories ? JSON.parse(task.categories) as Category[] : [],
 					// subtasks: task.subtasks ? JSON.parse(task.subtasks) as TaskData[] : [],
-					subtasks: task.subtasks ? JSON.parse(task.subtasks).map((subtask: TaskDataBBDD): TaskData => {
+					subtasks: task.subtasks ? JSON.parse(task.subtasks).map((subtask: {
+						id: number;
+						name: string;
+						createdAt: Date;
+						idWorkspace: number;
+						description: string;
+						completed: boolean;
+						deadline: Date;
+						priority: "NONE" | "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+						visibility: "PUBLIC" | "PRIVATE";
+						dependentIdTask: number;
+						categories: Category[];
+					}): TaskData => {
 						return {
 							task:{
 								id: subtask.id,
@@ -195,7 +203,7 @@ WHERE
 								idWorkspace: subtask.idWorkspace,
 								dependentIdTask: subtask.dependentIdTask,
 							},
-							categories: subtask.categories ? JSON.parse(subtask.categories) as Category[] : [],
+							categories: subtask.categories ? subtask.categories : [],
 							subtasks: [],
 						};
 					}
@@ -252,7 +260,7 @@ WHERE
 								SELECT
 									JSON_ARRAYAGG (
 										JSON_OBJECT (
-											'subtaskId',
+											'id',
 											sc.id,
 											'name',
 											sc.name,
@@ -321,6 +329,7 @@ WHERE
     );
 
     await connection.end();
+		console.log("algo");
 
     return result.map((task: TaskDataBBDD): TaskData => {
       return {
@@ -336,12 +345,21 @@ WHERE
 					idWorkspace: task.idWorkspace,
 					dependentIdTask: task.dependentIdTask,
 				},
-        // categories: JSON.parse(task.categories) as Category[],
 				categories: task.categories ? JSON.parse(task.categories) as Category[] : [],
-        // subtasks: JSON.parse(task.subtasks) as subtask[],
-				// subtasks: task.subtasks ? JSON.parse(task.subtasks) as TaskData[] : [],
-				// convert subtasks to TaskData task part and categories part
-				subtasks: task.subtasks ? JSON.parse(task.subtasks).map((subtask: TaskDataBBDD): TaskData => {
+				subtasks: task.subtasks ? JSON.parse(task.subtasks).map((subtask: {
+					id: number;
+					name: string;
+					createdAt: Date;
+					idWorkspace: number;
+					description: string;
+					completed: boolean;
+					deadline: Date;
+					priority: "NONE" | "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+					visibility: "PUBLIC" | "PRIVATE";
+					dependentIdTask: number;
+					categories: Category[];
+				}): TaskData => {
+					console.log(subtask);
 					return {
 						task:{
 							id: subtask.id,
@@ -355,11 +373,10 @@ WHERE
 							idWorkspace: subtask.idWorkspace,
 							dependentIdTask: subtask.dependentIdTask,
 						},
-						categories: subtask.categories ? JSON.parse(subtask.categories) as Category[] : [],
+						categories: subtask.categories ? subtask.categories : [],
 						subtasks: [],
 					};
-				}
-				) : [],
+				}) : [],
       };
     });
   }

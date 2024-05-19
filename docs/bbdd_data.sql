@@ -1,3 +1,4 @@
+-- Inserta datos en la tabla `user`
 INSERT INTO
 	`user` (
 		`id`,
@@ -25,28 +26,29 @@ VALUES
 		NULL
 	);
 
+-- Inserta datos en la tabla `workspace`
 INSERT INTO
 	`workspace` (`id`, `name`, `description`, `createdAt`)
 VALUES
 	(
 		1,
-		'Workspace 1',
-		'Description of workspace 1',
+		'Desarrollo Web',
+		'Proyecto de desarrollo web',
 		'2021-06-01 00:00:00'
 	),
 	(
 		2,
-		'Workspace 2',
-		'Description of workspace 2',
+		'Todo Personal',
+		'Lista de tareas diarias personales',
 		'2021-06-01 00:00:00'
 	);
 
+-- Inserta datos en la tabla `category`
 INSERT INTO
 	`category` (
 		`id`,
 		`name`,
 		`description`,
-		`createdAt`,
 		`idWorkspace`,
 		`color`,
 		`completed`
@@ -54,32 +56,38 @@ INSERT INTO
 VALUES
 	(
 		1,
-		'Category 1',
-		'Description of category 1',
-		'2021-06-01 00:00:00',
+		'Frontend',
+		'Tareas relacionadas con el frontend',
 		1,
-		'#FF0000',
+		'#FF5733',
 		FALSE
 	),
 	(
 		2,
-		'Category 2',
-		'Description of category 2',
-		'2021-06-01 00:00:00',
+		'Backend',
+		'Tareas relacionadas con el backend',
 		1,
-		'#00FF00',
+		'#33FF57',
 		FALSE
 	),
 	(
 		3,
-		'Category 3',
-		'Description of category 3',
-		'2021-06-01 00:00:00',
+		'Compras',
+		'Tareas de compras personales',
 		2,
-		'#0000FF',
+		'#3357FF',
+		FALSE
+	),
+	(
+		4,
+		'Salud',
+		'Tareas relacionadas con la salud personal',
+		2,
+		'#FF33A1',
 		FALSE
 	);
 
+-- Inserta datos en la tabla `task`
 INSERT INTO
 	`task` (
 		`id`,
@@ -97,88 +105,99 @@ INSERT INTO
 VALUES
 	(
 		1,
-		'Task 1',
-		'Description of task 1',
+		'Diseñar el landing page',
+		'Crear el diseño inicial del landing page',
 		'2021-06-01 00:00:00',
 		1,
 		'PUBLIC',
-		'2021-06-01 00:00:00',
+		'2021-07-01 00:00:00',
 		FALSE,
-		'NONE',
+		'HIGH',
 		NULL,
 		FALSE
 	),
 	(
 		2,
-		'Task 2',
-		'Description of task 2',
+		'Configurar base de datos',
+		'Configurar la base de datos inicial',
 		'2021-06-01 00:00:00',
 		1,
 		'PRIVATE',
-		'2021-06-01 00:00:00',
+		'2021-06-15 00:00:00',
 		FALSE,
-		'NONE',
+		'MEDIUM',
 		NULL,
 		FALSE
 	),
 	(
 		3,
-		'Task 3',
-		'Description of task 3',
+		'Comprar comestibles',
+		'Comprar leche, pan y frutas',
 		'2021-06-01 00:00:00',
-		1,
+		2,
 		'PUBLIC',
-		'2021-06-01 00:00:00',
+		'2021-06-05 00:00:00',
 		FALSE,
-		'NONE',
+		'LOW',
 		NULL,
 		FALSE
 	),
 	(
 		4,
-		'Task 4',
-		'Description of task 4',
+		'Hacer ejercicio',
+		'Correr 5 km en el parque',
 		'2021-06-01 00:00:00',
-		1,
+		2,
 		'PRIVATE',
 		'2021-06-01 00:00:00',
 		FALSE,
-		'NONE',
+		'MEDIUM',
 		NULL,
 		FALSE
 	),
 	(
 		5,
-		'Task 5',
-		'Description of task 5',
-		'2021-06-01 00:00:00',
+		'Implementar landing page',
+		'Convertir el diseño del landing page en código HTML/CSS',
+		'2021-06-02 00:00:00',
 		1,
 		'PUBLIC',
-		'2021-06-01 00:00:00',
+		'2021-07-05 00:00:00',
 		FALSE,
-		'NONE',
-		NULL,
+		'HIGH',
+		1,
+		FALSE
+	),
+	(
+		6,
+		'Revisar y ajustar el diseño',
+		'Revisar el diseño implementado y hacer ajustes necesarios',
+		'2021-06-03 00:00:00',
+		1,
+		'PRIVATE',
+		'2021-07-10 00:00:00',
+		FALSE,
+		'MEDIUM',
+		1,
 		FALSE
 	);
 
+-- Inserta datos en la tabla `userWorkspace`
 INSERT INTO
-	`userWorkspace` (
-		`id`,
-		`idUser`,
-		`idWorkspace`,
-		`role`,
-		`createdAt`
-	)
+	`userWorkspace` (`id`, `idUser`, `idWorkspace`, `role`, `deleted`)
 VALUES
-	(1, 1, 1, 'ADMIN', '2021-06-01 00:00:00'),
-	(2, 2, 1, 'GUEST', '2021-06-01 00:00:00'),
-	(3, 1, 2, 'ADMIN', '2021-06-01 00:00:00');
+	(1, 1, 1, 'ADMIN', 0),
+	(2, 1, 2, 'ADMIN', 0);
 
+-- Inserta datos en la tabla `taskCategory`
 INSERT INTO
-	`taskCategory` (`id`, `idTask`, `idCategory`, `createdAt`)
+	`taskCategory` (`id`, `idTask`, `idCategory`)
 VALUES
-	(1, 1, 1, '2021-06-01 00:00:00'),
-	(2, 2, 1, '2021-06-01 00:00:00'),
-	(3, 3, 2, '2021-06-01 00:00:00'),
-	(4, 4, 2, '2021-06-01 00:00:00'),
-	(5, 5, 1, '2021-06-01 00:00:00');
+	(1, 1, 1),
+	(2, 2, 2),
+	(3, 3, 3),
+	(4, 4, 4),
+	(5, 5, 1),
+	(6, 6, 1);
+
+COMMIT;

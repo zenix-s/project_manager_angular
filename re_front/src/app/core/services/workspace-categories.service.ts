@@ -110,6 +110,10 @@ export class WorkspaceCategoriesService {
       })
   }
 
+  getCategoriesSnapshot() {
+    return this._categories.getValue();
+}
+
   clearCategories() {
     this._categories.next([]);
   }

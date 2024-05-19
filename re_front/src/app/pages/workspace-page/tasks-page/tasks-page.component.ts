@@ -6,11 +6,14 @@ import { WorkspaceUsersService } from '@app/core/services/workspace-users.servic
 import { SectionComponent } from '@app/shared/components/section/section.component';
 import { Category, TaskData, workspaceUsersData } from '@env/interface.env';
 import { Subscription } from 'rxjs';
+import { TaskContainerComponent } from './components/task-container/task-container.component';
+import { TaskItemComponent } from './components/task-item/task-item.component';
+import { SubtaskContainerComponent } from './components/subtask-container/subtask-container.component';
 
 @Component({
   selector: 'app-tasks-page',
   standalone: true,
-  imports: [SectionComponent],
+  imports: [SectionComponent, TaskContainerComponent, TaskItemComponent, SubtaskContainerComponent],
   templateUrl: './tasks-page.component.html',
   styleUrl: './tasks-page.component.css'
 })
@@ -49,6 +52,7 @@ export class TasksPageComponent implements OnInit, OnDestroy{
     this.workspaceTasksSubscription =
       this.workspaceTasksService.tasks$.subscribe((tasks) => {
         this.tasks.set(tasks);
+        console.log("tasks", tasks);
       });
     this.workspaceCategoriesSubscription =
       this.workspaceCategoriesService.categories$.subscribe((categories) => {

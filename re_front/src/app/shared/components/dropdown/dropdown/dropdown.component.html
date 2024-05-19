@@ -1,0 +1,15 @@
+<div class="relative w-full">
+  <span tabindex="0" (click)="isOpen = !isOpen" class="cursor-pointer select-none w-full flex">
+    <ng-content select="[role=selector]"></ng-content>
+  </span>
+  <div class="absolute border-white border mt-2 rounded shadow-md w-max z-10 bg-bg" [ngClass]="{
+      'hidden': !isOpen,
+    }" [class]="
+      direction === 'left' ? 'right-full top-0' :
+      direction === 'right' ? 'left-full top-0' :
+      direction === 'bottom-left' ? 'right-full' :
+      direction === 'bottom-right' ? 'left-full' : ''
+    ">
+    <ng-content select="[role=list]"></ng-content>
+  </div>
+</div>

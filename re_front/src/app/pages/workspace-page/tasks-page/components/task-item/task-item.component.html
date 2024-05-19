@@ -1,0 +1,304 @@
+<div class="flex w-full items-center gap-4 group cursor-default">
+  <div class="flex flex-grow gap-4 items-center">
+    <!-- COMPLETE TASK -->
+    <div>
+      <app-toggle [checked]="task.task.completed" (checkedChange)="task.task.completed = $event">
+      </app-toggle>
+    </div>
+    <!-- PRORITY -->
+    <div>
+      <!-- {{task.task.priority}} -->
+      <app-tooltip [text]="'Priority'">
+        <app-dropdown [action]="'click'" [direction]="'right'">
+          <div role="selector">
+            @switch (task.task.priority) {
+            @case ('NONE') {
+            <i class="ri-signal-wifi-line"></i>
+            }
+            @case ('LOW') {
+            <i class="ri-signal-wifi-1-fill"></i>
+            }
+            @case ('MEDIUM') {
+            <i class="ri-signal-wifi-2-fill"></i>
+            }
+            @case ('HIGH') {
+            <i class="ri-signal-wifi-fill"></i>
+            }
+            @case ('CRITICAL') {
+            <i class="ri-alert-fill"></i>
+            }
+            }
+          </div>
+          <div role="list">
+            <app-dropdown-list>
+              <app-dropdown-item [isSelected]="task.task.priority === 'NONE'" (onClick)="task.task.priority = 'NONE'">
+                <span class="flex gap-2">
+                  <i class="ri-signal-wifi-line"></i>
+                  <span>
+                    NONE
+                  </span>
+                </span>
+              </app-dropdown-item>
+              <app-dropdown-item [isSelected]="task.task.priority === 'LOW'" (onClick)="task.task.priority = 'LOW'">
+                <span class="flex gap-2">
+                  <i class="ri-signal-wifi-1-fill"></i>
+                  <span>
+                    LOW
+                  </span>
+                </span>
+              </app-dropdown-item>
+              <app-dropdown-item [isSelected]="task.task.priority === 'MEDIUM'" (onClick)="task.task.priority = 'MEDIUM'">
+                <span class="flex gap-2">
+                  <i class="ri-signal-wifi-2-fill"></i>
+                  <span>
+                    MEDIUM
+                  </span>
+                </span>
+              </app-dropdown-item>
+              <app-dropdown-item [isSelected]="task.task.priority === 'HIGH'" (onClick)="task.task.priority = 'HIGH'">
+                <span class="flex gap-2">
+                  <i class="ri-signal-wifi-fill"></i>
+                  <span>
+                    HIGH
+                  </span>
+                </span>
+              </app-dropdown-item>
+              <app-dropdown-item [isSelected]="task.task.priority === 'CRITICAL'"
+                (onClick)="task.task.priority = 'CRITICAL'">
+                <span class="flex gap-2">
+                  <i class="ri-alert-fill"></i>
+                  <span>
+                    URGENT
+                  </span>
+                </span>
+              </app-dropdown-item>
+            </app-dropdown-list>
+          </div>
+        </app-dropdown>
+      </app-tooltip>
+    </div>
+    <!-- NAME -->
+    <div>
+      {{task.task.name}}
+    </div>
+  </div>
+  <!-- CATEGORIES -->
+  <div>
+    <ul class="flex gap-2">
+      @for (category of task.categories; track $index) {
+      <li class="flex gap-1 items-center rounded">
+        <span class="w-3 h-3 rounded-full" [style.backgroundColor]="category.color">
+        </span>
+        <span>{{category.name}}</span>
+      </li>
+      }
+    </ul>
+  </div>
+  <div class="flex gap-2">
+    <!-- DEADLINE -->
+    @if (task.task.deadline) {
+    <app-tooltip [text]="'deadline'">
+      <div class="flex">
+        <span>
+          {{task.task.deadline | date : 'MMM-dd'}}
+        </span>
+        <span>
+          &nbsp;-
+        </span>
+      </div>
+    </app-tooltip>
+    }
+    <!-- CREATED AT -->
+    <app-tooltip [text]="'Created at: ' + ((task.task.createdAt | date : 'YYYY-MMMM-dd') ?? '')">
+      <div class="text-white/70">
+        {{task.task.createdAt | date : 'MMM-dd'}}
+      </div>
+    </app-tooltip>
+  </div>
+  <div class="w-4 flex items-center justify-center">
+    <app-dropdown [direction]="'left'">
+      <div role="selector">
+        <i class="ri-more-2-fill"></i>
+      </div>
+      <div class="w-max" role="list">
+        <app-dropdown-list>
+          <app-dropdown-item>
+            Edit
+          </app-dropdown-item>
+          <app-dropdown-item>
+            Delete
+          </app-dropdown-item>
+          <app-dropdown-item>
+            <app-dropdown [direction]="'left'" action="click">
+              <div role="selector" class="w-full">
+                @switch (task.task.priority) {
+                @case ('NONE') {
+                <span>
+                  <i class="ri-signal-wifi-line"></i>
+                  <span>
+                    NONE
+                  </span>
+                </span>
+                }
+                @case ('LOW') {
+                <span>
+                  <i class="ri-signal-wifi-1-fill"></i>
+                  <span>
+                    LOW
+                  </span>
+                </span>
+                }
+                @case ('MEDIUM') {
+                <span>
+                  <i class="ri-signal-wifi-2-fill"></i>
+                  <span>
+                    MEDIUM
+                  </span>
+                </span>
+                }
+                @case ('HIGH') {
+                <span>
+                  <i class="ri-signal-wifi-fill"></i>
+                  <span>
+                    HIGH
+                  </span>
+                </span>
+                }
+                @case ('CRITICAL') {
+                <span>
+                  <i class="ri-alert-fill"></i>
+                  <span>
+                    URGENT
+                  </span>
+                </span>
+                }
+                }
+              </div>
+              <div role="list">
+                <app-dropdown-list>
+                  <app-dropdown-item [isSelected]="task.task.priority === 'NONE'" (onClick)="task.task.priority = 'NONE'">
+                    <span class="flex gap-2">
+                      <i class="ri-signal-wifi-line"></i>
+                      <span>
+                        NONE
+                      </span>
+                    </span>
+                  </app-dropdown-item>
+                  <app-dropdown-item [isSelected]="task.task.priority === 'LOW'" (onClick)="task.task.priority = 'LOW'">
+                    <span class="flex gap-2">
+                      <i class="ri-signal-wifi-1-fill"></i>
+                      <span>
+                        LOW
+                      </span>
+                    </span>
+                  </app-dropdown-item>
+                  <app-dropdown-item [isSelected]="task.task.priority === 'MEDIUM'"
+                    (onClick)="task.task.priority = 'MEDIUM'">
+                    <span class="flex gap-2">
+                      <i class="ri-signal-wifi-2-fill"></i>
+                      <span>
+                        MEDIUM
+                      </span>
+                    </span>
+                  </app-dropdown-item>
+                  <app-dropdown-item [isSelected]="task.task.priority === 'HIGH'" (onClick)="task.task.priority = 'HIGH'">
+                    <span class="flex gap-2">
+                      <i class="ri-signal-wifi-fill"></i>
+                      <span>
+                        HIGH
+                      </span>
+                    </span>
+                  </app-dropdown-item>
+                  <app-dropdown-item [isSelected]="task.task.priority === 'CRITICAL'"
+                    (onClick)="task.task.priority = 'CRITICAL'">
+                    <span class="flex gap-2">
+                      <i class="ri-alert-fill"></i>
+                      <span>
+                        CRITICAL
+                      </span>
+                    </span>
+                  </app-dropdown-item>
+                </app-dropdown-list>
+              </div>
+            </app-dropdown>
+          </app-dropdown-item>
+          <app-dropdown-item>
+            <span (click)="task.task.completed = !task.task.completed" class="flex gap-2 items-center justify-center">
+              @if(task.task.completed){
+              <span class="flex items-center justify-center gap-2">
+                <i class="ri-checkbox-line"></i>
+                uncomplete
+              </span>
+              } @else {
+              <span class="flex items-center justify-center gap-2">
+                <i class="ri-checkbox-blank-line"></i>
+                complete
+              </span>
+              }
+            </span>
+          </app-dropdown-item>
+          <app-dropdown-item>
+            <app-dropdown [action]="'hover'" [direction]="'left'">
+              <div role="selector">
+                <span class="flex gap-2 items-center justify-start">
+                  <i class="ri-flag-fill"></i>
+                  <span>
+                    Set due date
+                  </span>
+                </span>
+              </div>
+              <div role="list">
+                <app-dropdown-list>
+                  <app-dropdown-item>
+                    <span>
+                      Today
+                    </span>
+                  </app-dropdown-item>
+                  <app-dropdown-item>
+                    <span>
+                      Tomorrow
+                    </span>
+                  </app-dropdown-item>
+                  <app-dropdown-item>
+                    <span>
+                      Next week
+                    </span>
+                  </app-dropdown-item>
+                  <app-dropdown-item>
+                    <span>
+                      Custom
+                    </span>
+                  </app-dropdown-item>
+                </app-dropdown-list>
+              </div>
+            </app-dropdown>
+          </app-dropdown-item>
+          <app-dropdown-item>
+            <app-dropdown [direction]="'left'" [action]="'click'">
+              <div role="selector">
+                <span class="flex gap-2 items-center justify-start">
+                  <i class="ri-user-fill"></i>
+                  <span>
+                    Categories
+                  </span>
+                </span>
+              </div>
+              <div role="list">
+                <app-dropdown-list>
+                  @for (category of this.categoryService.getCategoriesSnapshot(); track $index) {
+                  <app-dropdown-item>
+                    <span>
+                      {{category.name}}
+                      {{ taskHaveCategory(category) ? '✓' : ''}}
+                    </span>
+                  </app-dropdown-item>
+                  }
+                </app-dropdown-list>
+              </div>
+            </app-dropdown>
+          </app-dropdown-item>
+        </app-dropdown-list>
+      </div>
+    </app-dropdown>
+  </div>
+</div>
