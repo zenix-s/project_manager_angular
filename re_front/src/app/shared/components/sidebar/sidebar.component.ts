@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
+  OnDestroy,
   OnInit,
   WritableSignal,
   inject,
@@ -17,6 +18,7 @@ import { UserWorkspacesService } from '@app/core/services/user-workspaces.servic
 import { Workspace } from '@env/interface.env';
 import { Subscription } from 'rxjs';
 import { LinkComponent } from '../link/link.component';
+import { SidebarService } from './sidebar.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -29,18 +31,23 @@ import { LinkComponent } from '../link/link.component';
     DropdownComponent,
     DropdownListComponent,
     DropdownItemComponent,
-    LinkComponent
+    LinkComponent,
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
   authenticationService = inject(AuthenticationService);
   userWorkspacesService = inject(UserWorkspacesService);
   router = inject(Router);
+  sidebarService = inject(SidebarService)
 
   workspaces: WritableSignal<Workspace[]> = signal<Workspace[]>([]);
   workspaceSub!: Subscription;
+  isOpenSub!: Subscription;
+
+  isOpen:WritableSignal<boolean> = signal<boolean>(false);
+
 
   ngOnInit(): void {
     this.workspaceSub = this.userWorkspacesService.workspaces$.subscribe(
@@ -48,7 +55,14 @@ export class SidebarComponent implements OnInit {
         this.workspaces.set(workspaces);
       }
     );
+    this.isOpenSub = this.sidebarService.isOpen$.subscribe((isOpen) => {
+      this.isOpen.set(isOpen);
+    });
 
     this.userWorkspacesService.getWorkspaces();
+  }
+  ngOnDestroy(): void {
+    this.workspaceSub.unsubscribe();
+    this.isOpenSub.unsubscribe();
   }
 }
