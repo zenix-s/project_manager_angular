@@ -1,0 +1,19 @@
+<a
+  class="p-1 border w-full transition-colors duration-200 hover:shadow-md h-min flex items-center justify-center"
+  [ngClass]="{
+    'text-black' : !outline,
+    'bg-white/70 border-white text-white hover:bg-white': theme === 'primary' && !outline,
+    'bg-green/70 border-green text-white hover:bg-green': theme === 'success' && !outline,
+    'bg-yellow/70 border-yellow text-white hover:bg-yellow': theme === 'warning' && !outline,
+    'bg-red/70 border-red text-white hover:bg-red': theme === 'error' && !outline,
+    'bg-bg  border-white/70 text-white hover:bg-white/10': outline && theme === 'primary',
+    'bg-bg  border-green/70 text-white hover:bg-green/10': outline && theme === 'success',
+    'bg-bg  border-yellow/70 text-white hover:bg-yellow/10': outline && theme === 'warning',
+    'bg-bg  border-red/70 text-white hover:bg-red/10': outline && theme === 'error',
+    'rounded-full': rounded,
+    'rounded-md': !rounded
+  }"
+  [routerLink]="[href]"
+  >
+    <ng-content></ng-content>
+</a>

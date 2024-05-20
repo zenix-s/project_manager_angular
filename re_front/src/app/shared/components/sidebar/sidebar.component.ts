@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, WritableSignal, inject, signal } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  WritableSignal,
+  inject,
+  signal,
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { SectionComponent } from '../section/section.component';
 import { ButtonComponent } from '../button/button.component';
@@ -7,29 +13,41 @@ import { AuthenticationService } from '@app/core/authentication/service/authenti
 import { DropdownComponent } from '../dropdown/dropdown/dropdown.component';
 import { DropdownListComponent } from '../dropdown/dropdown-list/dropdown-list.component';
 import { DropdownItemComponent } from '../dropdown/dropdown-item/dropdown-item.component';
-import { UserWorkspacesService } from '../../../core/services/user-workspaces.service';
+import { UserWorkspacesService } from '@app/core/services/user-workspaces.service';
 import { Workspace } from '@env/interface.env';
 import { Subscription } from 'rxjs';
+import { LinkComponent } from '../link/link.component';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink, SectionComponent, ButtonComponent, DropdownComponent, DropdownListComponent, DropdownItemComponent],
+  imports: [
+    CommonModule,
+    RouterLink,
+    SectionComponent,
+    ButtonComponent,
+    DropdownComponent,
+    DropdownListComponent,
+    DropdownItemComponent,
+    LinkComponent
+  ],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
+  styleUrl: './sidebar.component.css',
 })
-export class SidebarComponent implements OnInit{
-  authenticationService = inject(AuthenticationService)
-  userWorkspacesService = inject(UserWorkspacesService)
-  router = inject(Router)
+export class SidebarComponent implements OnInit {
+  authenticationService = inject(AuthenticationService);
+  userWorkspacesService = inject(UserWorkspacesService);
+  router = inject(Router);
 
-  workspaces:WritableSignal<Workspace[]> = signal<Workspace[]>([])
-  workspaceSub!:Subscription
+  workspaces: WritableSignal<Workspace[]> = signal<Workspace[]>([]);
+  workspaceSub!: Subscription;
 
   ngOnInit(): void {
-    this.workspaceSub = this.userWorkspacesService.workspaces$.subscribe((workspaces) => {
-      this.workspaces.set(workspaces);
-    });
+    this.workspaceSub = this.userWorkspacesService.workspaces$.subscribe(
+      (workspaces) => {
+        this.workspaces.set(workspaces);
+      }
+    );
 
     this.userWorkspacesService.getWorkspaces();
   }

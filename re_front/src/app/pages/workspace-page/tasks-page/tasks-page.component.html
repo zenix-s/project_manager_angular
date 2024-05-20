@@ -1,7 +1,7 @@
 <div class="w-full h-full flex flex-col">
   <div class="flex-grow p-4">
     <app-section [title]="'Tasks'">
-      <header class="w-full p-2 flex gap-2">
+      <header class="w-full p-2 flex gap-2 items-center justify-between">
         <div class="w-min">
           <app-button (onClick)="this.TaskFormService.open()" [outline]="true">
             <span class="flex gap-2">
@@ -10,8 +10,12 @@
             </span>
           </app-button>
         </div>
+
+        <input type="text"
+          class="w-full p-1 border border-blue/40 rounded-md bg-bg focus:outline-none focus:ring-2 focus:ring-blue/60"
+          (keyup)="this.filterSearch($event)">
         <div class="w-min">
-          <app-dropdown [action]="'click'" [direction]="'bottom-right'">
+          <app-dropdown [action]="'click'" [direction]="'left'">
             <app-dropdown-item role="selector">
               <span class="flex gap-2">
                 <i class="ri-filter-3-line"></i>
@@ -19,6 +23,8 @@
               </span>
             </app-dropdown-item>
             <app-dropdown-list role="list">
+              <app-dropdown-item>
+              </app-dropdown-item>
               <app-dropdown-item role="item" [isSelected]="this.filterTaskService.filters.status"
                 (onClick)="this.filterTaskService.filterCompleted(this.tasks())">
                 <span class="flex gap-2">
@@ -27,7 +33,7 @@
                 </span>
               </app-dropdown-item>
               <app-dropdown-item role="item">
-                <app-dropdown [direction]="'right'">
+                <app-dropdown [direction]="'left'">
                   <div role="selector">
                     <span class="flex gap-2 w-full items-start">
                       <i class="ri-checkbox-blank-circle-line"></i>
@@ -48,7 +54,80 @@
                   </app-dropdown-list>
                 </app-dropdown>
               </app-dropdown-item>
-              <app-dropdown-item role="item">hola</app-dropdown-item>
+              <app-dropdown-item>
+                <app-dropdown [direction]="'left'">
+                  <div role="selector">
+                    <span class="flex gap-2 w-full items-start">
+                      <i class="ri-checkbox-blank-circle-line"></i>
+                      Prioridades
+                    </span>
+                  </div>
+                  <app-dropdown-list role="list">
+                    @for (priority of listPriority; track $index) {
+                    <app-dropdown-item role="item"
+                      (onClick)="this.filterTaskService.filterPriority(priority, this.tasks())"
+                      [isSelected]="this.filterTaskService.filters.priority === priority">
+                      @switch (priority) {
+                      @case ('NONE') {
+                      <span>
+                        <i class="ri-signal-wifi-line"></i>
+                        <span>
+                          NONE
+                        </span>
+                      </span>
+                      }
+                      @case ('LOW') {
+                      <span>
+                        <i class="ri-signal-wifi-1-fill"></i>
+                        <span>
+                          LOW
+                        </span>
+                      </span>
+                      }
+                      @case ('MEDIUM') {
+                      <span>
+                        <i class="ri-signal-wifi-2-fill"></i>
+                        <span>
+                          MEDIUM
+                        </span>
+                      </span>
+                      }
+                      @case ('HIGH') {
+                      <span>
+                        <i class="ri-signal-wifi-fill"></i>
+                        <span>
+                          HIGH
+                        </span>
+                      </span>
+                      }
+                      @case ('CRITICAL') {
+                      <span>
+                        <i class="ri-alert-fill"></i>
+                        <span>
+                          URGENT
+                        </span>
+                      </span>
+                      }
+                      }
+                    </app-dropdown-item>
+                    }
+                  </app-dropdown-list>
+                </app-dropdown>
+              </app-dropdown-item>
+              <app-dropdown-item [isSelected]="this.filterTaskService.filters.subtaskFilter"
+                (onClick)="this.filterTaskService.toogleFilterSubtasks(this.tasks())">
+                <span class="flex gap-2">
+                  <i class="ri-checkbox-blank-circle-line"></i>
+                  Filtrar Subtareas
+                </span>
+              </app-dropdown-item>
+              <app-dropdown-item role="item" (onClick)="this.filterTaskService.clearFilters(this.tasks())">
+                <span class="flex gap-2">
+                  <i class="ri-close-line"></i>
+                  Limpiar
+                </span>
+              </app-dropdown-item>
+
             </app-dropdown-list>
           </app-dropdown>
         </div>

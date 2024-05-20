@@ -24,6 +24,7 @@ import { FilterTasksService } from './services/filter-tasks.service';
 import { DropdownComponent } from '@app/shared/components/dropdown/dropdown/dropdown.component';
 import { DropdownListComponent } from '@app/shared/components/dropdown/dropdown-list/dropdown-list.component';
 import { DropdownItemComponent } from '@app/shared/components/dropdown/dropdown-item/dropdown-item.component';
+import { listPriority } from '@env/interface.env';
 
 @Component({
   selector: 'app-tasks-page',
@@ -50,6 +51,7 @@ export class TasksPageComponent implements OnInit, OnDestroy {
   filterTaskService = inject(FilterTasksService);
 
   isOpen: boolean = false;
+  listPriority = listPriority;
 
   workspaceTasksService = inject(WorkspaceTasksService);
   workspaceCategoriesService = inject(WorkspaceCategoriesService);
@@ -68,6 +70,10 @@ export class TasksPageComponent implements OnInit, OnDestroy {
   users: WritableSignal<workspaceUsersData[]> = signal<workspaceUsersData[]>(
     []
   );
+
+  filterSearch(event: any) {
+    this.filterTaskService.filterSearch(event.target.value, this.tasks());
+  }
 
   ngOnInit(): void {
     let idWorkspace: number;

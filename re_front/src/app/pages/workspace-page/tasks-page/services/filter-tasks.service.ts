@@ -1,8 +1,8 @@
-import { Injectable, WritableSignal, inject, signal } from '@angular/core';
+import { Injectable, WritableSignal, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { taskFilter } from '@app/core/enity/taskFilter.entity';
-import { TaskData } from '@env/interface.env';
-import { WorkspaceTasksService } from '@app/core/services/workspace-tasks.service';
+import { TaskData, priority } from '@env/interface.env';
+import { filter } from '../../../../../../../front/src/app/features/workspace/tasks/services/task-filter.service';
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +37,9 @@ export class FilterTasksService {
         (priority ? task.task.priority === priority : true) &&
         (category.length > 0
           ? task.categories.find((c) => category.includes(c.id))
+          : true) &&
+        (search
+          ? task.task.name.toLowerCase().includes(search.toLowerCase())
           : true)
       ) {
         if (task.subtasks && task.subtasks.length > 0 && subtaskFilter) {
@@ -86,10 +89,26 @@ export class FilterTasksService {
     this.applyFilters(tasks);
   }
 
-  filterSubtasks(tasks: TaskData[]) {
+  toogleFilterSubtasks(tasks: TaskData[]) {
     this._filters.set({
       ...this._filters(),
       subtaskFilter: !this._filters().subtaskFilter,
+    });
+    this.applyFilters(tasks);
+  }
+
+  filterPriority(priority: priority, tasks: TaskData[]) {
+    this._filters.set({
+      ...this._filters(),
+      priority: this._filters().priority === priority ? null : priority,
+    });
+    this.applyFilters(tasks);
+  }
+
+  filterSearch(search: string, tasks: TaskData[]) {
+    this._filters.set({
+      ...this._filters(),
+      search,
     });
     this.applyFilters(tasks);
   }

@@ -30,10 +30,10 @@
       <nav class="flex-grow">
         <ul class="flex flex-col gap-2">
           <li>
-            <a [routerLink]="['/']" routerLinkActive="underline">Home</a>
+            <app-link [href]="'/'" [outline]="true">Home</app-link>
           </li>
           <li>
-            <a [routerLink]="['/Invitation']" routerLinkActive="underline">Invitations</a>
+            <app-link [href]="'/Invitation'" [outline]="true">Invitations</app-link>
           </li>
         </ul>
       </nav>
