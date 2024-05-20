@@ -45,11 +45,15 @@ export class WorkspaceTasksService {
     idWorkspace = parseInt(idWorkspace.toString());
 
     this.http
-      .post<TaskData>(`${backendUrl}:${port}/workspace/${idWorkspace}/task`, task, {
-        headers: {
-          Authorization: `${this.authenticationService.userToken}`,
-        },
-      })
+      .post<TaskData>(
+        `${backendUrl}:${port}/workspace/${idWorkspace}/task`,
+        task,
+        {
+          headers: {
+            Authorization: `${this.authenticationService.userToken}`,
+          },
+        }
+      )
       .subscribe({
         next: (task) => {
           this._tasks.next([...this._tasks.value, task]);
@@ -61,8 +65,7 @@ export class WorkspaceTasksService {
       });
   }
 
-  deleteTask(idTask:number) {
-
+  deleteTask(idTask: number) {
     this.http
       .delete<TaskData>(`${backendUrl}:${port}/task/${idTask}`, {
         headers: {
@@ -71,7 +74,9 @@ export class WorkspaceTasksService {
       })
       .subscribe({
         next: (task) => {
-          this._tasks.next(this._tasks.value.filter((t) => t.task.id !== idTask));
+          this._tasks.next(
+            this._tasks.value.filter((t) => t.task.id !== idTask)
+          );
           this.toasterService.success('Task deleted successfully');
         },
         error: (error) => {
@@ -80,8 +85,7 @@ export class WorkspaceTasksService {
       });
   }
 
-  updateTask(idTask:number, task: Task) {
-
+  updateTask(idTask: number, task: Task) {
     this.http
       .put<TaskData>(`${backendUrl}:${port}/task/${idTask}`, task, {
         headers: {
@@ -92,7 +96,7 @@ export class WorkspaceTasksService {
         next: (task) => {
           this._tasks.next(
             this._tasks.value.map((t) => {
-              if (t.task.id === idTask) {
+              if (t.task.id === task.task.id) {
                 return task;
               }
               return t;
@@ -104,5 +108,9 @@ export class WorkspaceTasksService {
           this.toasterService.error(error.error.message);
         },
       });
+  }
+
+  getTasksSnapshot() {
+    return this._tasks.getValue();
   }
 }

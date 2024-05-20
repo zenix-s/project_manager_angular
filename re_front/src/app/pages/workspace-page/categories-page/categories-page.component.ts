@@ -14,11 +14,15 @@ import { ToasterService } from '@app/core/toaster/service/toaster.service';
 import { SectionComponent } from '@app/shared/components/section/section.component';
 import { Category, TaskData, workspaceUsersData } from '@env/interface.env';
 import { Subscription } from 'rxjs';
+import { CategoryItemComponent } from './components/category-item/category-item.component';
+import { ButtonComponent } from '@app/shared/components/button/button.component';
+import { CategoryFormService } from './components/category-form/category-form.service';
+import { CategoryFormComponent } from './components/category-form/category-form.component';
 
 @Component({
   selector: 'app-categories-page',
   standalone: true,
-  imports: [SectionComponent],
+  imports: [SectionComponent, CategoryItemComponent, ButtonComponent, CategoryFormComponent],
   templateUrl: './categories-page.component.html',
   styleUrl: './categories-page.component.css',
 })
@@ -26,7 +30,7 @@ export class CategoriesPageComponent implements OnDestroy, OnInit {
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
   toasterService = inject(ToasterService);
-
+  categoryFormService = inject(CategoryFormService)
   workspaceCategoriesService = inject(WorkspaceCategoriesService);
 
   workspaceCategoriesSubscription!: Subscription;

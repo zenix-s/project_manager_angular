@@ -1,8 +1,8 @@
-<div class="relative hover:bg-comment/10 cursor-pointer select-none py-0.5 px-1 flex" (click)="onClick.emit()">
-  <span class="grow flex justify-between px-2">
+<div class="relative w-full hover:bg-comment/10 cursor-pointer select-none py-0.5 px-1 flex" (click)="onClick.emit()">
+  <span class="w-full flex justify-between items-center px-2 gap-2">
     <ng-content></ng-content>
     @if (isSelected) {
-    <i class="ri-checkbox-circle-line"></i>
+    <i class="ri-checkbox-circle-line flex items-center justify-center"></i>
     }
   </span>
 </div>

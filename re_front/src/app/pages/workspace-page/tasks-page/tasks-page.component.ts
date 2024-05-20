@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit, WritableSignal, inject, signal } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  WritableSignal,
+  inject,
+  signal,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WorkspaceCategoriesService } from '@app/core/services/workspace-categories.service';
 import { WorkspaceTasksService } from '@app/core/services/workspace-tasks.service';
@@ -9,18 +16,40 @@ import { Subscription } from 'rxjs';
 import { TaskContainerComponent } from './components/task-container/task-container.component';
 import { TaskItemComponent } from './components/task-item/task-item.component';
 import { SubtaskContainerComponent } from './components/subtask-container/subtask-container.component';
+import { ModalComponent } from '@app/shared/components/modal/modal.component';
+import { ButtonComponent } from '@app/shared/components/button/button.component';
+import { TaskFormComponent } from './components/task-form/task-form.component';
+import { TaskFormService } from './components/task-form/task-form.service';
+import { FilterTasksService } from './services/filter-tasks.service';
+import { DropdownComponent } from '@app/shared/components/dropdown/dropdown/dropdown.component';
+import { DropdownListComponent } from '@app/shared/components/dropdown/dropdown-list/dropdown-list.component';
+import { DropdownItemComponent } from '@app/shared/components/dropdown/dropdown-item/dropdown-item.component';
 
 @Component({
   selector: 'app-tasks-page',
   standalone: true,
-  imports: [SectionComponent, TaskContainerComponent, TaskItemComponent, SubtaskContainerComponent],
+  imports: [
+    SectionComponent,
+    TaskContainerComponent,
+    TaskItemComponent,
+    SubtaskContainerComponent,
+    ModalComponent,
+    ButtonComponent,
+    TaskFormComponent,
+    DropdownComponent,
+    DropdownListComponent,
+    DropdownItemComponent
+  ],
   templateUrl: './tasks-page.component.html',
-  styleUrl: './tasks-page.component.css'
+  styleUrl: './tasks-page.component.css',
 })
-export class TasksPageComponent implements OnInit, OnDestroy{
-
+export class TasksPageComponent implements OnInit, OnDestroy {
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
+  TaskFormService = inject(TaskFormService);
+  filterTaskService = inject(FilterTasksService);
+
+  isOpen: boolean = false;
 
   workspaceTasksService = inject(WorkspaceTasksService);
   workspaceCategoriesService = inject(WorkspaceCategoriesService);
@@ -29,9 +58,11 @@ export class TasksPageComponent implements OnInit, OnDestroy{
   workspaceTasksSubscription!: Subscription;
   workspaceCategoriesSubscription!: Subscription;
   workspaceUsersSubscription!: Subscription;
+  filterTaskSubscription!: Subscription;
 
   idWorkspace: number = 0;
 
+  filteredTasks: WritableSignal<TaskData[]> = signal<TaskData[]>([]);
   tasks: WritableSignal<TaskData[]> = signal<TaskData[]>([]);
   categories: WritableSignal<Category[]> = signal<Category[]>([]);
   users: WritableSignal<workspaceUsersData[]> = signal<workspaceUsersData[]>(
@@ -39,20 +70,31 @@ export class TasksPageComponent implements OnInit, OnDestroy{
   );
 
   ngOnInit(): void {
-    if (!this.activatedRoute.parent!.snapshot)
-      this.router.navigate(['/']);
-    const idWorkspace = parseInt(
-      this.activatedRoute.snapshot.paramMap.get('idWorkspace') as any
-    );
-    if (isNaN(idWorkspace) || !isFinite(idWorkspace) || idWorkspace < 0) {
-      this.router.navigate(['/']);
-    }
-    this.idWorkspace = idWorkspace;
+    let idWorkspace: number;
+    this.activatedRoute.parent!.paramMap.subscribe((params) => {
+      if (!params.has('idWorkspace')) {
+        this.router.navigate(['/']);
+      }
+      idWorkspace = parseInt(params.get('idWorkspace') as any);
+      if (isNaN(idWorkspace) || !isFinite(idWorkspace) || idWorkspace < 0) {
+        this.router.navigate(['/']);
+      }
+
+      this.idWorkspace = idWorkspace;
+
+      this.workspaceTasksService.getTasks(idWorkspace);
+      this.workspaceCategoriesService.getWorkspaceCategories(idWorkspace);
+      this.workspaceUsersService.getWorkspaceUsers(idWorkspace);
+    });
 
     this.workspaceTasksSubscription =
       this.workspaceTasksService.tasks$.subscribe((tasks) => {
         this.tasks.set(tasks);
-        console.log("tasks", tasks);
+        this.filterTaskService.applyFilters(tasks);
+      });
+    this.filterTaskSubscription =
+      this.filterTaskService.filteredTasks$.subscribe((tasks) => {
+        this.filteredTasks.set(tasks);
       });
     this.workspaceCategoriesSubscription =
       this.workspaceCategoriesService.categories$.subscribe((categories) => {

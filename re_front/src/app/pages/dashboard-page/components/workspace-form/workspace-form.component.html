@@ -1,5 +1,5 @@
-<app-modal [isOpen]="isOpen()" [title]="'title'" (onClose)="this.taskFormService.close()">
-  <form class="flex flex-col gap-2" [formGroup]="taskForm">
+<app-modal [isOpen]="isOpen()" [title]="'title'" (onClose)="this.workspaceFormService.close()">
+  <form class="flex flex-col gap-2" [formGroup]="workspaceForm">
     <app-input [label]="'name'" formControlName="name"></app-input>
     <app-input [label]="'description'" formControlName="description"></app-input>
     <app-button [outline]="true" (onClick)="onSubmit()" [type]="'submit'">

@@ -50,7 +50,7 @@ export class UserWorkspacesService {
       })
       .subscribe({
         next: (workspace) => {
-          // this._workspaces.next([...this._workspaces.value, workspace]);
+          this.getWorkspaces();
           this.toasterService.success('Workspace created');
         },
         error: (error) => {
@@ -59,7 +59,7 @@ export class UserWorkspacesService {
       });
   }
 
-  deleteWorkspace(workspaceId: string) {
+  deleteWorkspace(workspaceId: number) {
     this.http
       .delete(`${backendUrl}:${port}/workspace/${workspaceId}`, {
         headers: {
@@ -68,6 +68,7 @@ export class UserWorkspacesService {
       })
       .subscribe({
         next: () => {
+          this.getWorkspaces();
           this.toasterService.success('Workspace deleted');
         },
         error: (error) => {

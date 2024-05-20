@@ -1,12 +1,16 @@
 <div class="w-full h-full flex flex-col">
   <div class="flex-grow p-4">
     <app-section [title]="'Categories'">
-      <p>categories-page works!</p>
+      <header class="flex justify-between items-center p-2">
+        <app-button [outline]="true" (onClick)="this.categoryFormService.open()">Add Category</app-button>
+      </header>
+      <app-category-form [idWorkspace]="idWorkspace"></app-category-form>
+      <hr class="divide-x-2 divide-solid mt-2 mb-4 border-blue/40">
+      <section>
       @for (category of categories(); track $index) {
-      <div>
-        {{category.name}}
-      </div>
+      <app-category-item [category]="category"></app-category-item>
       }
+      </section>
     </app-section>
   </div>
 </div>

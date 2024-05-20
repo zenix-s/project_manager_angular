@@ -2,8 +2,10 @@
   <div class="flex flex-grow gap-4 items-center">
     <!-- COMPLETE TASK -->
     <div>
-      <app-toggle [checked]="task.task.completed" (checkedChange)="task.task.completed = $event">
-      </app-toggle>
+      <app-tooltip [text]="task.task.completed ? 'Uncomplete' : 'Complete'">
+        <app-toggle [checked]="task.task.completed" (checkedChange)="updateCompleteStatus($event)">
+        </app-toggle>
+      </app-tooltip>
     </div>
     <!-- PRORITY -->
     <div>
@@ -31,7 +33,7 @@
           </div>
           <div role="list">
             <app-dropdown-list>
-              <app-dropdown-item [isSelected]="task.task.priority === 'NONE'" (onClick)="task.task.priority = 'NONE'">
+              <app-dropdown-item [isSelected]="task.task.priority === 'NONE'" (onClick)="updatePriority('NONE')">
                 <span class="flex gap-2">
                   <i class="ri-signal-wifi-line"></i>
                   <span>
@@ -39,7 +41,7 @@
                   </span>
                 </span>
               </app-dropdown-item>
-              <app-dropdown-item [isSelected]="task.task.priority === 'LOW'" (onClick)="task.task.priority = 'LOW'">
+              <app-dropdown-item [isSelected]="task.task.priority === 'LOW'" (onClick)="updatePriority('LOW')">
                 <span class="flex gap-2">
                   <i class="ri-signal-wifi-1-fill"></i>
                   <span>
@@ -47,7 +49,7 @@
                   </span>
                 </span>
               </app-dropdown-item>
-              <app-dropdown-item [isSelected]="task.task.priority === 'MEDIUM'" (onClick)="task.task.priority = 'MEDIUM'">
+              <app-dropdown-item [isSelected]="task.task.priority === 'MEDIUM'" (onClick)="updatePriority('MEDIUM')">
                 <span class="flex gap-2">
                   <i class="ri-signal-wifi-2-fill"></i>
                   <span>
@@ -55,7 +57,7 @@
                   </span>
                 </span>
               </app-dropdown-item>
-              <app-dropdown-item [isSelected]="task.task.priority === 'HIGH'" (onClick)="task.task.priority = 'HIGH'">
+              <app-dropdown-item [isSelected]="task.task.priority === 'HIGH'" (onClick)="updatePriority('HIGH')">
                 <span class="flex gap-2">
                   <i class="ri-signal-wifi-fill"></i>
                   <span>
@@ -64,11 +66,11 @@
                 </span>
               </app-dropdown-item>
               <app-dropdown-item [isSelected]="task.task.priority === 'CRITICAL'"
-                (onClick)="task.task.priority = 'CRITICAL'">
+                (onClick)="updatePriority('CRITICAL')">
                 <span class="flex gap-2">
                   <i class="ri-alert-fill"></i>
                   <span>
-                    URGENT
+                    Critical
                   </span>
                 </span>
               </app-dropdown-item>
@@ -122,10 +124,10 @@
       </div>
       <div class="w-max" role="list">
         <app-dropdown-list>
-          <app-dropdown-item>
+          <app-dropdown-item (onClick)="openEditTaskForm()">
             Edit
           </app-dropdown-item>
-          <app-dropdown-item>
+          <app-dropdown-item (onClick)="this.taskService.deleteTask(task.task.id)">
             Delete
           </app-dropdown-item>
           <app-dropdown-item>
@@ -176,7 +178,7 @@
               </div>
               <div role="list">
                 <app-dropdown-list>
-                  <app-dropdown-item [isSelected]="task.task.priority === 'NONE'" (onClick)="task.task.priority = 'NONE'">
+                  <app-dropdown-item [isSelected]="task.task.priority === 'NONE'" (onClick)="updatePriority('NONE')">
                     <span class="flex gap-2">
                       <i class="ri-signal-wifi-line"></i>
                       <span>
@@ -184,7 +186,7 @@
                       </span>
                     </span>
                   </app-dropdown-item>
-                  <app-dropdown-item [isSelected]="task.task.priority === 'LOW'" (onClick)="task.task.priority = 'LOW'">
+                  <app-dropdown-item [isSelected]="task.task.priority === 'LOW'" (onClick)="updatePriority('LOW')">
                     <span class="flex gap-2">
                       <i class="ri-signal-wifi-1-fill"></i>
                       <span>
@@ -193,7 +195,7 @@
                     </span>
                   </app-dropdown-item>
                   <app-dropdown-item [isSelected]="task.task.priority === 'MEDIUM'"
-                    (onClick)="task.task.priority = 'MEDIUM'">
+                    (onClick)="updatePriority('MEDIUM')">
                     <span class="flex gap-2">
                       <i class="ri-signal-wifi-2-fill"></i>
                       <span>
@@ -201,7 +203,7 @@
                       </span>
                     </span>
                   </app-dropdown-item>
-                  <app-dropdown-item [isSelected]="task.task.priority === 'HIGH'" (onClick)="task.task.priority = 'HIGH'">
+                  <app-dropdown-item [isSelected]="task.task.priority === 'HIGH'" (onClick)="updatePriority('HIGH')">
                     <span class="flex gap-2">
                       <i class="ri-signal-wifi-fill"></i>
                       <span>
@@ -210,7 +212,7 @@
                     </span>
                   </app-dropdown-item>
                   <app-dropdown-item [isSelected]="task.task.priority === 'CRITICAL'"
-                    (onClick)="task.task.priority = 'CRITICAL'">
+                    (onClick)="updatePriority('CRITICAL')">
                     <span class="flex gap-2">
                       <i class="ri-alert-fill"></i>
                       <span>
@@ -223,7 +225,7 @@
             </app-dropdown>
           </app-dropdown-item>
           <app-dropdown-item>
-            <span (click)="task.task.completed = !task.task.completed" class="flex gap-2 items-center justify-center">
+            <span (click)="updateCompleteStatus(!task.task.completed)" class="flex gap-2 items-center justify-center">
               @if(task.task.completed){
               <span class="flex items-center justify-center gap-2">
                 <i class="ri-checkbox-line"></i>
@@ -249,19 +251,19 @@
               </div>
               <div role="list">
                 <app-dropdown-list>
-                  <app-dropdown-item>
+                  <app-dropdown-item (onClick)="updateDeadline(null)">
                     <span>
-                      Today
+                      Eliminar
                     </span>
                   </app-dropdown-item>
-                  <app-dropdown-item>
+                  <app-dropdown-item (onClick)="updateDeadline(tomorrowsDate())">
                     <span>
                       Tomorrow
                     </span>
                   </app-dropdown-item>
-                  <app-dropdown-item>
+                  <app-dropdown-item (onClick)="updateDeadline(endOfWeekDate())">
                     <span>
-                      Next week
+                      End of the week
                     </span>
                   </app-dropdown-item>
                   <app-dropdown-item>
@@ -286,10 +288,11 @@
               <div role="list">
                 <app-dropdown-list>
                   @for (category of this.categoryService.getCategoriesSnapshot(); track $index) {
-                  <app-dropdown-item>
-                    <span>
+                  <app-dropdown-item [isSelected]="taskHaveCategory(category)" (onClick)="toggleCategory(category)">
+                    <span class="flex items-center justify-center gap-2">
+                      <span class="w-3 h-3 rounded-full" [style.backgroundColor]="category.color">
+                      </span>
                       {{category.name}}
-                      {{ taskHaveCategory(category) ? '✓' : ''}}
                     </span>
                   </app-dropdown-item>
                   }

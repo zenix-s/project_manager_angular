@@ -1,18 +1,74 @@
 <div class="w-full h-full flex flex-col">
   <div class="flex-grow p-4">
     <app-section [title]="'Tasks'">
-      @for (task of tasks(); track $index) {
-      <app-task-container [haveSubtasks]="task.subtasks != null && task.subtasks.length > 0">
-        <app-task-item role="task" [task]="task"></app-task-item>
-        <div class="flex flex-col" role="subtasks">
-          @for (subtask of task.subtasks; track $index) {
-          <app-subtask-container [isLast]="task.subtasks != null && task.subtasks.length - 1 === $index">
-            <app-task-item [task]="subtask"></app-task-item>
-          </app-subtask-container>
-          }
+      <header class="w-full p-2 flex gap-2">
+        <div class="w-min">
+          <app-button (onClick)="this.TaskFormService.open()" [outline]="true">
+            <span class="flex gap-2">
+              Tarea
+              <i class="ri-add-line"></i>
+            </span>
+          </app-button>
         </div>
-      </app-task-container>
-    }
+        <div class="w-min">
+          <app-dropdown [action]="'click'" [direction]="'bottom-right'">
+            <app-dropdown-item role="selector">
+              <span class="flex gap-2">
+                <i class="ri-filter-3-line"></i>
+                Filtrar
+              </span>
+            </app-dropdown-item>
+            <app-dropdown-list role="list">
+              <app-dropdown-item role="item" [isSelected]="this.filterTaskService.filters.status"
+                (onClick)="this.filterTaskService.filterCompleted(this.tasks())">
+                <span class="flex gap-2">
+                  <i class="ri-checkbox-blank-circle-line"></i>
+                  Completadas
+                </span>
+              </app-dropdown-item>
+              <app-dropdown-item role="item">
+                <app-dropdown [direction]="'right'">
+                  <div role="selector">
+                    <span class="flex gap-2 w-full items-start">
+                      <i class="ri-checkbox-blank-circle-line"></i>
+                      Categorias
+                    </span>
+                  </div>
+                  <app-dropdown-list role="list">
+                    @for (category of categories(); track $index) {
+                    <app-dropdown-item role="item"
+                      (onClick)="this.filterTaskService.toggleCategory(category.id, this.tasks())"
+                      [isSelected]="this.filterTaskService.filters.category.includes(category.id)">
+                      <span class="flex gap-2 items-center">
+                        <div class="w-4 h-4 rounded-full" [style.background-color]="category.color"></div>
+                        {{ category.name }}
+                      </span>
+                    </app-dropdown-item>
+                    }
+                  </app-dropdown-list>
+                </app-dropdown>
+              </app-dropdown-item>
+              <app-dropdown-item role="item">hola</app-dropdown-item>
+            </app-dropdown-list>
+          </app-dropdown>
+        </div>
+      </header>
+      <app-task-form [idWorkspace]="idWorkspace"></app-task-form>
+      <hr class="divide-x-2 divide-solid border-blue/40 mt-2 mb-4">
+      <section>
+        @for (task of filteredTasks(); track $index) {
+        <app-task-container [haveSubtasks]="task.subtasks != null && task.subtasks.length > 0">
+          <app-task-item role="task" [task]="task"></app-task-item>
+          <div class="flex flex-col" role="subtasks">
+            @for (subtask of task.subtasks; track $index) {
+            <app-subtask-container [isLast]="task.subtasks != null && task.subtasks.length - 1 === $index">
+              <app-task-item [task]="subtask"></app-task-item>
+            </app-subtask-container>
+            }
+          </div>
+        </app-task-container>
+        }
+      </section>
     </app-section>
   </div>
 </div>

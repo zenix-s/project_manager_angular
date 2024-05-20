@@ -1,5 +1,5 @@
 <button
-  class="p-2 rounded-md border w-full transition-colors duration-200 hover:shadow-md"
+  class="p-1 border w-full transition-colors duration-200 hover:shadow-md h-min flex items-center justify-center"
   [ngClass]="{
     'text-black' : !outline,
     'bg-white/70 border-white text-white hover:bg-white': theme === 'primary' && !outline,
@@ -10,8 +10,8 @@
     'bg-bg  border-green/70 text-white hover:bg-green/10': outline && theme === 'success',
     'bg-bg  border-yellow/70 text-white hover:bg-yellow/10': outline && theme === 'warning',
     'bg-bg  border-red/70 text-white hover:bg-red/10': outline && theme === 'error',
-  }"
-  (click)="onClick.emit()"
->
-  <ng-content></ng-content>
+    'rounded-full': rounded,
+    'rounded-md': !rounded
+  }" (click)="onClick.emit()">
+    <ng-content></ng-content>
 </button>

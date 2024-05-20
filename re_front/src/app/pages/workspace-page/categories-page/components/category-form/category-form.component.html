@@ -1,0 +1,14 @@
+<app-modal [isOpen]="isOpen()" [title]="'Category Form'" (onClose)="onClose()">
+  <form class="flex flex-col gap-2" [formGroup]="categoryForm">
+    <app-input [label]="'name'" formControlName="name"></app-input>
+    <!-- <app-input [label]="'description'" formControlName="description"></app-input> -->
+    <input
+      type="color"
+      formControlName="color"
+      class="w-full h-10 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-indigo-300"
+    />
+    <app-button [outline]="true" (onClick)="onSubmit()" [type]="'submit'">
+      Guardar
+    </app-button>
+  </form>
+</app-modal>

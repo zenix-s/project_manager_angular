@@ -1,7 +1,16 @@
 <div class="w-full h-full flex flex-col">
   <div class="flex-grow p-4">
     <app-section [title]="'Options'">
-      <p>options-page works!</p>
+      <div class="w-max">
+        <app-button [outline]="true" [theme]="'error'" (onClick)="DeleteWorkspace()">
+          <span class="flex gap-2 items-center">
+            <i class="ri-delete-bin-line"></i>
+            <span>
+              Eliminar Workspace
+            </span>
+          </span>
+        </app-button>
+      </div>
     </app-section>
   </div>
 </div>

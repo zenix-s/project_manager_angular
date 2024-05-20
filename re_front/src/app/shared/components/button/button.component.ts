@@ -13,6 +13,7 @@ export class ButtonComponent {
   @Input() disabled: boolean = false;
   @Input() theme: 'primary' | 'success' | 'warning' | 'error' = 'primary';
   @Input() outline: boolean = false;
+  @Input() rounded: boolean = false;
 
   @Output() onClick = new EventEmitter<void>();
 

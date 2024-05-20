@@ -21,7 +21,6 @@ export class TaskController {
 
     try {
       const tasks = await modelTask.getTasksByIdWorkspace(workspaceId);
-			console.log(tasks);
       res.json(tasks);
     } catch (error) {
       console.error(error);
@@ -113,19 +112,27 @@ export class TaskController {
       return;
     }
 
+
+
     // Comprobamos si el usuario tiene permisos para editar tareas
     const workspaceUser = await workspaceUsersModel.getWorkspaceUserById(
       Task.idWorkspace,
       parseInt(authToken as string)
     );
 
+		console.log({
+			"idWorkspace": Task.idWorkspace,
+			"authToken": parseInt(authToken as string),
+			"workspaceUser": workspaceUser,
+		});
+
     if (workspaceUser === undefined) {
-			res.status(403).json({ message: "Unauthorized" });
+			res.status(403).json({ message: "Unauthorized 1" });
       return;
     }
 
     if (!checkUserEditPermission(workspaceUser.role)) {
-			res.status(403).json({ message: "Unauthorized" });
+			res.status(403).json({ message: "Unauthorized 2" });
       return;
     }
 

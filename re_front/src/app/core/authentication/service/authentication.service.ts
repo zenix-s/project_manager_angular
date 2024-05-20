@@ -25,7 +25,6 @@ export class AuthenticationService {
   };
 
   login(username: string, password: string) {
-    console.log('login', username, password);
     this.http
       .post(`${backendUrl}:${port}/login`, { username, password })
       .subscribe({
@@ -35,7 +34,6 @@ export class AuthenticationService {
             username: response.user.username,
             email: response.user.email,
           };
-          console.log('response', response.user);
           localStorage.setItem('token', response.user.id);
 					localStorage.setItem('user', JSON.stringify(response.user));
           this.ToasterService.success('Logged in');
@@ -48,7 +46,6 @@ export class AuthenticationService {
   }
 
   register(email: string, username: string, password: string) {
-    console.log('register', email, username, password);
     this.http
       .post(`${backendUrl}:${port}/register`, { email, username, password })
       .subscribe({
@@ -85,7 +82,6 @@ export class AuthenticationService {
     if (this._user.id === 0) {
       const user = localStorage.getItem('user');
       if (user) {
-        console.log('user', user);
         this._user = JSON.parse(user);
       } else {
         this._user = {

@@ -329,7 +329,6 @@ WHERE
     );
 
     await connection.end();
-		console.log("algo");
 
     return result.map((task: TaskDataBBDD): TaskData => {
       return {
@@ -359,7 +358,6 @@ WHERE
 					dependentIdTask: number;
 					categories: Category[];
 				}): TaskData => {
-					console.log(subtask);
 					return {
 						task:{
 							id: subtask.id,
