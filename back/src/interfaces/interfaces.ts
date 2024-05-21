@@ -52,7 +52,7 @@ export interface Task {
   deadline?: Date;
   priority: priority;
   visibility: visibility;
-  dependentIdTask: number;
+  dependentIdTask: number | null;
 }
 
 export interface project {

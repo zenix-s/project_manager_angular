@@ -444,11 +444,11 @@ WHERE
 		if (task.deadline) {
 			task.deadline = new Date(task.deadline);
 		}
-
+		console.log(task);
 		await connection.query(
 			`
 				UPDATE task
-				SET name = ?, description = ?, completed = ?, deadline = ?, priority = ?, visibility = ?
+				SET name = ?, description = ?, completed = ?, deadline = ?, priority = ?, visibility = ?, dependentIdTask = ?
 				WHERE id = ?
 			`,
 			[
@@ -458,6 +458,7 @@ WHERE
 				task.deadline,
 				task.priority,
 				task.visibility,
+				task.dependentIdTask,
 				task.id,
 			]
 		);

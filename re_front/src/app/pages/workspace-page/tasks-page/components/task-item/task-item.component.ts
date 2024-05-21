@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { WorkspaceCategoriesService } from '@app/core/services/workspace-categories.service';
 import { DropdownItemComponent } from '@app/shared/components/dropdown/dropdown-item/dropdown-item.component';
 import { DropdownListComponent } from '@app/shared/components/dropdown/dropdown-list/dropdown-list.component';
@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { WorkspaceTasksService } from '@app/core/services/workspace-tasks.service';
 import { WorkspaceTaskCategoriesService } from '@app/core/services/workspace-task-categories.service';
 import { TaskFormService } from '../task-form/task-form.service';
+import { setThrowInvalidWriteToSignalError } from '@angular/core/primitives/signals';
 
 @Component({
   selector: 'app-task-item',
@@ -52,7 +53,6 @@ export class TaskItemComponent {
   }
 
   updateDeadline(date: Date | null) {
-    console.log(date);
     this.taskService.updateTask(this.task.task.id, {
       ...this.task.task,
       deadline: date ? date : undefined,
@@ -104,5 +104,28 @@ export class TaskItemComponent {
   openEditTaskForm() {
     this.taskFormService.task = this.task;
     this.taskFormService.open();
+  }
+
+  dependency(idTask: number) {
+    return this.task.task.dependentIdTask === idTask;
+  }
+
+  addDependency(idTask: number | null) {
+    if (this.task.task.dependentIdTask === idTask) {
+      idTask = null;
+    }
+    this.taskService.updateTask(this.task.task.id, {
+      ...this.task.task,
+      dependentIdTask: idTask,
+    });
+    if (idTask === null) {
+      this.taskService.addTask(this.task);
+    }
+    if (!this.task.task.dependentIdTask) return;
+    const dependentTask = this.taskService.getTask(
+      this.task.task.dependentIdTask
+    );
+    if (!dependentTask) return;
+    this.taskService.updateTask(dependentTask.task.id, dependentTask.task);
   }
 }

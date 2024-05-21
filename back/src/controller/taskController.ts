@@ -120,12 +120,6 @@ export class TaskController {
       parseInt(authToken as string)
     );
 
-		console.log({
-			"idWorkspace": Task.idWorkspace,
-			"authToken": parseInt(authToken as string),
-			"workspaceUser": workspaceUser,
-		});
-
     if (workspaceUser === undefined) {
 			res.status(403).json({ message: "Unauthorized 1" });
       return;

@@ -300,6 +300,40 @@
               </div>
             </app-dropdown>
           </app-dropdown-item>
+          @if (this.task.subtasks && this.task.subtasks.length <= 0) { <app-dropdown-item>
+            <!-- Dependant -->
+            <app-dropdown [direction]="'left'" [action]="'click'">
+              <div role="selector">
+                <span class="flex gap-2 items-center justify-start">
+                  <i class="ri-user-fill"></i>
+                  <span>
+                    Dependant
+                  </span>
+                </span>
+              </div>
+              <div role="list">
+                <app-dropdown-list>
+                  @if (this.task.task.dependentIdTask !== null) {
+                  <app-dropdown-item (onClick)="addDependency(null)">
+                    <span>
+                      Remove dependency
+                    </span>
+                  </app-dropdown-item>
+                  }
+                  @for (taskL of this.taskService.getTasksSnapshot(); track $index) {
+                  @if(taskL.task.id !== this.task.task.id && taskL.task.dependentIdTask === null){
+                  <app-dropdown-item [isSelected]="dependency(taskL.task.id)" (onClick)="addDependency(taskL.task.id)">
+                    <span class="flex items-center justify-center gap-2">
+                      {{taskL.task.name}}
+                    </span>
+                  </app-dropdown-item>
+                  }
+                  }
+                </app-dropdown-list>
+              </div>
+            </app-dropdown>
+            </app-dropdown-item>
+            }
         </app-dropdown-list>
       </div>
     </app-dropdown>

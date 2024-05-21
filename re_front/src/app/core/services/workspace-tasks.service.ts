@@ -41,6 +41,13 @@ export class WorkspaceTasksService {
       });
   }
 
+  addTask(task: TaskData) {
+    this._tasks.next([...this._tasks.value, task]);
+  }
+  removeTask(task: TaskData) {
+    this._tasks.next(this._tasks.value.filter((t) => t.task.id !== task.task.id));
+  }
+
   createTask(idWorkspace: number, task: Task) {
     idWorkspace = parseInt(idWorkspace.toString());
 
@@ -56,7 +63,8 @@ export class WorkspaceTasksService {
       )
       .subscribe({
         next: (task) => {
-          this._tasks.next([...this._tasks.value, task]);
+          // this._tasks.next([...this._tasks.value, task]);
+          this.addTask(task);
           this.toasterService.success('Task created successfully');
         },
         error: (error) => {
@@ -94,6 +102,19 @@ export class WorkspaceTasksService {
       })
       .subscribe({
         next: (task) => {
+          if (task.subtasks && task.subtasks.length > 0) {
+            this._tasks.next(
+              this._tasks.value.filter((t) => {
+                if (
+                  task.subtasks &&
+                  !task.subtasks.some((st) => st.task.id === t.task.id)
+                ) {
+                  return true;
+                }
+                return false;
+              })
+            );
+          }
           this._tasks.next(
             this._tasks.value.map((t) => {
               if (t.task.id === task.task.id) {
@@ -112,5 +133,10 @@ export class WorkspaceTasksService {
 
   getTasksSnapshot() {
     return this._tasks.getValue();
+  }
+
+  getTask(idTask: number): TaskData | undefined {
+    const task = this._tasks.value.find((t) => t.task.id === idTask);
+    return task;
   }
 }

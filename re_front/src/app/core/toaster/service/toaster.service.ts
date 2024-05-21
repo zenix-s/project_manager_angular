@@ -41,7 +41,7 @@ export class ToasterService {
     this._toaster.next([...this._toaster.value, { id, action, message, type }]);
     setTimeout(() => {
       this.removeToast(id);
-    }, 3000);
+    }, 1500);
   }
 
   error(message: string): void {
