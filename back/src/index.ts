@@ -4,7 +4,8 @@ import { CategoryController } from "@/controller/categoryController";
 import { WorkspaceController } from "@/controller/workspaceController";
 import { TaskController } from "@/controller/taskController";
 import { TaskCategoryController } from "@/controller/taskCategoryController";
-import { AuthenticationController } from "./controller/authenticationController";
+import { AuthenticationController } from "@/controller/authenticationController";
+import { InvitationController } from '@/controller/invitationsController';
 
 process.loadEnvFile();
 const app: Express = express();
@@ -15,6 +16,7 @@ const taskController = new TaskController();
 const categoryController = new CategoryController();
 const taskCategoryController = new TaskCategoryController();
 const authenticationController = new AuthenticationController();
+const invitationController = new InvitationController();
 
 // MIDLEWARES
 app.use(bodyParser.json());
@@ -100,5 +102,10 @@ app.post("/register", authenticationController.register);
  * Devuelve los usuarios asociados a un workspace
  */
 app.get("/workspace/:idWorkspace/users", workspaceController.getWorkspaceUsers);
+
+/**
+ * Devuelve las invitaciones de un usuario
+ */
+app.get("/userInvitations", invitationController.getInvitationsByIdUser);
 
 app.listen(port, () => console.log("Server running on port " + port));
