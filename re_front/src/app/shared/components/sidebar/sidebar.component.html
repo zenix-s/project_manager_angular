@@ -4,12 +4,13 @@
   <app-section [title]="'sidebar'">
     <div class="flex flex-col w-full h-full gap-4 relative">
       <div class="w-full flex justify-end">
-        <div class="w-min absolute -top-5 -right-5 bg-bg">
-          <app-button (onClick)="this.sidebarService.close()" [outline]="true">
+        <div class="z-50 w-min absolute top-16 -right-5 bg-transparent hover:bg-bg">
+          <button (click)="this.sidebarService.close()"
+            class="w-8 h-8 rounded-full hover:shadow-md items-center justify-center border border-transparent hover:border-white flex hover:bg-bg bg-transparent transition-all text-transparent hover:text-white ">
             <span class="flex items-center gap-2">
-              <i class="ri-close-line"></i>
+              <i class="ri-arrow-left-s-line text-xl"></i>
             </span>
-          </app-button>
+          </button>
         </div>
       </div>
       <div class="py-2">
@@ -61,10 +62,10 @@
 </div>
 
 @if (!isOpen()) {
-<div class="absolute top-12 -left-2 z-50">
-  <button (click)="this.sidebarService.open()"
-    class="w-10 h-10 rounded-full hover:shadow-md items-center justify-center border border-transparent hover:border-white flex hover:bg-bg bg-transparent transition-all text-transparent hover:text-white ">
-    <i class="ri-arrow-right-s-line"></i>
-  </button>
-</div>
+  <div class="absolute top-[4.5rem]  z-50">
+    <button (click)="this.sidebarService.open()"
+      class="w-8 h-8 rounded-full hover:shadow-md items-center justify-center border border-transparent hover:border-white flex hover:bg-bg bg-transparent transition-all text-transparent hover:text-white ">
+      <i class="ri-arrow-right-s-line text-lg"></i>
+    </button>
+  </div>
 }
