@@ -7,6 +7,7 @@ import { UsersPageComponent } from './pages/workspace-page/users-page/users-page
 import { OptionsPageComponent } from './pages/workspace-page/options-page/options-page.component';
 import { AuthenticationPageComponent } from './pages/authentication-page/authentication-page.component';
 import { authGuard } from './core/authentication/guard/auth.guard';
+import { InvitationsPageComponent } from './pages/invitations-page/invitations-page.component';
 
 export const routes: Routes = [
   {
@@ -24,6 +25,10 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardPageComponent,
+      },
+      {
+        path: 'invitations',
+        component: InvitationsPageComponent,
       },
       {
         path: 'workspace/:idWorkspace',

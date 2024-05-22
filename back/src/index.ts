@@ -108,4 +108,14 @@ app.get("/workspace/:idWorkspace/users", workspaceController.getWorkspaceUsers);
  */
 app.get("/userInvitations", invitationController.getInvitationsByIdUser);
 
+/**
+ * Acepta una invitación
+ */
+app.put("/invitation/:id", invitationController.acceptInvitation);
+
+/**
+ * Rechaza una invitación
+ */
+app.delete("/invitation/:id", invitationController.rejectInvitation);
+
 app.listen(port, () => console.log("Server running on port " + port));

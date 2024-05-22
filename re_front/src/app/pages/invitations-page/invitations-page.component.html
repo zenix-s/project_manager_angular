@@ -1,0 +1,28 @@
+<div class="h-full w-full flex gap-4">
+  <app-sidebar></app-sidebar>
+  <div class="flex-grow py-4 pr-4">
+    <app-section [title]="'Invitations'">
+      <div class="flex flex-col">
+        @for (invitation of invitations(); track $index) {
+        <div class="flex items-center border-b border-white p-2">
+          <div class="w-52">
+            {{invitation.idWorkspace}}
+          </div>
+          <div class="flex gap-2">
+            <app-button
+            [outline]="true"
+            (onClick)="this.invitationService.acceptInvitation(invitation.id)">
+              Accept
+            </app-button>
+            <app-button [outline]="true"
+            (onClick)="this.invitationService.rejectInvitation(invitation.id)"
+            >
+              Decline
+            </app-button>
+          </div>
+        </div>
+        }
+      </div>
+    </app-section>
+  </div>
+</div>

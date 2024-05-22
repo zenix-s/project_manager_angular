@@ -8,15 +8,6 @@ import { UserModel } from "./userModel";
 import { dbconfig } from "@/lib/mysqldb";
 import { Invitation } from "@/interfaces/interfaces";
 
-// interface CategoryBBDD extends RowDataPacket {
-//   id: number;
-//   name: string;
-//   description: string;
-//   color: string;
-//   completed: boolean;
-//   idWorkspace: number;
-// }
-
 interface InvitationBBDD extends RowDataPacket {
   id: number;
   email: string;
@@ -56,34 +47,54 @@ export class InvitationModel {
 
     return result;
   }
-  async postInvitation(invitation: Invitation): Promise<number> {
-		const connection: Connection = await mysql.createConnection(dbconfig);
 
-		const [result] = await connection.query<ResultSetHeader>(
-			`
+  async getInvitationsById(idInvitation: number) {
+    const connection: Connection = await mysql.createConnection(dbconfig);
+
+    const [result] = await connection.query<RowDataPacket[]>(
+      `
+			SELECT *
+			FROM invitation
+			WHERE id = ?
+			`,
+      [idInvitation]
+    );
+
+    await connection.end();
+
+    return result;
+  }
+
+  async postInvitation(invitation: Invitation): Promise<number> {
+    const connection: Connection = await mysql.createConnection(dbconfig);
+
+    const [result] = await connection.query<ResultSetHeader>(
+      `
 			INSERT INTO invitation (email, idWorkspace)
 			VALUES (?, ?)
 			`,
-			[invitation.email, invitation.idWorkspace]
-		);
+      [invitation.email, invitation.idWorkspace]
+    );
 
-		await connection.end();
+    await connection.end();
 
-		return result.insertId;
-	}
+    return result.insertId;
+  }
+
   async deleteInvitation(id: number): Promise<void> {
-		const connection: Connection = await mysql.createConnection(dbconfig);
+    const connection: Connection = await mysql.createConnection(dbconfig);
 
-		await connection.query(
-			`
+    await connection.query(
+      `
 			DELETE FROM invitation
 			WHERE id = ?
 			`,
-			[id]
-		);
+      [id]
+    );
 
-		await connection.end();
-	}
+    await connection.end();
+  }
+
   async acceptInvitation(id: number): Promise<void> {
     const connection: Connection = await mysql.createConnection(dbconfig);
 
@@ -104,18 +115,32 @@ export class InvitationModel {
       [id]
     );
 
-		const user = await userModel.getUserByEmail(invitation[0].email);
-		if (!user) {
-			await connection.end();
-			return;
-		}
+    const user = await userModel.getUserByEmail(invitation[0].email);
+    if (!user) {
+      await connection.end();
+      return;
+    }
 
     await connection.query(
       `
-			INSERT INTO userWorkspace (idUser, idWorkspace, role, delted)
-			VALUES (?, ?)
+			INSERT INTO userWorkspace (idUser, idWorkspace, role, deleted)
+			VALUES (?, ?, ?, ?)
 			`,
-      [user.id, invitation[0].idWorkspace, "GUEST", false]
+      [user.id, invitation[0].idWorkspace, "GUEST", 0]
+    );
+
+    await connection.end();
+  }
+
+  async rejectInvitation(id: number): Promise<void> {
+    const connection: Connection = await mysql.createConnection(dbconfig);
+
+    await connection.query(
+      `
+			DELETE FROM invitation
+			WHERE id = ?
+			`,
+      [id]
     );
 
     await connection.end();
