@@ -45,6 +45,25 @@ export class InvitationsService {
     this._invitations.next(this._invitations.value.filter((i) => i.id !== invitation.id));
   }
 
+  postInvitation(email: string, idWorkspace: number) {
+    this.http.post(`${backendUrl}:${port}/invitation`, {
+      email,
+      idWorkspace
+    }, {
+      headers: {
+        Authorization: `${this.authenticationService.userToken}`
+      }
+    }).subscribe({
+      next: (invitation) => {
+        this.addInvitation(invitation as Invitation);
+        this.toasterService.success('Invitation sent');
+      },
+      error: (error) => {
+        this.toasterService.error(error.error.message);
+      }
+    });
+  }
+
   acceptInvitation(id: number) {
     this.http.put(`${backendUrl}:${port}/invitation/${id}`, {}, {
       headers: {

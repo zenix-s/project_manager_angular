@@ -1,0 +1,8 @@
+<app-modal [isOpen]="InvitationFormService.isOpened()" [title]="'Enviar Invitación'" (onClose)="this.InvitationFormService.close()">
+  <form class="flex flex-col gap-2" [formGroup]="invitationForm">
+    <app-input [label]="'email'" formControlName="email"></app-input>
+    <app-button [outline]="true" (onClick)="onSubmit()" [type]="'submit'">
+      Invitar
+    </app-button>
+  </form>
+</app-modal>

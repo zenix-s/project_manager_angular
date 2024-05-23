@@ -25,7 +25,7 @@ export class WorkspaceController {
     const idWorkspace: number = parseInt(req.params.idWorkspace);
     const authToken = req.headers.authorization;
 
-		// Comprobar si el usuario tiene permisos de administrador para eliminar el workspace
+    // Comprobar si el usuario tiene permisos de administrador para eliminar el workspace
     const workspaceUser = await modelWorkspaceUsers.getWorkspaceUserById(
       idWorkspace,
       parseInt(authToken as string)
@@ -37,11 +37,11 @@ export class WorkspaceController {
     }
 
     if (!checkUserAdminPermission(workspaceUser.role)) {
-      res.status(403).json({ message: "Se necesita permisos de administrador" });
+      res
+        .status(403)
+        .json({ message: "Se necesita permisos de administrador" });
       return;
     }
-
-
 
     try {
       const deletedIdWorkspace: number = await modelWorkspace.deleteWorkspace(
@@ -83,8 +83,8 @@ export class WorkspaceController {
   }
 
   public async getWorkspaceUsers(req: Request, res: Response) {
-    // const idWorkspace: number = parseInt(req.params.idWorkspace);
-    const idWorkspace: number = 1;
+    const idWorkspace: number = parseInt(req.params.idWorkspace);
+    // const idWorkspace: number = 1;
 
     try {
       const workspaceUsers = await modelWorkspaceUsers.getWorkspaceUsers(

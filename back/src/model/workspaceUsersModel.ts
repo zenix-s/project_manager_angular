@@ -17,7 +17,7 @@ export class WorkspaceUsersModel {
 
     const connection = await mysql.createConnection(dbconfig);
 
-    const [result] = await connection.query<UserBBDD[]>(
+    const [result] = await connection.query(
       `
 			SELECT
 				'id',
@@ -32,7 +32,6 @@ export class WorkspaceUsersModel {
 				uw.role,
 				'idUserWorkspace',
 				uw.id
-
 			FROM
 				user u
 			INNER JOIN
@@ -46,6 +45,23 @@ export class WorkspaceUsersModel {
       [workspaceId]
     );
 
+		const [ids] = await connection.query(
+			`
+			SELECT
+				*
+			FROM
+				user u
+			INNER JOIN
+				userWorkspace uw
+			ON
+				u.id = uw.idUser
+			WHERE
+				uw.idWorkspace = ? AND uw.deleted = 0
+			`,
+			[workspaceId]
+		);
+
+		console.log(ids);
     await connection.end();
 
     return result as workspaceUsersData[];

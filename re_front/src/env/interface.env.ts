@@ -9,6 +9,7 @@ export const listPriority: priority[] = [
   'HIGH',
   'CRITICAL',
 ];
+export const listRole: role[] = ['ADMIN', 'MEMBER', 'GUEST'];
 
 export interface User {
   id: number;

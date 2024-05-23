@@ -118,4 +118,9 @@ app.put("/invitation/:id", invitationController.acceptInvitation);
  */
 app.delete("/invitation/:id", invitationController.rejectInvitation);
 
+/**
+ * Crea una invitación
+ */
+app.post("/invitation", invitationController.postInvitation);
+
 app.listen(port, () => console.log("Server running on port " + port));

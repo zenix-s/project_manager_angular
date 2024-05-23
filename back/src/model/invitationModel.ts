@@ -70,8 +70,8 @@ export class InvitationModel {
 
     const [result] = await connection.query<ResultSetHeader>(
       `
-			INSERT INTO invitation (email, idWorkspace)
-			VALUES (?, ?)
+			INSERT INTO invitation (email, idWorkspace, createdAt)
+			VALUES (?, ?, NOW())
 			`,
       [invitation.email, invitation.idWorkspace]
     );
