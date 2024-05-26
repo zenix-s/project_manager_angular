@@ -19,7 +19,7 @@
         <div>{{ user.user.email }}</div>
         <div>{{user.idWorkspace}}</div>
         <div>
-          <button (click)="this.workspaceUsersService.deleteWorkspaceUser(this.idWorkspace, user.id)">
+          <button (click)="this.workspaceUsersService.deleteWorkspaceUser(this.idWorkspace, user.user.id)">
             <span class="flex gap-2">
               Remove
               <i class="ri-delete-bin-line"></i>

@@ -52,8 +52,6 @@ export class WorkspaceUsersModel {
       };
     });
 
-		console.log(usersWorkspace);
-
     return usersWorkspace;
   }
 
@@ -62,8 +60,6 @@ export class WorkspaceUsersModel {
     idUser: number
   ): Promise<userWorkspaceData> {
     const connection = await mysql.createConnection(dbconfig);
-
-		console.log(idWorkspace, idUser);
 
     const [result] = await connection.query<UserBBDD[]>(
       `

@@ -39,20 +39,22 @@ export class WorkspaceUsersService {
 
   deleteWorkspaceUser(idWorkspace: number, idUser: number) {
     this.http
-      .delete<workspaceUsersData[]>(
-        `${backendUrl}:${port}/userWorkspace`,
-        {
-          headers: {
-            Authorization: `${this.authenticationService.userToken}`,
-            idWorkspace: `${idWorkspace}`,
-            idUser: `${idUser}`,
-          },
-        }
-      )
+      .delete<workspaceUsersData[]>(`${backendUrl}:${port}/userWorkspace`, {
+        headers: {
+          Authorization: `${this.authenticationService.userToken}`,
+          idWorkspace: `${idWorkspace}`,
+          idUser: `${idUser}`,
+        },
+      })
       .subscribe({
-        next: (data) => this._workspaceUsers.next(data),
+        next: (data: any) => {
+          this.toasterService.success(data.message);
+        },
         error: (error) => {
           this.toasterService.error(error.error.message);
+        },
+        complete: () => {
+          this.getWorkspaceUsers(idWorkspace);
         },
       });
   }

@@ -123,5 +123,6 @@ app.delete("/invitation/:id", invitationController.rejectInvitation);
  */
 app.post("/invitation", invitationController.postInvitation);
 
+app.delete("/userWorkspace/", workspaceController.deleteWorkspaceUser);
 
 app.listen(port, () => console.log("Server running on port " + port));

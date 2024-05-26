@@ -100,37 +100,70 @@ export class WorkspaceController {
   }
 
   public async deleteWorkspaceUser(req: Request, res: Response) {
-    // const idUser = parseInt(req.headers.authorization as string);
-    // const idWorkspace = parseInt(req.headers.idworkspace as string);
-    // const idUserToDelete = parseInt(req.headers.iduser as string);
+    const authToken = parseInt(req.headers.authorization as string);
+    const idWorkspace = parseInt(req.headers.idworkspace as string);
+    const idUser = parseInt(req.headers.iduser as string);
 
-    // const workspaceUser = await modelWorkspaceUsers.getWorkspaceUserByidUser(
+    const editorUser = await modelWorkspaceUsers.getWorkspaceUserByidUser(
+      idWorkspace,
+      authToken
+    );
+
+    if (editorUser === undefined) {
+      res.status(403).json({ message: "Unauthorized" });
+      return;
+    }
+
+    if (!checkUserAdminPermission(editorUser.role)) {
+      res
+        .status(403)
+        .json({ message: "Se necesita permisos de administrador" });
+      return;
+    }
+
+    if (editorUser.user.id === idUser) {
+      res.status(403).json({ message: "No puedes eliminarte a ti mismo" });
+      return;
+    }
+
+    // const userToDelete = await modelWorkspaceUsers.getWorkspaceUserByidUser(
     //   idWorkspace,
     //   idUser
     // );
+    const userToDelete = async () => {
+      try {
+        return await modelWorkspaceUsers.getWorkspaceUserByidUser(
+          idWorkspace,
+          idUser
+        );
+      } catch (error) {
+        return undefined;
+      }
+    };
 
-    // if (workspaceUser === undefined) {
-    //   res.status(403).json({ message: "Unauthorized" });
-    //   return;
-    // }
+    if (userToDelete === undefined) {
+      res.status(404).json({ message: "Usuario no encontrado" });
+      return;
+    }
 
-    // if (!checkUserAdminPermission(workspaceUser.role)) {
-    //   res
-    //     .status(403)
-    //     .json({ message: "Se necesita permisos de administrador" });
-    //   return;
-    // }
+    const userToDeleteResult = await userToDelete();
+    if (userToDeleteResult === undefined) {
+      res.status(404).json({ message: "Usuario no encontrado" });
+      return;
+    }
+    if (checkUserAdminPermission(await userToDeleteResult.role)) {
+      res
+        .status(403)
+        .json({ message: "No puedes eliminar a un administrador" });
+      return;
+    }
 
-    // try {
-    //   await modelWorkspaceUsers.deleteWorkspaceUser(
-    //     idWorkspace,
-    //     idUserToDelete
-    //   );
-    //   res.json({ message: "Usuario eliminado del workspace" });
-    // } catch (error) {
-    //   console.error(error);
-    //   res.status(500).json({ message: "Internal server error" });
-    // }
-		res.status(200).json({ message: "Unimplemented" });
+    try {
+      await modelWorkspaceUsers.deleteWorkspaceUser(userToDeleteResult.id);
+      res.json({ message: "Usuario eliminado del workspace" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
+    }
   }
 }
