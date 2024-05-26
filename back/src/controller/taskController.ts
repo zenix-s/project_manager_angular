@@ -39,7 +39,7 @@ export class TaskController {
       return;
     }
 
-    const workspaceUser = await workspaceUsersModel.getWorkspaceUserById(
+    const workspaceUser = await workspaceUsersModel.getWorkspaceUserByidUser(
       task.task.idWorkspace,
       parseInt(authToken as string)
     );
@@ -77,7 +77,7 @@ export class TaskController {
     }
 
     // Comprobamos si el usuario tiene permisos para crear tareas
-    const workspaceUser = await workspaceUsersModel.getWorkspaceUserById(
+    const workspaceUser = await workspaceUsersModel.getWorkspaceUserByidUser(
       workspaceId,
       parseInt(authToken as string)
     );
@@ -115,7 +115,7 @@ export class TaskController {
 
 
     // Comprobamos si el usuario tiene permisos para editar tareas
-    const workspaceUser = await workspaceUsersModel.getWorkspaceUserById(
+    const workspaceUser = await workspaceUsersModel.getWorkspaceUserByidUser(
       Task.idWorkspace,
       parseInt(authToken as string)
     );

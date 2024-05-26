@@ -75,13 +75,12 @@ export class InvitationController {
       return;
     }
 
-		console.log(invitation);
     const user = await userModel.getUserById(parseInt(authToken));
     if (user === undefined || user === null) {
       res.status(404).json({ message: "User not found" });
       return;
     }
-    const userWorkspace = await workspaceUsersModel.getWorkspaceUserById(
+    const userWorkspace = await workspaceUsersModel.getWorkspaceUserByidUser(
       invitation.idWorkspace,
       user.id
     );
@@ -91,7 +90,7 @@ export class InvitationController {
       return;
     }
 
-		console.log(user);
+		// console.log(user);
 
     try {
       const idInvitation = await modelInvitation.postInvitation(invitation);

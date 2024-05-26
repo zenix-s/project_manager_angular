@@ -1,7 +1,7 @@
-import { role, workspaceUsersData } from "@types";
+import { Role, userWorkspaceData } from "@types";
 
-export function checkUserEditPermission(userRole: role) {
-  const editRoles: role[] = ["ADMIN", "MEMBER"];
+export function checkUserEditPermission(userRole: Role) {
+  const editRoles: Role[] = ["ADMIN", "MEMBER"];
   if (userRole === undefined || userRole === null) return false;
 
   if (editRoles.includes(userRole)) {
@@ -23,8 +23,8 @@ export function checkUserEditPermission(userRole: role) {
 //   return false;
 // }
 
-export function checkUserAdminPermission(userRole: role) {
-  const adminRoles: role[] = ["ADMIN"];
+export function checkUserAdminPermission(userRole: Role) {
+  const adminRoles: Role[] = ["ADMIN"];
   if (userRole === undefined || userRole === null) return false;
 
   if (adminRoles.includes(userRole)) {

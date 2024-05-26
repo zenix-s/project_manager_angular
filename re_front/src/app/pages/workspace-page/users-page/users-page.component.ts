@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { WorkspaceUsersService } from '@app/core/services/workspace-users.service';
 import { ToasterService } from '@app/core/toaster/service/toaster.service';
 import { SectionComponent } from '@app/shared/components/section/section.component';
-import { workspaceUsersData } from '@env/interface.env';
+import { Role, workspaceUsersData } from '@env/interface.env';
 import { Subscription } from 'rxjs';
 import { InvitationFormComponent } from './components/invitation-form/invitation-form.component';
 import { InvitationFormService } from './components/invitation-form/invitation-form.service';
@@ -54,15 +54,9 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     []
   );
 
-  changeRole(idUserWorkspace: number, role: string) {
-    console.log('changeRole', idUserWorkspace, role);
-    // this.workspaceUsersService.changeRole(idUserWorkspace, role);
-  }
-
   ngOnInit(): void {
     let idWorkspace: number;
     this.activatedRoute.parent!.paramMap.subscribe((params) => {
-      console.log('idWorkspace', params.get('idWorkspace'));
       if (!params.has('idWorkspace')) {
         this.toasterService.error('No se ha encontrado el espacio de trabajo');
         this.router.navigate(['/']);
@@ -79,7 +73,6 @@ export class UsersPageComponent implements OnInit, OnDestroy {
 
     this.workspaceUsersSubscription =
       this.workspaceUsersService.users$.subscribe((users) => {
-        console.log('users', users);
         this.users.set(users);
       });
   }

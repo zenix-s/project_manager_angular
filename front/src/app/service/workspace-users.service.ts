@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { workspaceUsersData } from '@types';
+import { userWorkspaceData } from '@types';
 import { backendUrl, port } from '@env';
 import { BehaviorSubject } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
@@ -13,13 +13,13 @@ export class WorkspaceUsersService {
   private authenticationService = inject(AuthenticationService);
   private ToasterService = inject(ToasterService);
 
-  private _workspaceUsers = new BehaviorSubject<workspaceUsersData[]>([]);
+  private _workspaceUsers = new BehaviorSubject<userWorkspaceData[]>([]);
 
   workspaceUsers$ = this._workspaceUsers.asObservable();
 
   getWorkspaceUsers(idWorkspace: number) {
     this.http
-      .get<workspaceUsersData[]>(
+      .get<userWorkspaceData[]>(
         `${backendUrl}:${port}/workspace/${idWorkspace}/users`,
         {
           headers: {

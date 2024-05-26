@@ -126,7 +126,7 @@ export class InvitationModel {
 			INSERT INTO userWorkspace (idUser, idWorkspace, role, deleted)
 			VALUES (?, ?, ?, ?)
 			`,
-      [user.id, invitation[0].idWorkspace, "GUEST", 0]
+      [user.id, invitation[0].idWorkspace, "MEMBER", 0]
     );
 
     await connection.end();

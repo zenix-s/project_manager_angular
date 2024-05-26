@@ -21,7 +21,7 @@ export class CategoryController {
     }
 
     // Comprobamos si el usuario pertenece al workspace
-    const workspaceUser = await workspaceUsersModel.getWorkspaceUserById(
+    const workspaceUser = await workspaceUsersModel.getWorkspaceUserByidUser(
       idWorkspace,
       parseInt(authToken as string)
     );
@@ -56,7 +56,7 @@ export class CategoryController {
     }
 
     // Comprobamos si el usuario tiene permisos para crear una categoria
-    const workspaceUser = await workspaceUsersModel.getWorkspaceUserById(
+    const workspaceUser = await workspaceUsersModel.getWorkspaceUserByidUser(
       idWorkspace,
       parseInt(authToken as string)
     );
@@ -95,7 +95,7 @@ export class CategoryController {
     }
 
     // Comprobamos los permisos del usuario
-    const workspaceUser = await workspaceUsersModel.getWorkspaceUserById(
+    const workspaceUser = await workspaceUsersModel.getWorkspaceUserByidUser(
       category.idWorkspace,
       parseInt(authToken as string)
     );
@@ -136,7 +136,7 @@ export class CategoryController {
     }
 
     // Comprobamos los permisos del usuario
-    const workspaceUser = await workspaceUsersModel.getWorkspaceUserById(
+    const workspaceUser = await workspaceUsersModel.getWorkspaceUserByidUser(
       category.idWorkspace,
       parseInt(authToken as string)
     );

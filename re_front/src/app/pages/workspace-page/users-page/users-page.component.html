@@ -1,5 +1,5 @@
 <div class="w-full h-full flex flex-col">
-  <div class="flex-grow p-4">
+  <div class="flex-grow pt-4 p-2">
     <app-section [title]="'Users'">
       <header class="w-full p-2 flex gap-2 items-center justify-between">
         <div class="w-min">
@@ -15,21 +15,16 @@
       <hr class="divide-x-2 divide-solid border-blue/40 mt-2 mb-4">
       @for (user of users(); track $index) {
       <div class="flex gap-4">
-        <!-- <div>{{user.idUserWorkspace}}</div> -->
-        <div>{{ user.username }}</div>
-        <div>{{ user.email }}</div>
-        <!-- <div>{{ user.role }}</div> -->
-        <div class="w-min">
-          <app-dropdown [direction]="'right'">
-            <div role="selector">{{user.role}}</div>
-            <app-dropdown-list role="list">
-              @for (role of listRole; track $index) {
-              <app-dropdown-item [isSelected]="user.role === role" (onClick)="changeRole(user.id, role)">
-                {{ role }}
-              </app-dropdown-item>
-              }
-            </app-dropdown-list>
-          </app-dropdown>
+        <div>{{ user.user.username }}</div>
+        <div>{{ user.user.email }}</div>
+        <div>{{user.idWorkspace}}</div>
+        <div>
+          <button (click)="this.workspaceUsersService.deleteWorkspaceUser(this.idWorkspace, user.id)">
+            <span class="flex gap-2">
+              Remove
+              <i class="ri-delete-bin-line"></i>
+            </span>
+          </button>
         </div>
       </div>
       }

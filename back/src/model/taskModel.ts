@@ -444,7 +444,6 @@ WHERE
 		if (task.deadline) {
 			task.deadline = new Date(task.deadline);
 		}
-		console.log(task);
 		await connection.query(
 			`
 				UPDATE task

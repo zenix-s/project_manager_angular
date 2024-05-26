@@ -1,109 +1,124 @@
 import mysql, { ResultSetHeader, RowDataPacket } from "mysql2/promise";
-import { UserWorkspace, User, workspaceUsersData } from "@types";
+import { UserWorkspace, User, userWorkspaceData, Role } from "@types";
 import { dbconfig } from "@/lib/mysqldb";
 
 interface UserBBDD extends RowDataPacket {
-  id: number;
-  username: string;
-  email: string;
-  createdAt: Date;
-  role: string;
-  idUserWorkspace: number;
+	id: number;
+	idWorkspace: number;
+	role: Role;
+	user: string;
 }
 
 export class WorkspaceUsersModel {
-  async getWorkspaceUsers(workspaceId: number): Promise<workspaceUsersData[]> {
-    // array de workspaceUsersData que tiene User y UserWorkspace
 
-    const connection = await mysql.createConnection(dbconfig);
-
-    const [result] = await connection.query(
-      `
-			SELECT
-				'id',
-				u.id,
-				'username',
-				u.username,
-				'email',
-				u.email,
-				'createdAt',
-				u.createdAt,
-				'role',
-				uw.role,
-				'idUserWorkspace',
-				uw.id
-			FROM
-				user u
-			INNER JOIN
-				userWorkspace uw
-			ON
-				u.id = uw.idUser
-			WHERE
-				uw.idWorkspace = ? AND uw.deleted = 0
-				
-			`,
-      [workspaceId]
-    );
-
-		const [ids] = await connection.query(
-			`
-			SELECT
-				*
-			FROM
-				user u
-			INNER JOIN
-				userWorkspace uw
-			ON
-				u.id = uw.idUser
-			WHERE
-				uw.idWorkspace = ? AND uw.deleted = 0
-			`,
-			[workspaceId]
-		);
-
-		console.log(ids);
-    await connection.end();
-
-    return result as workspaceUsersData[];
-  }
-
-  async getWorkspaceUserById(
-    workspaceId: number,
-    userId: number
-  ): Promise<workspaceUsersData> {
+  async getWorkspaceUsers(idWorkspace: number): Promise<userWorkspaceData[]> {
     const connection = await mysql.createConnection(dbconfig);
 
     const [result] = await connection.query<UserBBDD[]>(
       `
 			SELECT
-				'id',
-				u.id,
-				'username',
-				u.username,
-				'email',
-				u.email,
-				'createdAt',
-				u.createdAt,
-				'role',
+				uw.id,
+				uw.idWorkspace,
 				uw.role,
-				'idUserWorkspace',
-				uw.id
-
+				(
+					SELECT
+						JSON_OBJECT(
+							'id', u.id,
+							'username', u.username,
+							'email', u.email
+						)
+					FROM
+						user u
+					WHERE
+						u.id = uw.idUser
+				) as 'user'
 			FROM
-				user u
-			INNER JOIN
 				userWorkspace uw
-			ON
-				u.id = uw.idUser
 			WHERE
-				uw.idWorkspace = ? AND uw.idUser = ? AND uw.deleted = 0
+				uw.idWorkspace = ? AND uw.deleted = 0
+
 			`,
-      [workspaceId, userId]
+      [idWorkspace]
     );
 
     await connection.end();
 
-    return result[0] as workspaceUsersData;
+    const usersWorkspace: userWorkspaceData[] = result.map((userWorkspace) => {
+      return {
+				id: userWorkspace.id,
+				idWorkspace: userWorkspace.idWorkspace,
+				role: userWorkspace.role as Role,
+				user: JSON.parse(userWorkspace.user),
+      };
+    });
+
+		console.log(usersWorkspace);
+
+    return usersWorkspace;
   }
 
+  async getWorkspaceUserByidUser(
+    idWorkspace: number,
+    idUser: number
+  ): Promise<userWorkspaceData> {
+    const connection = await mysql.createConnection(dbconfig);
+
+		console.log(idWorkspace, idUser);
+
+    const [result] = await connection.query<UserBBDD[]>(
+      `
+			SELECT
+				uw.id,
+				uw.idWorkspace,
+				uw.role,
+				(
+					SELECT
+						JSON_OBJECT(
+							'id', u.id,
+							'username', u.username,
+							'email', u.email
+						)
+					FROM
+						user u
+					WHERE
+						u.id = uw.idUser
+				) as 'user'
+			FROM
+				userWorkspace uw
+			WHERE
+				uw.idWorkspace = ? AND uw.idUser = ? AND uw.deleted = 0
+			`,
+      [idWorkspace, idUser]
+    );
+
+    await connection.end();
+
+		const userWorkspace: userWorkspaceData = {
+			id: result[0].id,
+			idWorkspace: result[0].idWorkspace,
+			role: result[0].role as Role,
+			user: JSON.parse(result[0].user),
+		};
+
+		return userWorkspace;
+
+  }
+
+  async deleteWorkspaceUser(idUserWorkspace: number) {
+    const connection = await mysql.createConnection(dbconfig);
+
+    await connection.query(
+      `
+			UPDATE
+				userWorkspace
+			SET
+				deleted = 1
+			WHERE
+				id = ?
+			`,
+      [idUserWorkspace]
+    );
+
+    await connection.end();
+  }
 }

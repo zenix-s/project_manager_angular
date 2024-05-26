@@ -46,7 +46,7 @@ export class TaskCategoryController {
     }
 
     // Comprobamos si el usuario tiene permisos para editar la tarea
-    const workspaceUser = await modelWorkspaceUsers.getWorkspaceUserById(
+    const workspaceUser = await modelWorkspaceUsers.getWorkspaceUserByidUser(
       task.task.idWorkspace,
       parseInt(authToken as string)
     );
@@ -104,7 +104,7 @@ export class TaskCategoryController {
       idCategory,
     };
 
-    const workspaceUser = await modelWorkspaceUsers.getWorkspaceUserById(
+    const workspaceUser = await modelWorkspaceUsers.getWorkspaceUserByidUser(
       task.task.idWorkspace,
       parseInt(authToken as string)
     );

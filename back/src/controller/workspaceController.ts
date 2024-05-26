@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { Workspace } from "@types";
 import { WorkspaceModel } from "@/model/workspaceModel";
 import { WorkspaceUsersModel } from "@/model/workspaceUsersModel";
+import { UserModel } from "@/model/userModel";
+import { Role } from "../interfaces/interfaces";
 import {
   checkUserAdminPermission,
   checkUserEditPermission,
@@ -9,6 +11,7 @@ import {
 
 const modelWorkspace = new WorkspaceModel();
 const modelWorkspaceUsers = new WorkspaceUsersModel();
+const userModel = new UserModel();
 
 export class WorkspaceController {
   public async getWorkspacesByIdUserController(req: Request, res: Response) {
@@ -26,7 +29,7 @@ export class WorkspaceController {
     const authToken = req.headers.authorization;
 
     // Comprobar si el usuario tiene permisos de administrador para eliminar el workspace
-    const workspaceUser = await modelWorkspaceUsers.getWorkspaceUserById(
+    const workspaceUser = await modelWorkspaceUsers.getWorkspaceUserByidUser(
       idWorkspace,
       parseInt(authToken as string)
     );
@@ -84,7 +87,6 @@ export class WorkspaceController {
 
   public async getWorkspaceUsers(req: Request, res: Response) {
     const idWorkspace: number = parseInt(req.params.idWorkspace);
-    // const idWorkspace: number = 1;
 
     try {
       const workspaceUsers = await modelWorkspaceUsers.getWorkspaceUsers(
@@ -95,5 +97,40 @@ export class WorkspaceController {
       console.error(error);
       res.status(500).json({ message: "Internal server error" });
     }
+  }
+
+  public async deleteWorkspaceUser(req: Request, res: Response) {
+    // const idUser = parseInt(req.headers.authorization as string);
+    // const idWorkspace = parseInt(req.headers.idworkspace as string);
+    // const idUserToDelete = parseInt(req.headers.iduser as string);
+
+    // const workspaceUser = await modelWorkspaceUsers.getWorkspaceUserByidUser(
+    //   idWorkspace,
+    //   idUser
+    // );
+
+    // if (workspaceUser === undefined) {
+    //   res.status(403).json({ message: "Unauthorized" });
+    //   return;
+    // }
+
+    // if (!checkUserAdminPermission(workspaceUser.role)) {
+    //   res
+    //     .status(403)
+    //     .json({ message: "Se necesita permisos de administrador" });
+    //   return;
+    // }
+
+    // try {
+    //   await modelWorkspaceUsers.deleteWorkspaceUser(
+    //     idWorkspace,
+    //     idUserToDelete
+    //   );
+    //   res.json({ message: "Usuario eliminado del workspace" });
+    // } catch (error) {
+    //   console.error(error);
+    //   res.status(500).json({ message: "Internal server error" });
+    // }
+		res.status(200).json({ message: "Unimplemented" });
   }
 }

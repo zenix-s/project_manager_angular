@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { WorkspaceUsersService } from '@app/service/workspace-users.service';
 
-import { workspaceUsersData } from '@types';
+import { userWorkspaceData } from '@types';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -23,7 +23,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
 
   usersService = inject(WorkspaceUsersService);
 
-  users: WritableSignal<workspaceUsersData[]> = signal<workspaceUsersData[]>(
+  users: WritableSignal<userWorkspaceData[]> = signal<userWorkspaceData[]>(
     []
   );
 
