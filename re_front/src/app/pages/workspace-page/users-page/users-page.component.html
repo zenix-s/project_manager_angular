@@ -17,7 +17,7 @@
       <div class="flex gap-4">
         <div>{{ user.user.username }}</div>
         <div>{{ user.user.email }}</div>
-        <div>{{user.idWorkspace}}</div>
+        @if(haveAdminPermission){
         <div>
           <button (click)="this.workspaceUsersService.deleteWorkspaceUser(this.idWorkspace, user.user.id)">
             <span class="flex gap-2">
@@ -26,6 +26,7 @@
             </span>
           </button>
         </div>
+        }
       </div>
       }
     </app-section>

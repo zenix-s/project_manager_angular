@@ -19,6 +19,7 @@ import { DropdownComponent } from '@app/shared/components/dropdown/dropdown/drop
 import { DropdownItemComponent } from '@app/shared/components/dropdown/dropdown-item/dropdown-item.component';
 import { DropdownListComponent } from '@app/shared/components/dropdown/dropdown-list/dropdown-list.component';
 import { listRole } from '@env/interface.env';
+import { AuthenticationService } from '@app/core/authentication/service/authentication.service';
 
 @Component({
   selector: 'app-users-page',
@@ -37,6 +38,7 @@ import { listRole } from '@env/interface.env';
 export class UsersPageComponent implements OnInit, OnDestroy {
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
+  private AuthenticationService = inject(AuthenticationService);
 
   workspaceUsersService = inject(WorkspaceUsersService);
   toasterService = inject(ToasterService);
@@ -45,6 +47,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
   workspaceUsersSubscription!: Subscription;
 
   idWorkspace: number = 0;
+  haveAdminPermission: boolean = false;
 
   get listRole() {
     return listRole;
@@ -74,6 +77,15 @@ export class UsersPageComponent implements OnInit, OnDestroy {
     this.workspaceUsersSubscription =
       this.workspaceUsersService.users$.subscribe((users) => {
         this.users.set(users);
+        const user = this.AuthenticationService.user;
+
+        if (user) {
+          users.find((u) => {
+            if (u.user.id === user.id) {
+              this.haveAdminPermission = u.role === 'ADMIN';
+            }
+          });
+        }
       });
   }
 
