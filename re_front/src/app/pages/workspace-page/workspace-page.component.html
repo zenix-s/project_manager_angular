@@ -6,16 +6,21 @@
         <nav>
           <ul class="flex gap-4">
             <li>
-              <a [routerLink]="['tasks']" routerLinkActive="underline">1-tasks</a>
+              <a
+                [routerLink]="['tasks']"
+                routerLinkActive="active"
+              >
+                Tasks
+              </a>
             </li>
             <li>
-              <a [routerLink]="['users']" routerLinkActive="underline">2-teams/users</a>
+              <a [routerLink]="['users']" routerLinkActive="active">Users</a>
             </li>
             <li>
-              <a [routerLink]="['categories']" routerLinkActive="underline">3-categories</a>
+              <a [routerLink]="['categories']" routerLinkActive="active">Categories</a>
             </li>
             <li>
-              <a [routerLink]="['options']" routerLinkActive="underline">4-options</a>
+              <a [routerLink]="['options']" routerLinkActive="active">Options</a>
             </li>
           </ul>
         </nav>

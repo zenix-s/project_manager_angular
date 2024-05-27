@@ -11,7 +11,7 @@
       [label]="'status'"
       formControlName="priority"
     ></app-input-select> -->
-    <div class="flex">
+    <div class="flex gap-2 mt-2">
       <select class="w-max p-2 border border-white rounded-md bg-bg outline-none  focus:border-slate-50"
         formControlName="priority">
         <option value="NONE">NONE</option>
@@ -21,15 +21,19 @@
         <option value="CRITICAL">CRITICAL</option>
       </select>
 
-      <input
-        type="date"
-        class="w-max p-2 border border-white rounded-md bg-bg outline-none  focus:border-slate-50"
-        formControlName="deadline"
-        value="{{task()?.task?.deadline | date: 'yyyy-MM-dd'}}"
-      >
+      <input type="date"
+        class="w-max p-1 border border-white rounded-md bg-bg outline-none  focus:border-slate-50 text-sm"
+        formControlName="deadline" value="{{task()?.task?.deadline | date: 'yyyy-MM-dd'}}">
     </div>
-    <app-button [outline]="true" (onClick)="onSubmit()" [type]="'submit'">
-      Guardar
-    </app-button>
+    <div class="w-full flex justify-end">
+      <div class="w-max">
+        <app-button [outline]="true" (onClick)="onSubmit()" [type]="'submit'">
+          <span>
+            <i class="ri-save-line"></i>
+            {{task() ? 'Update' : 'Create'}}
+          </span>
+        </app-button>
+      </div>
+    </div>
   </form>
 </app-modal>

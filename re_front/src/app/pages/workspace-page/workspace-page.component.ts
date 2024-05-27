@@ -11,6 +11,7 @@ import {
   Router,
   RouterLink,
   RouterOutlet,
+  RouterModule,
 } from '@angular/router';
 import { WorkspaceCategoriesService } from '@app/core/services/workspace-categories.service';
 import { WorkspaceTasksService } from '@app/core/services/workspace-tasks.service';
@@ -23,7 +24,13 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-workspace-page',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, SectionComponent, SidebarComponent],
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    SectionComponent,
+    SidebarComponent,
+    RouterModule,
+  ],
   templateUrl: './workspace-page.component.html',
   styleUrl: './workspace-page.component.css',
 })

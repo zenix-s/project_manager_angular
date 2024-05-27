@@ -1,3 +1,11 @@
 :host{
   @apply h-full w-full
 }
+
+.active{
+  @apply bg-comment/10
+}
+
+a {
+  @apply px-2 py-1 text-sm rounded-md
+}
