@@ -42,11 +42,9 @@ export class WorkspacePageComponent implements OnInit, OnDestroy {
   workspaceCategoriesService = inject(WorkspaceCategoriesService);
   workspaceUsersService = inject(WorkspaceUsersService);
 
-  workspaceTasksSubscription!: Subscription;
-  workspaceCategoriesSubscription!: Subscription;
-  workspaceUsersSubscription!: Subscription;
 
   idWorkspace: number = 0;
+  reloader!:any;
 
   tasks: WritableSignal<TaskData[]> = signal<TaskData[]>([]);
   categories: WritableSignal<Category[]> = signal<Category[]>([]);
@@ -65,30 +63,22 @@ export class WorkspacePageComponent implements OnInit, OnDestroy {
     }
     this.idWorkspace = idWorkspace;
 
-    // this.workspaceTasksSubscription =
-    //   this.workspaceTasksService.tasks$.subscribe((tasks) => {
-    //     this.tasks.set(tasks);
-    //   });
-    this.workspaceTasksService.getTasks(this.idWorkspace);
-    // this.workspaceCategoriesSubscription =
-    //   this.workspaceCategoriesService.categories$.subscribe((categories) => {
-    //     this.categories.set(categories);
-    //   });
-    this.workspaceCategoriesService.getWorkspaceCategories(this.idWorkspace);
-    // this.workspaceUsersSubscription =
-    //   this.workspaceUsersService.users$.subscribe((users) => {
-    //     this.users.set(users);
-    //   });
-    this.workspaceUsersService.getWorkspaceUsers(this.idWorkspace);
+
+    // this.workspaceTasksService.getTasks(this.idWorkspace);
+    // this.workspaceCategoriesService.getWorkspaceCategories(this.idWorkspace);
+    // this.workspaceUsersService.getWorkspaceUsers(this.idWorkspace);
+
+    this.reloader = setInterval(() => {
+      this.workspaceTasksService.getTasks(this.idWorkspace);
+      this.workspaceCategoriesService.getWorkspaceCategories(this.idWorkspace);
+      this.workspaceUsersService.getWorkspaceUsers(this.idWorkspace);
+    }, 1000)
   }
 
   ngOnDestroy(): void {
-    // this.workspaceTasksSubscription.unsubscribe();
-    // this.workspaceCategoriesSubscription.unsubscribe();
-    // this.workspaceUsersSubscription.unsubscribe();
-
     this.workspaceTasksService.clearTasks();
     this.workspaceCategoriesService.clearCategories();
     this.workspaceUsersService.clearUsers();
+    clearInterval(this.reloader);
   }
 }
