@@ -57,7 +57,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
       [Validators.required, Validators.maxLength(50), Validators.minLength(3)],
     ],
     description: ['', [Validators.maxLength(255), Validators.minLength(3)]],
-    deadline: [null as Date | null, Validators.required],
+    deadline: [null as Date | null],
     priority: ['NONE', Validators.required],
     visibility: ['PUBLIC', Validators.required],
     dependentIdTask: [null],
@@ -69,6 +69,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
       this.taskService.updateTask(this.taskForm.value.id, {
         ...this.taskForm.value,
         idWorkspace: this.idWorkspace,
+        deadline: this.taskForm.value.deadline ? this.taskForm.value.deadline : null,
       });
       this.taskFormService.close();
       this.taskForm.reset();
