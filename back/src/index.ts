@@ -1,11 +1,12 @@
 import bodyParser from "body-parser";
-import express, { Express } from "express";
+import express, { Express, Request } from "express";
 import { CategoryController } from "@/controller/categoryController";
 import { WorkspaceController } from "@/controller/workspaceController";
 import { TaskController } from "@/controller/taskController";
 import { TaskCategoryController } from "@/controller/taskCategoryController";
 import { AuthenticationController } from "@/controller/authenticationController";
 import { InvitationController } from '@/controller/invitationsController';
+import cors from "cors"
 
 process.loadEnvFile();
 const app: Express = express();
@@ -17,6 +18,8 @@ const categoryController = new CategoryController();
 const taskCategoryController = new TaskCategoryController();
 const authenticationController = new AuthenticationController();
 const invitationController = new InvitationController();
+
+app.use(cors<Request>());
 
 // MIDLEWARES
 app.use(bodyParser.json());
