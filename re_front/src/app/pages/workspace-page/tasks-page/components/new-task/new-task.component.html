@@ -1,0 +1,23 @@
+<div class="mt-4 w-full">
+  <form
+    [formGroup]="formTask"
+    (ngSubmit)="createTask()"
+    class="flex gap-2 items-center justify-between w-full p-2">
+    <input class="w-full p-1 border border-white rounded-md bg-bg outline-none  focus:border-slate-50"
+      type="text" formControlName="title" placeholder="Nueva tarea">
+
+    <!-- <app-input [type]="'text'" [class]="'w-full'" formControlName="title"></app-input> -->
+    <!-- <app-button [outline]="true">
+      <span class="flex gap-2">
+        <i class="ri-add-line"></i>
+        Tarea
+      </span>
+    </app-button> -->
+    <button
+      class="border border-white p-1 self-stretch  bg-bg text-white rounded-md"
+      type="submit">
+      <i class="ri-add-line"></i>
+    </button>
+
+  </form>
+</div>

@@ -7,7 +7,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { WorkspaceFormService } from './workspace-form.service';
 import { UserWorkspacesService } from '@app/core/services/user-workspaces.service';
 import { Workspace } from '@env/interface.env';
@@ -38,8 +38,8 @@ export class WorkspaceFormComponent implements OnInit, OnDestroy {
 
   workspaceForm: FormGroup = this.fb.group({
     id: [null],
-    name: [''],
-    description: [''],
+    name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(25)]],
+    description: ['', [Validators.minLength(3), Validators.maxLength(50)]],
   });
 
   onSubmit(): void {
@@ -56,6 +56,7 @@ export class WorkspaceFormComponent implements OnInit, OnDestroy {
       this.workspaceService.addWorkspace(workspace);
       this.toasterService.success('Workspace added');
     }
+    this.workspaceFormService.close();
   }
 
   ngOnInit(): void {
@@ -68,7 +69,6 @@ export class WorkspaceFormComponent implements OnInit, OnDestroy {
       if (workspace) {
         this.workspaceForm.patchValue(workspace);
       }
-
     });
   }
 

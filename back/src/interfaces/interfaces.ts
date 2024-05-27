@@ -1,14 +1,24 @@
-export type Role = 'ADMIN' | 'MEMBER' | 'GUEST';
-export type priority = 'NONE' | 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
-export type visibility = 'PUBLIC' | 'PRIVATE';
+export type Role = "ADMIN" | "MEMBER" | "GUEST";
+export type priority = "NONE" | "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+export type visibility = "PUBLIC" | "PRIVATE";
 
 export const listPriority: priority[] = [
-  'NONE',
-  'LOW',
-  'MEDIUM',
-  'HIGH',
-  'CRITICAL',
+  "NONE",
+  "LOW",
+  "MEDIUM",
+  "HIGH",
+  "CRITICAL",
 ];
+
+export const selectPriority: {
+  label: string;
+  value: priority;
+}[] = listPriority.map((priority) => {
+  return {
+    label: priority.charAt(0) + priority.slice(1).toLowerCase(),
+    value: priority,
+  };
+});
 
 export interface User {
   id: number;
@@ -39,7 +49,7 @@ export interface UserWorkspace {
   idWorkspace: number;
   role: Role;
   createdAt: Date;
-	deleted: boolean;
+  deleted: boolean;
 }
 
 export interface Task {
@@ -78,7 +88,7 @@ export interface Category {
   idWorkspace: number;
   color: string;
   completed: boolean;
-	deleted: boolean;
+  deleted: boolean;
 }
 
 export interface UserTask {
@@ -95,8 +105,6 @@ export interface TaskCategory {
   idCategory: number;
 }
 
-
-
 export interface TaskData {
   task: Task;
   categories: Category[];
@@ -112,8 +120,8 @@ export interface userData {
 }
 
 export interface userWorkspaceData {
-  id: number,
-	idWorkspace: number,
-  role: Role,
-  user: userData
+  id: number;
+  idWorkspace: number;
+  role: Role;
+  user: userData;
 }

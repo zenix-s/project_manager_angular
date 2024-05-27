@@ -25,6 +25,7 @@ import { DropdownComponent } from '@app/shared/components/dropdown/dropdown/drop
 import { DropdownListComponent } from '@app/shared/components/dropdown/dropdown-list/dropdown-list.component';
 import { DropdownItemComponent } from '@app/shared/components/dropdown/dropdown-item/dropdown-item.component';
 import { listPriority } from '@env/interface.env';
+import { NewTaskComponent } from './components/new-task/new-task.component';
 
 @Component({
   selector: 'app-tasks-page',
@@ -39,7 +40,8 @@ import { listPriority } from '@env/interface.env';
     TaskFormComponent,
     DropdownComponent,
     DropdownListComponent,
-    DropdownItemComponent
+    DropdownItemComponent,
+    NewTaskComponent
   ],
   templateUrl: './tasks-page.component.html',
   styleUrl: './tasks-page.component.css',

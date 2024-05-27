@@ -20,6 +20,7 @@ import { Subscription } from 'rxjs';
 import { ModalComponent } from '@app/shared/components/modal/modal.component';
 import { InputComponent } from '@app/shared/components/input/input.component';
 import { ButtonComponent } from '@app/shared/components/button/button.component';
+import { InputSelectComponent } from '@app/shared/components/input-select/input-select.component';
 
 @Component({
   selector: 'app-task-form',
@@ -29,6 +30,7 @@ import { ButtonComponent } from '@app/shared/components/button/button.component'
     InputComponent,
     ReactiveFormsModule,
     ButtonComponent,
+    InputSelectComponent
   ],
   templateUrl: './task-form.component.html',
   styleUrl: './task-form.component.css',

@@ -1,6 +1,6 @@
 <div class="relative flex flex-col w-full">
   @if(label){
-  <div class="">
+  <div>
     {{label}}
   </div>
   }
@@ -23,14 +23,16 @@
     [class]="isOptionsVisible ? 'flex' : 'hidden'">
     @if(selectedOption() !== null){
     <li>
-      <button (click)="selectOption(null)" class="p-2 text-lg bg-whiter cursor-pointer w-full text-left hover:bg-white/20">
+      <button (click)="selectOption(null)"
+        class="p-2 text-lg bg-whiter cursor-pointer w-full text-left hover:bg-white/20">
         Deshacer selección
       </button>
     </li>
     }
     @for (option of options; track $index) {
     <li>
-      <button (click)="selectOption(option)" class="p-2 text-lg bg-whiter cursor-pointer w-full text-left hover:bg-white/20"
+      <button (click)="selectOption(option)"
+        class="p-2 text-lg bg-whiter cursor-pointer w-full text-left hover:bg-white/20"
         [class]="selectedOption === option ? 'option--selected' : ''">
         {{option.label}}
       </button>

@@ -15,24 +15,20 @@
       </div>
       <div class="py-2">
         <app-dropdown [direction]="'right'">
-          <div role="selector" class="w-full">
-            <app-button [theme]="'primary'" [outline]="true" role="selector">
-              <span class="w-full flex justify-between hover:bg-comment/10">
-                workspace
-                <i class="ri-arrow-right-s-fill"></i>
-              </span>
-            </app-button>
+          <div class="w-full" role="selector">
+            <span class="w-full flex justify-start hover:bg-comment/10 px-2 py-1 gap-2">
+              <i class="ri-box-2-line"></i>
+              workspace
+              <i class="ri-arrow-right-s-fill"></i>
+            </span>
           </div>
           <div role="list">
             <app-dropdown-list>
               @for (workspace of workspaces(); track $index) {
-              <!-- <a [routerLink]="['/workspace', workspace.id]" routerLinkActive="underline"
-                class="w-full px-1 py-0.5 cursor-pointer hover:bg-comment/10">
+              <a [routerLink]="['/workspace', workspace.id]"
+                class="w-full px-2 py-1 flex justify-start hover:bg-comment/10">
                 {{ workspace.name }}
-              </a> -->
-              <app-link [href]="'/workspace/' + workspace.id" [outline]="true">
-                {{ workspace.name }}
-              </app-link>
+              </a>
               }
             </app-dropdown-list>
           </div>
@@ -42,30 +38,45 @@
       <nav class="flex-grow">
         <ul class="flex flex-col gap-2">
           <li>
-            <app-link [href]="'/'" [outline]="true">Home</app-link>
+            <a [routerLink]="['/']" class="w-full px-2 py-1 flex justify-start hover:bg-comment/10 gap-2">
+              <i class="ri-home-2-line"></i>
+              Home
+            </a>
           </li>
           <li>
-            <app-link [href]="'/invitations'" [outline]="true">Invitations</app-link>
+            <a [routerLink]="['/invitations']" class="w-full px-2 py-1 flex justify-start hover:bg-comment/10 gap-2">
+              <i class="ri-mail-line"></i>
+              Invitations
+            </a>
           </li>
         </ul>
       </nav>
       <div class="flex flex-col gap-2">
-        <app-button [theme]="'primary'" [outline]="true" [routerLink]="['/profile']">
+        <!-- <app-button [theme]="'primary'" [outline]="true" [routerLink]="['/profile']">
           {{ this.authenticationService.user!.username }}
-        </app-button>
-        <app-button [theme]="'primary'" [outline]="true" (onClick)="this.authenticationService.logout()">
+        </app-button> -->
+        <div class="w-full px-2 py-1 flex justify-start gap-2">
+          <i class="ri-user-line"></i>
+          {{ this.authenticationService.user!.username }}
+        </div>
+        <!-- <app-button [theme]="'primary'" [outline]="true" (onClick)="this.authenticationService.logout()">
           logout
-        </app-button>
+        </app-button> -->
+        <button (click)="this.authenticationService.logout()"
+          class="w-full px-2 py-1 flex justify-start gap-2 hover:bg-comment/10">
+          <i class="ri-logout-box-line"></i>
+          logout
+        </button>
       </div>
     </div>
   </app-section>
 </div>
 
 @if (!isOpen()) {
-  <div class="absolute top-[4.5rem]  z-50">
-    <button (click)="this.sidebarService.open()"
-      class="w-8 h-8 rounded-full hover:shadow-md items-center justify-center border border-transparent hover:border-white flex hover:bg-bg bg-transparent transition-all text-transparent hover:text-white ">
-      <i class="ri-arrow-right-s-line text-lg"></i>
-    </button>
-  </div>
+<div class="absolute top-[4.5rem]  z-50">
+  <button (click)="this.sidebarService.open()"
+    class="w-8 h-8 rounded-full hover:shadow-md items-center justify-center border border-transparent hover:border-white flex hover:bg-bg bg-transparent transition-all text-transparent hover:text-white ">
+    <i class="ri-arrow-right-s-line text-lg"></i>
+  </button>
+</div>
 }

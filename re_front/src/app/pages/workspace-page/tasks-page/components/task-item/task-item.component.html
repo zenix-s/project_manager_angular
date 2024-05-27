@@ -125,10 +125,20 @@
       <div class="w-max" role="list">
         <app-dropdown-list>
           <app-dropdown-item (onClick)="openEditTaskForm()">
-            Edit
+            <span>
+              <i class="ri-edit-2-fill"></i>
+              <span>
+                Edit
+              </span>
+            </span>
           </app-dropdown-item>
           <app-dropdown-item (onClick)="this.taskService.deleteTask(task.task.id)">
-            Delete
+            <span>
+              <i class="ri-delete-bin-2-line"></i>
+              <span>
+                Delete
+              </span>
+            </span>
           </app-dropdown-item>
           <app-dropdown-item>
             <app-dropdown [direction]="'left'" action="click">
@@ -243,7 +253,7 @@
             <app-dropdown [action]="'hover'" [direction]="'left'">
               <div role="selector">
                 <span class="flex gap-2 items-center justify-start">
-                  <i class="ri-flag-fill"></i>
+                  <i class="ri-calendar-todo-fill"></i>
                   <span>
                     Set due date
                   </span>
@@ -279,7 +289,7 @@
             <app-dropdown [direction]="'left'" [action]="'click'">
               <div role="selector">
                 <span class="flex gap-2 items-center justify-start">
-                  <i class="ri-user-fill"></i>
+                  <i class="ri-folder-info-fill"></i>
                   <span>
                     Categories
                   </span>
@@ -301,13 +311,13 @@
             </app-dropdown>
           </app-dropdown-item>
           @if (this.task.subtasks && this.task.subtasks.length <= 0) { <app-dropdown-item>
-            <!-- Dependant -->
+            <!-- Dependant task -->
             <app-dropdown [direction]="'left'" [action]="'click'">
               <div role="selector">
                 <span class="flex gap-2 items-center justify-start">
-                  <i class="ri-user-fill"></i>
+                  <i class="ri-links-fill"></i>
                   <span>
-                    Dependant
+                    Dependant task
                   </span>
                 </span>
               </div>

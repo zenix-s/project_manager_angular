@@ -1,6 +1,6 @@
-<div class="h-full w-full flex gap-4">
+<div class="h-full w-full flex">
   <app-sidebar></app-sidebar>
-  <div class="flex-grow py-4 pr-4">
+  <div class="flex-grow pt-4 p-2">
     <app-section [title]="'Dashboard'">
       <header class="flex w-full p-2">
         <div class="w-max">
@@ -11,12 +11,20 @@
         <app-workspace-form></app-workspace-form>
       </header>
       <hr class="divide-x-2 border-blue/40 my-4">
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-1">
         @for (workspace of userWorkspaces(); track $index) {
         <div class="w-full">
           <a [routerLink]="['/workspace', workspace.id]"
-            class="block p-2 border border-white rounded-md hover:bg-white/10 transition-colors">
-            {{workspace.name}}
+            class="block px-2 py-1  rounded-md hover:bg-comment/10 transition-colors overflow-hidden whitespace-nowrap">
+            <span>
+              {{workspace.name}}
+            </span>
+            @if (workspace.description !== undefined && workspace.description.length > 0) {
+            <span class="text-xs text-comment">
+              -
+              {{workspace.description}}
+            </span>
+            }
           </a>
         </div>
         }

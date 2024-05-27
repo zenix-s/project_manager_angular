@@ -6,9 +6,9 @@
       [ngClass]="{'text-transparent cursor-auto': !haveSubtasks, 'text-primary': haveSubtasks}"
     >
       @if (isOpened) {
-        <i class="ri-indeterminate-circle-line"></i>
+        <i class="ri-subtract-line"></i>
       }@else {
-        <i class="ri-add-circle-line"></i>
+        <i class="ri-add-line"></i>
       }
     </span>
     <ng-content select="[role=task]"></ng-content>
