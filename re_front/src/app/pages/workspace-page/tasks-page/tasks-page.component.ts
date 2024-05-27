@@ -12,7 +12,7 @@ import { WorkspaceTasksService } from '@app/core/services/workspace-tasks.servic
 import { WorkspaceUsersService } from '@app/core/services/workspace-users.service';
 import { SectionComponent } from '@app/shared/components/section/section.component';
 import { Category, TaskData, workspaceUsersData } from '@env/interface.env';
-import { Subscription } from 'rxjs';
+import { Subject, forkJoin, takeUntil, zip } from 'rxjs';
 import { TaskContainerComponent } from './components/task-container/task-container.component';
 import { TaskItemComponent } from './components/task-item/task-item.component';
 import { SubtaskContainerComponent } from './components/subtask-container/subtask-container.component';
@@ -41,7 +41,7 @@ import { NewTaskComponent } from './components/new-task/new-task.component';
     DropdownComponent,
     DropdownListComponent,
     DropdownItemComponent,
-    NewTaskComponent
+    NewTaskComponent,
   ],
   templateUrl: './tasks-page.component.html',
   styleUrl: './tasks-page.component.css',
@@ -59,10 +59,7 @@ export class TasksPageComponent implements OnInit, OnDestroy {
   workspaceCategoriesService = inject(WorkspaceCategoriesService);
   workspaceUsersService = inject(WorkspaceUsersService);
 
-  workspaceTasksSubscription!: Subscription;
-  workspaceCategoriesSubscription!: Subscription;
-  workspaceUsersSubscription!: Subscription;
-  filterTaskSubscription!: Subscription;
+  private sub = new Subject<void>();
 
   idWorkspace: number = 0;
 
@@ -79,44 +76,52 @@ export class TasksPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     let idWorkspace: number;
-    this.activatedRoute.parent!.paramMap.subscribe((params) => {
-      if (!params.has('idWorkspace')) {
-        this.router.navigate(['/']);
-      }
-      idWorkspace = parseInt(params.get('idWorkspace') as any);
-      if (isNaN(idWorkspace) || !isFinite(idWorkspace) || idWorkspace < 0) {
-        this.router.navigate(['/']);
-      }
+    this.activatedRoute
+      .parent!.paramMap.pipe(takeUntil(this.sub))
+      .subscribe((params) => {
+        if (!params.has('idWorkspace')) {
+          this.router.navigate(['/']);
+        }
+        idWorkspace = parseInt(params.get('idWorkspace') as any);
+        if (isNaN(idWorkspace) || !isFinite(idWorkspace) || idWorkspace < 0) {
+          this.router.navigate(['/']);
+        }
 
-      this.idWorkspace = idWorkspace;
+        this.idWorkspace = idWorkspace;
 
-      this.workspaceTasksService.getTasks(idWorkspace);
-      this.workspaceCategoriesService.getWorkspaceCategories(idWorkspace);
-      this.workspaceUsersService.getWorkspaceUsers(idWorkspace);
-    });
+        this.workspaceTasksService.getTasks(idWorkspace);
+        this.workspaceCategoriesService.getWorkspaceCategories(idWorkspace);
+        this.workspaceUsersService.getWorkspaceUsers(idWorkspace);
+      });
 
-    this.workspaceTasksSubscription =
-      this.workspaceTasksService.tasks$.subscribe((tasks) => {
+    this.workspaceTasksService.tasks$
+      .pipe(takeUntil(this.sub))
+      .subscribe((tasks) => {
         this.tasks.set(tasks);
         this.filterTaskService.applyFilters(tasks);
       });
-    this.filterTaskSubscription =
-      this.filterTaskService.filteredTasks$.subscribe((tasks) => {
+
+    this.filterTaskService.filteredTasks$
+      .pipe(takeUntil(this.sub))
+      .subscribe((tasks) => {
         this.filteredTasks.set(tasks);
       });
-    this.workspaceCategoriesSubscription =
-      this.workspaceCategoriesService.categories$.subscribe((categories) => {
+
+    this.workspaceCategoriesService.categories$
+      .pipe(takeUntil(this.sub))
+      .subscribe((categories) => {
         this.categories.set(categories);
       });
-    this.workspaceUsersSubscription =
-      this.workspaceUsersService.users$.subscribe((users) => {
+
+    this.workspaceUsersService.users$
+      .pipe(takeUntil(this.sub))
+      .subscribe((users) => {
         this.users.set(users);
       });
   }
 
   ngOnDestroy(): void {
-    this.workspaceTasksSubscription.unsubscribe();
-    this.workspaceCategoriesSubscription.unsubscribe();
-    this.workspaceUsersSubscription.unsubscribe();
+    this.sub.next();
+    this.sub.complete();
   }
 }

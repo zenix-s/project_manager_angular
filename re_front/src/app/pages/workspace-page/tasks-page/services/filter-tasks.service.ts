@@ -2,7 +2,6 @@ import { Injectable, WritableSignal, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { taskFilter } from '@app/core/enity/taskFilter.entity';
 import { TaskData, priority } from '@env/interface.env';
-import { filter } from '../../../../../../../front/src/app/features/workspace/tasks/services/task-filter.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +11,7 @@ export class FilterTasksService {
     search: '',
     category: [],
     priority: null,
-    status: true,
+    status: false,
     subtaskFilter: false,
   });
 
@@ -32,15 +31,35 @@ export class FilterTasksService {
     tasks.forEach((task) => {
       const filteredTask: TaskData = { ...task };
 
+      const tags = task.categories.map((tag) => tag.name).join(' ');
+
+      const searchedText: string =
+        task.task.name.toLowerCase() +
+        task.task.priority.toLowerCase() +
+        tags.toLowerCase();
+
+      // const search:string[] = search.toLowerCase().split(' ');
+
+      const searchText = () => {
+        if (search && search.length > 0) {
+          return search.toLowerCase().split(' ');
+        } else {
+          return [''];
+        }
+      };
+
+      const haveAllWords = (text: string, words: string[]) => {
+        return words.every((word) => text.includes(word));
+      }
+
       if (
         (status ? true : task.task.completed == false) &&
         (priority ? task.task.priority === priority : true) &&
         (category.length > 0
           ? task.categories.find((c) => category.includes(c.id))
           : true) &&
-        (search
-          ? task.task.name.toLowerCase().includes(search.toLowerCase())
-          : true)
+        // (search ? searchedText.includes(search.toLowerCase()) : true)
+        (search ? haveAllWords(searchedText, searchText()) : true)
       ) {
         if (task.subtasks && task.subtasks.length > 0 && subtaskFilter) {
           filteredTask.subtasks = this.applyFilter(task.subtasks);

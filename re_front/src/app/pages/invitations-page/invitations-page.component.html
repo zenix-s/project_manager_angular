@@ -22,6 +22,11 @@
           </div>
         </div>
         }
+        @if (invitations().length <= 0) {
+        <div class="text-center text-white">
+          No invitations
+        </div>
+        }
       </div>
     </app-section>
   </div>
