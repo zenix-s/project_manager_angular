@@ -110,6 +110,13 @@ export class TaskItemComponent {
     return this.task.task.dependentIdTask === idTask;
   }
 
+  deadlineToday():boolean {
+    return this.task.task.deadline ? new Date(this.task.task.deadline).toDateString() === new Date().toDateString() : false;
+  }
+  deadlinePassed():boolean {
+    return this.task.task.deadline ? new Date(this.task.task.deadline) < new Date() : false;
+  }
+
   addDependency(idTask: number | null) {
     if (this.task.task.dependentIdTask === idTask) {
       idTask = null;

@@ -21,6 +21,7 @@ import { ModalComponent } from '@app/shared/components/modal/modal.component';
 import { InputComponent } from '@app/shared/components/input/input.component';
 import { ButtonComponent } from '@app/shared/components/button/button.component';
 import { InputSelectComponent } from '@app/shared/components/input-select/input-select.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-task-form',
@@ -30,7 +31,8 @@ import { InputSelectComponent } from '@app/shared/components/input-select/input-
     InputComponent,
     ReactiveFormsModule,
     ButtonComponent,
-    InputSelectComponent
+    InputSelectComponent,
+    CommonModule
   ],
   templateUrl: './task-form.component.html',
   styleUrl: './task-form.component.css',
@@ -55,7 +57,7 @@ export class TaskFormComponent implements OnInit, OnDestroy {
       [Validators.required, Validators.maxLength(50), Validators.minLength(3)],
     ],
     description: ['', [Validators.maxLength(255), Validators.minLength(3)]],
-    deadline: [null, Validators.required],
+    deadline: [null as Date | null, Validators.required],
     priority: ['NONE', Validators.required],
     visibility: ['PUBLIC', Validators.required],
     dependentIdTask: [null],
@@ -91,11 +93,12 @@ export class TaskFormComponent implements OnInit, OnDestroy {
     this.taskSub = this.taskFormService.task$.subscribe((task) => {
       this.task.set(task);
       if (task) {
+        console.log(task.task.deadline ? new Date(task.task.deadline) : null);
         this.taskForm.patchValue({
           id: task.task.id,
           name: task.task.name,
           description: task.task.description,
-          deadline: task.task.deadline,
+          deadline: task.task.deadline ? new Date(task.task.deadline) : null,
           priority: task.task.priority,
           visibility: task.task.visibility,
           dependentIdTask: task.task.dependentIdTask,

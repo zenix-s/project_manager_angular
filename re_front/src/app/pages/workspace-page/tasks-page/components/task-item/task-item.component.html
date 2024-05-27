@@ -80,8 +80,21 @@
       </app-tooltip>
     </div>
     <!-- NAME -->
-    <div>
-      {{task.task.name}}
+    <div class="flex gap-2 cursor-pointer overflow-x-hidden" (click)="openEditTaskForm()">
+      <div class="text-nowrap">
+        {{task.task.name}}
+      </div>
+      <div class="
+      hidden
+      md:flex
+      items-center
+      text-comment
+      text-sm
+      text-nowrap
+      overflow-hidden
+      ">
+        {{task.task.description}}
+      </div>
     </div>
   </div>
   <!-- CATEGORIES -->
@@ -101,7 +114,10 @@
     @if (task.task.deadline) {
     <app-tooltip [text]="'deadline'">
       <div class="flex">
-        <span>
+        <span class="text-white" [ngClass]="{
+            'text-red': deadlinePassed(),
+            'text-yellow': deadlineToday()
+          }">
           {{task.task.deadline | date : 'MMM-dd'}}
         </span>
         <span>

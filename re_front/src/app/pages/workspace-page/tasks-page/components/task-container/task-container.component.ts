@@ -13,5 +13,5 @@ export class TaskContainerComponent {
   @Input()
   haveSubtasks: boolean = false;
 
-  isOpened: boolean = false;
+  isOpened: boolean = true;
 }

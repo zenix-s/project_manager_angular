@@ -20,9 +20,13 @@
         <option value="HIGH">HIGH</option>
         <option value="CRITICAL">CRITICAL</option>
       </select>
-      <input type="date" class="w-max p-2 border border-white rounded-md bg-bg outline-none  focus:border-slate-50"
-        formControlName="deadline">
 
+      <input
+        type="date"
+        class="w-max p-2 border border-white rounded-md bg-bg outline-none  focus:border-slate-50"
+        formControlName="deadline"
+        value="{{task()?.task?.deadline | date: 'yyyy-MM-dd'}}"
+      >
     </div>
     <app-button [outline]="true" (onClick)="onSubmit()" [type]="'submit'">
       Guardar
