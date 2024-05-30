@@ -94,7 +94,6 @@ export class TaskFormComponent implements OnInit, OnDestroy {
     this.taskSub = this.taskFormService.task$.subscribe((task) => {
       this.task.set(task);
       if (task) {
-        console.log(task.task.deadline ? new Date(task.task.deadline) : null);
         this.taskForm.patchValue({
           id: task.task.id,
           name: task.task.name,
