@@ -458,7 +458,7 @@ Tambien se puede acceder a la base de datos en `http://localhost:8080` con las s
 
 #### Workspaces
 
-![workspace](./assets/img/workspace.png)
+![workspace](./assets/img/workspaces.png)
 
 #### Tasks
 
