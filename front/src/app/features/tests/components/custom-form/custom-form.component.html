@@ -1,9 +1,0 @@
-<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-  <h1>My form loquete</h1>
-  <app-custom-input formControlName="customInputControl"></app-custom-input>
-  <p>
-    Value:
-    {{myForm.get('customInputControl')!.value}}
-  </p>
-  <button>ok</button>
-</form>

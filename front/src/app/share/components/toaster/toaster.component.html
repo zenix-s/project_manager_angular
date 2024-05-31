@@ -1,7 +1,0 @@
-@if (toasts().length > 0) {
-<div class="w-full gap-2 flex flex-col p-8">
-  @for (toas of toasts(); track $index) {
-  <app-toaster-item [toast]="toas"></app-toaster-item>
-  }
-</div>
-}
