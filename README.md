@@ -20,6 +20,12 @@ Hay que ejecutar tres modulos
 
 Si se ha finalizado la ejecución del docker de mysql. 3. Acceder a la carpeta mysql y ejecutar el comando `docker compose start`
 
+## Incialización de la base de datos
+
+En la carpeta `mysql` se encuentra un archivo `tfgsff_db.sql` que contiene las instrucciones para inicializar la base de datos.
+
+El contenedor de docker tambien corre una manager de phpmyadmin en `http://localhost:8080` para poder ejecutar las instrucciones SQL.
+
 ## Acceso a la aplicación
 
 Acceder a la dirección `http://localhost:4200` para acceder a la aplicación.
