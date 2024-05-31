@@ -81,6 +81,6 @@ A los usuarios o equipos se les pueden asignar **tareas** y estas tareas pueden 
 
 También se pueden crear **proyectos** dentro de un workspace, los cuales pueden tener **tareas**, y ser asignados a **equipos** o **usuarios**.
 
-![Modelo de datos](./docs/assets/ModeloDatos.png)
+![Modelo de datos](./docs/assets/img/bbdd.png)
 
 </div>
