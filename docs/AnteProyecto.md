@@ -18,7 +18,7 @@ Diseñada para adaptarse a las necesidades de cualquier equipo, Varbas ofrece un
 A pesar de que existen muchas herramientas de gestión de proyectos, siempre hay algo que no termina de encajar. Ya sea por la falta de alguna funcionalidad, por la complejidad de la herramienta o por el precio.
 
 
-Varbas nace con la idea de ser una herramienta open-source, sencilla y con las funcionalidades justas para que cualquier equipo de trabajo pueda gestionar sus proyectos de forma efectiva.
+Varbas nace con la idea de ser una herramienta open-source, sencilla y con las funcionalidades justas para que cualquier equipo de traboajo pueda gestionar sus proyectos de forma efectiva.
 ## Tecnologías
 
 Para el desarrollo se utilizarán las siguientes tecnologías:
@@ -81,6 +81,6 @@ A los usuarios o equipos se les pueden asignar **tareas** y estas tareas pueden 
 
 También se pueden crear **proyectos** dentro de un workspace, los cuales pueden tener **tareas**, y ser asignados a **equipos** o **usuarios**.
 
-![Modelo de datos](./docs/assets/img/bbdd.png)
+![Modelo de datos](./assets/img/bbdd.png)
 
 </div>
