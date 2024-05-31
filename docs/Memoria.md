@@ -21,8 +21,8 @@
 - [Herramientas/Lenguajes utilizados](#herramientaslenguajes-utilizados)
 - [Fases del proyecto](#fases-del-proyecto)
 - [Conclusiones y mejoras](#conclusiones-y-mejoras)
-- [Bibliografía](#bibliografía)
 - [Anexos](#anexos)
+- [Bibliografía](#bibliografía)
 
 <div style="page-break-after: always;"></div>
 
